@@ -36,7 +36,7 @@ public class personajeMOV : MonoBehaviour {
     Poderes poderesScript;
 
     public float timeWallJumping;
-
+    float gravityInit;
 
     void Start()
     {
@@ -50,11 +50,22 @@ public class personajeMOV : MonoBehaviour {
 
         //necesito el script de poderes para modificar booleano del dush para controlarlo cada vez que toque el suelo
         poderesScript = GetComponent<Poderes>();
+
+        gravityInit = rb.gravityScale;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        //control y dinamica de salto
+        //si la velocidad en Y es negativa significa que el personaje ya esta cayendo
+        
+        if (rb.velocity.y < 0 && numSalto==3)
+        {
+            rb.gravityScale = gravityInit + 1;
+        }
+
+
         //si se permite el movimiento del personaje
         if (permitido)
         {
@@ -125,7 +136,7 @@ public class personajeMOV : MonoBehaviour {
                     if (numSalto < 3)
                     {
                         saltar();
-
+                        
                         numSalto++;
                     }
                 }
@@ -139,6 +150,9 @@ public class personajeMOV : MonoBehaviour {
                     //Invoke("DesactivationWallJumping", timeWallJumping);
 
                 }
+
+              
+
             }
         }
     }
@@ -150,6 +164,8 @@ public class personajeMOV : MonoBehaviour {
         {
             //resetear los saltos
             numSalto = 1;
+            //pongo la escala de gravedad a su valor original
+            rb.gravityScale = gravityInit;
 
             //resetear el dush
             poderesScript.SetDashUse(true);
@@ -174,8 +190,12 @@ public class personajeMOV : MonoBehaviour {
 
     void saltar()
     {
+        if(numSalto==1)
+             rb.AddForce(new Vector2(0, alturaSalto) - new Vector2(0, rb.velocity.y), ForceMode2D.Impulse);
+
+        else if(numSalto==2)
+            rb.AddForce(new Vector2(0, alturaSalto+2)-new Vector2(0,rb.velocity.y),ForceMode2D.Impulse);
        
-        rb.AddForce(new Vector2(0, alturaSalto / numSalto) - new Vector2(0, rb.velocity.y), ForceMode2D.Impulse);
     }
 
     //salto con la pared
