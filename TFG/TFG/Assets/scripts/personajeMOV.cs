@@ -26,11 +26,20 @@ public class personajeMOV : MonoBehaviour {
 
     public float reboteSaltoPared = 10;
 
+    //PROVISIONAL
+    public float distanciaSaltoPared;
+    public float alturaSaltoPared;
+    enum Direccion { izquierda, derecha }
+    Direccion direccionMov;
+
+
     //1 derecha  && - 1 izquierda
     int direccion;
 
     public float speedRun;
     public bool run;
+
+    bool isJumping;
 
     //variable que usamos para guardar el script de los poderes
     Poderes poderesScript;
@@ -48,6 +57,8 @@ public class personajeMOV : MonoBehaviour {
 
         permitirSaltoPared = false;
 
+        isJumping = false;
+
         //necesito el script de poderes para modificar booleano del dush para controlarlo cada vez que toque el suelo
         poderesScript = GetComponent<Poderes>();
 
@@ -60,9 +71,32 @@ public class personajeMOV : MonoBehaviour {
         //control y dinamica de salto
         //si la velocidad en Y es negativa significa que el personaje ya esta cayendo
         
-        if (rb.velocity.y < 0 && numSalto==3)
+        if (rb.velocity.y < 0 && numSalto==2)
         {
             rb.gravityScale = gravityInit + 1;
+        }
+
+
+        //PROVISIONAL
+        if (permitirSaltoPared)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log(direccionMov);
+                //hacer un enum de izquierda derecha.
+                if (direccionMov == Direccion.derecha)
+                {
+                    rb.AddForce(new Vector2(-distanciaSaltoPared, alturaSaltoPared), ForceMode2D.Impulse);
+                    direccionMov = Direccion.izquierda;
+                }
+
+                else
+                {
+                    rb.AddForce(new Vector2(distanciaSaltoPared, alturaSaltoPared), ForceMode2D.Impulse);
+                    direccionMov = Direccion.derecha;
+                }
+                
+            }
         }
 
 
@@ -121,10 +155,17 @@ public class personajeMOV : MonoBehaviour {
 
             //izquierda
             if (movex < 0)
+            {
                 direccion = -1;
-            if(movex>0)//derecha
+                direccionMov = Direccion.izquierda;
+            }
+
+            if (movex > 0)
+            {
+                //derecha
                 direccion = 1;
-            
+                direccionMov = Direccion.derecha;
+            }
 
             //salto
             if (Input.GetKeyDown("space"))
@@ -135,8 +176,17 @@ public class personajeMOV : MonoBehaviour {
                     //comprobacion del doble salto
                     if (numSalto < 3)
                     {
-                        saltar();
-                        
+                        //saltar();
+
+
+                        if (numSalto == 1)
+                            rb.AddForce(new Vector2(0, alturaSalto) - new Vector2(0, rb.velocity.y), ForceMode2D.Impulse);
+
+
+                        else if (numSalto == 2)
+                            rb.AddForce(new Vector2(0, alturaSalto + 2) - new Vector2(0, rb.velocity.y), ForceMode2D.Impulse);
+
+                        isJumping = true;
                         numSalto++;
                     }
                 }
@@ -144,8 +194,9 @@ public class personajeMOV : MonoBehaviour {
                 {
                     //giramos al personaje
                     direccion = -direccion;
+                    direccionMov = Direccion.izquierda;
 
-                    saltarPared();
+                    //saltarPared();
 
                     //Invoke("DesactivationWallJumping", timeWallJumping);
 
@@ -167,24 +218,39 @@ public class personajeMOV : MonoBehaviour {
             //pongo la escala de gravedad a su valor original
             rb.gravityScale = gravityInit;
 
+            //PROVISIONAL
+            isJumping = false;
+            permitido = true;
+
             //resetear el dush
             poderesScript.SetDashUse(true);
 
         }
         //comprobacion choque con pared
-        if(coll.collider.name == "Pared")
+        if(coll.collider.tag == "Pared")
         {
-            permitirSaltoPared = true;
+            
+            if (isJumping)
+            {
+                permitirSaltoPared = true;
+                permitido = false;
+            }
+               
             
         }
     }
 
+    
+
     void OnCollisionExit2D(Collision2D coll)
     {
         //comprobacion choque con pared
-        if (coll.collider.name == "Pared")
+        if (coll.collider.tag == "Pared")
         {
             permitirSaltoPared = false;
+
+            //PROVISIONAL
+            //permitido = true;
         }
     }
 
@@ -201,6 +267,7 @@ public class personajeMOV : MonoBehaviour {
     //salto con la pared
     void saltarPared()
     {
+
         rb.AddForce(new Vector2(reboteSaltoPared, alturaSalto)); //- new Vector2(rb.velocity.x, rb.velocity.y), ForceMode2D.Impulse);
     }
 
