@@ -1,20 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class camaraMOV : MonoBehaviour {
+public class camaraMOV : MonoBehaviour
+{
 
     bool movPermitido;
 
+    //si esta quieto el personaje se balancea
+    bool personajeQuieto;
+
+    float timer = 0;
+
     bool movAlturaPermitido;
+
+    //cuanto se balancea
+    public float balanceoX = 1;
+    public float balanceoY = 0.3f;
+
+    //controla que solo se guarde una vez si es true se puede guardar si no no.
+    bool guardar = true;
+
+    //a que velocidad se balancea
+    public float veclocidadBalanceo = 0.5F;
+
+    //vector guarda posicion camra para respirar
+    Vector3 vectorGuarda = new Vector3();
 
     public Transform camaraTrans;
     public Transform personajeTrans;
+
+    Vector3 velocity = Vector3.zero;
 
     public float anchoMAX = 3f;
     public float anchoMIN = -3f;
 
     public float altoMAX = 3f;
     public float altoMIN = -3f;
+
+    public float veclocidadSeguimiento = 0.7F;
+
+    public bool cambioDireccionBalanceo = false;
 
     //distancia inicial entre camara y personaje
     float distanciaInicial;
@@ -36,6 +61,10 @@ public class camaraMOV : MonoBehaviour {
         movAlturaPermitido = false;
 
         distanciaInicial = camaraTrans.position.y - personajeTrans.position.y;
+
+        personajeQuieto = true;
+
+
     }
 
     // Update is called once per frame
@@ -47,6 +76,7 @@ public class camaraMOV : MonoBehaviour {
         movAlturaPermitido = compararAltura();
 
         //si el personaje se sale del rango de movimiento libre
+
         if (movPermitido & direccionAncho == 0)//diro derecha
         {
             //nueva posicion de la camara
@@ -59,24 +89,35 @@ public class camaraMOV : MonoBehaviour {
             //nueva posicion de la camara
             Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN, camaraTrans.position.y, -10f);
             camaraTrans.position = newPos;
+
         }
         if (movAlturaPermitido & direccionAlto == 0)//giro arriba
         {
             //nueva posicion de la camara
             Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMAX + distanciaInicial, -10f);
             camaraTrans.position = newPos;
+
         }
         if (movAlturaPermitido & direccionAlto == 1)//giro abajo
         {
             //nueva posicion de la camara
             Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMIN + distanciaInicial, -10f);
             camaraTrans.position = newPos;
+
         }
 
         //evitar que al volver a pasar se vuelva a meter en algun if sin querer
         direccionAlto = 3;
         direccionAncho = 3;
 
+        //calcular nueva posicion para el balanceo
+
+        Vector3 Seguimiento = new Vector3(personajeTrans.position.x, personajeTrans.position.y + distanciaInicial, camaraTrans.position.z);
+
+        //Camara sigue despacio
+        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+
+        
     }
 
     //mirar si se sale del rango
@@ -86,7 +127,7 @@ public class camaraMOV : MonoBehaviour {
         if (personajeTrans.position.x - camaraTrans.position.x > anchoMAX)
         {
             direccionAncho = 0;
-            return true;        
+            return true;
         }
         // se sale por la izquierda
         if (personajeTrans.position.x - camaraTrans.position.x < anchoMIN)
@@ -113,4 +154,5 @@ public class camaraMOV : MonoBehaviour {
         }
         return false;
     }
+
 }
