@@ -75,7 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\scripts\ObjectAbsorb.cs" />
     <Compile Include="Assets\scripts\Poderes.cs" />
+    <Compile Include="Assets\scripts\Prueba.cs" />
     <Compile Include="Assets\scripts\camaraMOV.cs" />
     <Compile Include="Assets\scripts\personajeMOV.cs" />
   </ItemGroup>

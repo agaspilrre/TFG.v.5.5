@@ -31,7 +31,7 @@ public class personajeMOV : MonoBehaviour {
     public float alturaSaltoPared;
     enum Direccion { izquierda, derecha }
     Direccion direccionMov;
-
+    BoxCollider2D playerCollider;
 
     //1 derecha  && - 1 izquierda
     int direccion;
@@ -63,6 +63,8 @@ public class personajeMOV : MonoBehaviour {
         poderesScript = GetComponent<Poderes>();
 
         gravityInit = rb.gravityScale;
+
+        playerCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -80,11 +82,11 @@ public class personajeMOV : MonoBehaviour {
         //PROVISIONAL
         if (permitirSaltoPared)
         {
-            rb.gravityScale = gravityInit - 1f; 
+            
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log(direccionMov);
+               
                 //hacer un enum de izquierda derecha.
                 if (direccionMov == Direccion.derecha)
                 {
@@ -173,8 +175,11 @@ public class personajeMOV : MonoBehaviour {
             if (Input.GetKeyDown("space"))
             {
                 //solo entra si no esta en contacto con la pared
+                
+
                 if (!permitirSaltoPared)
                 {
+                    
                     //comprobacion del doble salto
                     if (numSalto < 3)
                     {
@@ -211,19 +216,39 @@ public class personajeMOV : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D coll)
     {
         //comprobacion choque con el suelo
-        if (coll.collider.name =="Suelo")
+        if (coll.collider.tag =="Suelo")
         {
-            //resetear los saltos
-            numSalto = 1;
-            //pongo la escala de gravedad a su valor original
-            rb.gravityScale = gravityInit;
+            //raycast hacia abajo
+            float distance = playerCollider.bounds.extents.y + 0.3f;
+            
 
-            //PROVISIONAL
-            isJumping = false;
-            permitido = true;
+            Vector3 origin = playerCollider.bounds.center;
 
-            //resetear el dush
-            poderesScript.SetDashUse(true);
+            RaycastHit2D hit;
+            hit = Physics2D.Raycast(origin, -transform.up, distance, LayerMask.GetMask("Suelo"));
+            //lanza un raycast cuando estamos colisionando con el suelo para comprobar que esta el player por encima del suelo y si es asi te deja saltar si no no(caso en que te quedes en la pared de una plataforma evita que puedas saltar)
+            if (hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))
+            {
+
+                //resetear los saltos
+                numSalto = 1;
+                //pongo la escala de gravedad a su valor original
+                rb.gravityScale = gravityInit;
+
+                //PROVISIONAL
+                isJumping = false;
+                permitido = true;
+
+                //resetear el dush
+                poderesScript.SetDashUse(true);
+            }
+
+            //si chocamos con una plataforma cuando estamos en el aire si mantenemos pulsado el mov se queda enganchado en la plataforma, con esto evitamos q se enganche
+            else if(hit.collider ==null && isJumping)
+            {
+                permitido = false;
+            }
+                
 
         }
         //comprobacion choque con pared
@@ -234,6 +259,7 @@ public class personajeMOV : MonoBehaviour {
             {
                 permitirSaltoPared = true;
                 permitido = false;
+                rb.gravityScale = gravityInit - 1f;
             }              
             
         }
@@ -247,12 +273,13 @@ public class personajeMOV : MonoBehaviour {
         if (coll.collider.tag == "Pared")
         {
             permitirSaltoPared = false;
-
+            rb.gravityScale = gravityInit;
             //PROVISIONAL
             //permitido = true;
         }
     }
 
+    /* ES PREFERIBLE PONER ESTO EN EL FIXEUPDATE PARA TENER UNA MEJOR RESPUESTA Y MAS INMEDIATA.
     void saltar()
     {
         if(numSalto==1)
@@ -261,15 +288,16 @@ public class personajeMOV : MonoBehaviour {
         else if(numSalto==2)
             rb.AddForce(new Vector2(0, alturaSalto+2)-new Vector2(0,rb.velocity.y),ForceMode2D.Impulse);
        
-    }
+    }*/
 
     //salto con la pared
+    /*
     void saltarPared()
     {
 
         rb.AddForce(new Vector2(reboteSaltoPared, alturaSalto)); //- new Vector2(rb.velocity.x, rb.velocity.y), ForceMode2D.Impulse);
     }
-
+    */
     public void setPermitido(bool permiso)
     {
         permitido = permiso;
