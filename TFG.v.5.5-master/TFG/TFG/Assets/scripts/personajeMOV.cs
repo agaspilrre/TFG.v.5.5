@@ -220,7 +220,8 @@ public class personajeMOV : MonoBehaviour {
         {
             //raycast hacia abajo
             float distance = playerCollider.bounds.extents.y + 0.3f;
-            
+            //resetear el dush
+            poderesScript.SetDashUse(true);
 
             Vector3 origin = playerCollider.bounds.center;
 
@@ -239,10 +240,8 @@ public class personajeMOV : MonoBehaviour {
                 isJumping = false;
                 permitido = true;
 
-                //resetear el dush
-                poderesScript.SetDashUse(true);
-            }
 
+            }                        
             //si chocamos con una plataforma cuando estamos en el aire si mantenemos pulsado el mov se queda enganchado en la plataforma, con esto evitamos q se enganche
             else if(hit.collider ==null && isJumping)
             {
@@ -314,6 +313,11 @@ public class personajeMOV : MonoBehaviour {
     {
         permitirSaltoPared = false;
 
+    }
+
+    public bool getIsJumping()
+    {
+        return isJumping;
     }
 
 

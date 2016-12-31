@@ -29,8 +29,6 @@ public class camaraMOV : MonoBehaviour
     public Transform camaraTrans;
     public Transform personajeTrans;
 
-    Vector3 velocity = Vector3.zero;
-
     public float anchoMAX = 3f;
     public float anchoMIN = -3f;
 
