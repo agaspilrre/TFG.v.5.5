@@ -78,16 +78,10 @@ public class personajeMOV : MonoBehaviour {
             rb.gravityScale = gravityInit + 1;
         }
 
-        if (rb.velocity.y < 0 && !permitirSaltoPared)
-        {
-            permitido = true;//para permitir moverme cuando caigo o cuando termino walljumping
-        }
 
         //PROVISIONAL
         if (permitirSaltoPared)
         {
-            
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                
@@ -96,20 +90,14 @@ public class personajeMOV : MonoBehaviour {
                 {
                     rb.AddForce(new Vector2(-distanciaSaltoPared, alturaSaltoPared), ForceMode2D.Impulse);
                     direccionMov = Direccion.izquierda;
-                    direccion = -1;
-                    
                 }
 
                 else
                 {
                     rb.AddForce(new Vector2(distanciaSaltoPared, alturaSaltoPared), ForceMode2D.Impulse);
                     direccionMov = Direccion.derecha;
-                    direccion = 1;
-                    
                 }
-
                 
-
             }
         }
 
@@ -210,8 +198,8 @@ public class personajeMOV : MonoBehaviour {
                 else
                 {
                     //giramos al personaje
-                    //direccion = -direccion;
-                    //direccionMov = Direccion.izquierda;
+                    direccion = -direccion;
+                    direccionMov = Direccion.izquierda;
 
                     //saltarPared();
 
@@ -220,8 +208,6 @@ public class personajeMOV : MonoBehaviour {
                 }             
 
             }
-
-           
         }
     }
 
@@ -232,7 +218,6 @@ public class personajeMOV : MonoBehaviour {
         {
             //raycast hacia abajo
             float distance = playerCollider.bounds.extents.y + 0.3f;
-
             //resetear el dush
             poderesScript.SetDashUse(true);
 
@@ -240,7 +225,6 @@ public class personajeMOV : MonoBehaviour {
 
             RaycastHit2D hit;
             hit = Physics2D.Raycast(origin, -transform.up, distance, LayerMask.GetMask("Suelo"));
-            Debug.DrawRay(origin, -transform.up*distance,Color.red);
             //lanza un raycast cuando estamos colisionando con el suelo para comprobar que esta el player por encima del suelo y si es asi te deja saltar si no no(caso en que te quedes en la pared de una plataforma evita que puedas saltar)
             if (hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))
             {
@@ -257,43 +241,9 @@ public class personajeMOV : MonoBehaviour {
 
             }                        
             //si chocamos con una plataforma cuando estamos en el aire si mantenemos pulsado el mov se queda enganchado en la plataforma, con esto evitamos q se enganche
-
             else if(hit.collider ==null && isJumping)
             {
-                //lanzamos unos raycast horizontales para comprobar si estamos enganchados en un plataforma
-                if (direccionMov == Direccion.derecha)
-                {
-                    hit = Physics2D.Raycast(origin, transform.right, distance, LayerMask.GetMask("Suelo"));
-                    Debug.DrawRay(origin, transform.right * distance, Color.red);
-                    if (hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))
-                    {
-                        permitido = false;
-                    }
-                }
-
-               else if (direccionMov == Direccion.izquierda)
-                {
-                    hit = Physics2D.Raycast(origin, -transform.right, distance, LayerMask.GetMask("Suelo"));
-                    Debug.DrawRay(origin, -transform.right * distance, Color.red);
-                    if (hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))
-                    {
-                        permitido = false;
-                    }
-                }
-
-                else
-                {
-                    numSalto = 1;
-                    //pongo la escala de gravedad a su valor original
-                    rb.gravityScale = gravityInit;
-
-                    //PROVISIONAL
-                    isJumping = false;
-                    permitido = true;
-
-                }
-
-
+                permitido = false;
             }
                 
 
@@ -321,7 +271,6 @@ public class personajeMOV : MonoBehaviour {
         {
             permitirSaltoPared = false;
             rb.gravityScale = gravityInit;
-            
             //PROVISIONAL
             //permitido = true;
         }

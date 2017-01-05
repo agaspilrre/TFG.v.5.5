@@ -9,7 +9,10 @@ public class ObjectAbsorb : MonoBehaviour {
     //public float amplitude;
     //private Vector3 tempPosition;
 
-    private Transform transform;    
+    private Transform transform;
+    private Collider2D collider;
+    private bool canAbsorb;
+        
 
     public float speed = 1f;   
 
@@ -17,7 +20,8 @@ public class ObjectAbsorb : MonoBehaviour {
     void Start() {
 
         transform = GetComponent<Transform>();
-        
+        collider = GetComponent<Collider2D>();
+        canAbsorb = false;
         //tempPosition = transform.position;
     }
 
@@ -29,21 +33,43 @@ public class ObjectAbsorb : MonoBehaviour {
 
     void Update() {
 
-        if (Input.GetKey(KeyCode.C))
-        {
-            //reescalo el objeto por primera vez
-            transform.localScale = new Vector3(0.2f, 0.2f, 1);           
+     if (canAbsorb) {
+
+          if (Input.GetKey(KeyCode.C))
+          {
+                
+             //reescalo el objeto por primera vez
+             transform.localScale = new Vector3(0.2f, 0.2f, 1);           
             
-            //le doy movimiento, la velocidad se controla con el deltaTime
-            transform.Translate(-speed * Time.deltaTime/4, 0, 0);            
+             //le doy movimiento, la velocidad se controla con el deltaTime
+             transform.Translate(-speed * Time.deltaTime/4, 0, 0);
 
-            //cuando llega a cierta posicion se vuelve a reescalar para hacerlo mas pequeño
-            if(transform.localPosition.x <= 1.5f )
-                transform.localScale = new Vector3(0.1f, 0.1f, 1);
+                //cuando llega a cierta posicion se vuelve a reescalar para hacerlo mas pequeño
+                if (transform.localPosition.x <= 1.5f)
+                {
+                    transform.localScale = new Vector3(0.1f, 0.1f, 1);
+                }                       
 
-            //cuando su x es negativa se destruye
-            if (transform.localPosition.x < 0)            
-                Destroy(this);            
+             //cuando su x es negativa se destruye
+             if (transform.localPosition.x < 0)            
+             Destroy(this.gameObject);            
+          }
+      }
+    }   
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "Player")
+        {
+            canAbsorb = true;            
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "Player")
+        {
+            canAbsorb = false;
         }
     }
 
