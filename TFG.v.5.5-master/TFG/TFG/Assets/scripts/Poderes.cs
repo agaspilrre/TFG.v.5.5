@@ -13,7 +13,7 @@ public class Poderes : MonoBehaviour {
 
     public float duracionElectroDash = 1f;
 
-    float velocidadDash;
+    public float velocidadDash;
 
     float velocidadElectroDash;
 
@@ -61,7 +61,7 @@ public class Poderes : MonoBehaviour {
 
             cargaDash += Time.deltaTime;
 
-            if (cargaDash < 0.3)
+            if (cargaDash > 0.3)
             {
                 materialCargaDash.color = Color.white;
             }
@@ -101,13 +101,13 @@ public class Poderes : MonoBehaviour {
 
     void electroDash()
     {
-        personajeMovimiento.setPermitido(false);
+        
         personajeRB.gravityScale = 0;//para que el personaje no caiga mientras hace el dush
         personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadElectroDash * distanciaElectroDash, 0);
 
         dashUse = false;
         //despues del tiempo del dash volver a permitir movimiento
-        Invoke("dashPermitido", duracionDash);
+        Invoke("dashPermitido", duracionElectroDash);
     }
 
     void dashPermitido()

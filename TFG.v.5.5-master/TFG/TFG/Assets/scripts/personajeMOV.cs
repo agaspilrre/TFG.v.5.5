@@ -70,6 +70,9 @@ public class personajeMOV : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate()
     {
+        
+        /*comentado por mario por problemas con el dash
+        
         //control y dinamica de salto
         //si la velocidad en Y es negativa significa que el personaje ya esta cayendo
         
@@ -82,6 +85,7 @@ public class personajeMOV : MonoBehaviour {
         {
             permitido = true;//para permitir moverme cuando caigo o cuando termino walljumping
         }
+        */
 
         //PROVISIONAL
         if (permitirSaltoPared)
