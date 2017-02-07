@@ -13,6 +13,13 @@ public class camaraMOV : MonoBehaviour
 
     bool movAlturaPermitido;
 
+
+    Vector3 originPosition;
+    Quaternion originRotation;
+    float shake_decay;
+    float shake_intensity;
+
+
     //cuanto se balancea
     public float balanceoX = 1;
     public float balanceoY = 0.3f;
@@ -104,7 +111,7 @@ public class camaraMOV : MonoBehaviour
 
         }
 
-        //evitar que al volver a pasar se vuelva a meter en algun if sin querer
+        /*//evitar que al volver a pasar se vuelva a meter en algun if sin querer
         direccionAlto = 3;
         direccionAncho = 3;
 
@@ -113,9 +120,26 @@ public class camaraMOV : MonoBehaviour
         Vector3 Seguimiento = new Vector3(personajeTrans.position.x, personajeTrans.position.y + distanciaInicial, camaraTrans.position.z);
 
         //Camara sigue despacio
-        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);*/
 
-        
+
+        if (shake_intensity > 0)
+        {
+            transform.position = originPosition + Random.insideUnitSphere * shake_intensity;        
+            shake_intensity -= shake_decay;
+            if(shake_intensity <= 0)
+            {
+                transform.position = vectorGuarda;
+            }
+        }
+       
+
+        if(Input.GetKey(KeyCode.V))
+        {
+            vectorGuarda = new Vector3(transform.position.x , transform.position.y, -10f);
+            Shake();
+        }
+
     }
 
     //mirar si se sale del rango
@@ -151,6 +175,14 @@ public class camaraMOV : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    void Shake()
+    {
+        originPosition = transform.position;
+        originRotation = transform.rotation;
+        shake_intensity = .3f;
+        shake_decay = 0.002f;
     }
 
 }
