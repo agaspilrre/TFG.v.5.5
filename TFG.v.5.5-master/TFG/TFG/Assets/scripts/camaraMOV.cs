@@ -82,6 +82,7 @@ public class camaraMOV : MonoBehaviour
 
         //si el personaje se sale del rango de movimiento libre
 
+        
         if (movPermitido & direccionAncho == 0)//diro derecha
         {
             //nueva posicion de la camara
@@ -110,8 +111,8 @@ public class camaraMOV : MonoBehaviour
             camaraTrans.position = newPos;
 
         }
-
-        /*//evitar que al volver a pasar se vuelva a meter en algun if sin querer
+        
+        //evitar que al volver a pasar se vuelva a meter en algun if sin querer
         direccionAlto = 3;
         direccionAncho = 3;
 
@@ -120,17 +121,14 @@ public class camaraMOV : MonoBehaviour
         Vector3 Seguimiento = new Vector3(personajeTrans.position.x, personajeTrans.position.y + distanciaInicial, camaraTrans.position.z);
 
         //Camara sigue despacio
-        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);*/
+        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
 
 
         if (shake_intensity > 0)
         {
-            transform.position = originPosition + Random.insideUnitSphere * shake_intensity;        
+            transform.position = transform.position + Random.insideUnitSphere * shake_intensity;        
             shake_intensity -= shake_decay;
-            if(shake_intensity <= 0)
-            {
-                transform.position = vectorGuarda;
-            }
+            
         }
        
 
