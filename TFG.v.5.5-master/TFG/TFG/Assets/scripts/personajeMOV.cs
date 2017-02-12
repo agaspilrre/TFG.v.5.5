@@ -10,8 +10,12 @@ public class personajeMOV : MonoBehaviour {
     //comprueba la velocidad para que no sea superior al speed
     float comparador;
 
+    //VARIABLES BOOL
     //permitir saltar con la pared
-    bool permitirSaltoPared;
+    public bool permitirSaltoPared;
+    public bool run;
+    public bool permitido;
+    public bool isJumping;
 
     float movex = 0f;
 
@@ -20,7 +24,7 @@ public class personajeMOV : MonoBehaviour {
 
     public Rigidbody2D rb;
 
-    bool permitido;
+    
 
     float fuerza;
 
@@ -37,9 +41,7 @@ public class personajeMOV : MonoBehaviour {
     int direccion;
 
     public float speedRun;
-    public bool run;
-
-    bool isJumping;
+    
 
     //variable que usamos para guardar el script de los poderes
     Poderes poderesScript;
@@ -71,16 +73,17 @@ public class personajeMOV : MonoBehaviour {
     void FixedUpdate()
     {
         
-        /*comentado por mario por problemas con el dash
+       
         
         //control y dinamica de salto
         //si la velocidad en Y es negativa significa que el personaje ya esta cayendo
         
-        if (rb.velocity.y < 0 && numSalto==2)
+        if (rb.velocity.y < 0 )
         {
             rb.gravityScale = gravityInit + 1;
         }
 
+         /*comentado por mario por problemas con el dash
         if (rb.velocity.y < 0 && !permitirSaltoPared)
         {
             permitido = true;//para permitir moverme cuando caigo o cuando termino walljumping
@@ -90,7 +93,7 @@ public class personajeMOV : MonoBehaviour {
         //PROVISIONAL
         if (permitirSaltoPared)
         {
-            
+            //HAY QUE HACER QUE SE PERMITA EL MOVIMIENTO CUANDO SE PULSE OTRA TECLA!!!!!!!!!!!!!!
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -143,7 +146,8 @@ public class personajeMOV : MonoBehaviour {
             }
 
             
-            if (Input.GetKeyUp(KeyCode.P))
+            //if (Input.GetKeyUp(KeyCode.P))
+            else
             {
                 run = false;
             }
@@ -271,7 +275,12 @@ public class personajeMOV : MonoBehaviour {
                     Debug.DrawRay(origin, transform.right * distance, Color.red);
                     if (hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))
                     {
-                        permitido = false;
+                        if (isJumping)
+                        {
+                            permitirSaltoPared = true;
+                            permitido = false;
+                            rb.gravityScale = gravityInit - 1f;
+                        }
                     }
                 }
 
@@ -281,7 +290,12 @@ public class personajeMOV : MonoBehaviour {
                     Debug.DrawRay(origin, -transform.right * distance, Color.red);
                     if (hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))
                     {
-                        permitido = false;
+                        if (isJumping)
+                        {
+                            permitirSaltoPared = true;
+                            permitido = false;
+                            rb.gravityScale = gravityInit - 1f;
+                        }
                     }
                 }
 
@@ -305,14 +319,16 @@ public class personajeMOV : MonoBehaviour {
         //comprobacion choque con pared
         if(coll.collider.tag == "Pared")
         {
-            
-            if (isJumping)
-            {
+            //si estamos saltando
+            //if (isJumping)
+            //{
+                
                 permitirSaltoPared = true;
                 permitido = false;
                 rb.gravityScale = gravityInit - 1f;
-            }              
+            //}              
             
+            //si nos estamos dejando caer
         }
     }
 
@@ -342,14 +358,14 @@ public class personajeMOV : MonoBehaviour {
        
     }*/
 
-    //salto con la pared
-    /*
-    void saltarPared()
-    {
+        //salto con la pared
+        /*
+        void saltarPared()
+        {
 
-        rb.AddForce(new Vector2(reboteSaltoPared, alturaSalto)); //- new Vector2(rb.velocity.x, rb.velocity.y), ForceMode2D.Impulse);
-    }
-    */
+            rb.AddForce(new Vector2(reboteSaltoPared, alturaSalto)); //- new Vector2(rb.velocity.x, rb.velocity.y), ForceMode2D.Impulse);
+        }
+        */
     public void setPermitido(bool permiso)
     {
         permitido = permiso;
