@@ -245,8 +245,12 @@ public class personajeMOV : MonoBehaviour {
             poderesScript.SetDashUse(true);
 
             Vector3 origin = playerCollider.bounds.center;
+            Vector3 originSup = playerCollider.bounds.max;
+            Vector3 originInf = playerCollider.bounds.min;
 
             RaycastHit2D hit;
+            RaycastHit2D hit2,hit3;
+
             hit = Physics2D.Raycast(origin, -transform.up, distance, LayerMask.GetMask("Suelo"));
             Debug.DrawRay(origin, -transform.up*distance,Color.red);
             //lanza un raycast cuando estamos colisionando con el suelo para comprobar que esta el player por encima del suelo y si es asi te deja saltar si no no(caso en que te quedes en la pared de una plataforma evita que puedas saltar)
@@ -262,6 +266,9 @@ public class personajeMOV : MonoBehaviour {
                 isJumping = false;
                 permitido = true;
 
+                //?¿?¿?¿
+                //permitirSaltoPared = false;
+
 
             }                        
             //si chocamos con una plataforma cuando estamos en el aire si mantenemos pulsado el mov se queda enganchado en la plataforma, con esto evitamos q se enganche
@@ -272,8 +279,12 @@ public class personajeMOV : MonoBehaviour {
                 if (direccionMov == Direccion.derecha)
                 {
                     hit = Physics2D.Raycast(origin, transform.right, distance, LayerMask.GetMask("Suelo"));
+                    hit2 = Physics2D.Raycast(originSup, transform.right, distance, LayerMask.GetMask("Suelo"));
+                    hit3 = Physics2D.Raycast(originInf, transform.right, distance, LayerMask.GetMask("Suelo"));
                     Debug.DrawRay(origin, transform.right * distance, Color.red);
-                    if (hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))
+                    Debug.DrawRay(originSup, transform.right * distance, Color.red);
+                    Debug.DrawRay(originInf, transform.right * distance, Color.red);
+                    if ((hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))|| (hit2.collider != null && (hit2.collider.gameObject.tag == "Suelo"))|| (hit3.collider != null && (hit3.collider.gameObject.tag == "Suelo")))
                     {
                         if (isJumping)
                         {
@@ -287,8 +298,12 @@ public class personajeMOV : MonoBehaviour {
                else if (direccionMov == Direccion.izquierda)
                 {
                     hit = Physics2D.Raycast(origin, -transform.right, distance, LayerMask.GetMask("Suelo"));
+                    hit2 = Physics2D.Raycast(originSup, -transform.right, distance, LayerMask.GetMask("Suelo"));
+                    hit3 = Physics2D.Raycast(originInf, -transform.right, distance, LayerMask.GetMask("Suelo"));
                     Debug.DrawRay(origin, -transform.right * distance, Color.red);
-                    if (hit.collider != null && (hit.collider.gameObject.tag == "Suelo"))
+                    Debug.DrawRay(originSup, -transform.right * distance, Color.red);
+                    Debug.DrawRay(originInf, -transform.right * distance, Color.red);
+                    if ((hit.collider != null && (hit.collider.gameObject.tag == "Suelo")) || (hit2.collider != null && (hit2.collider.gameObject.tag == "Suelo")) || (hit3.collider != null && (hit3.collider.gameObject.tag == "Suelo")))
                     {
                         if (isJumping)
                         {
@@ -308,6 +323,8 @@ public class personajeMOV : MonoBehaviour {
                     //PROVISIONAL
                     isJumping = false;
                     permitido = true;
+
+                    //permitirSaltoPared = false;
 
                 }
 
