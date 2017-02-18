@@ -406,5 +406,17 @@ public class personajeMOV : MonoBehaviour {
         return isJumping;
     }
 
+    public bool getIsMoving()
+    {
+        if(comparador!=0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
 }

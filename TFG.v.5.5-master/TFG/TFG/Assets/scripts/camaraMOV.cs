@@ -6,9 +6,6 @@ public class camaraMOV : MonoBehaviour
 
     bool movPermitido;
 
-    //si esta quieto el personaje se balancea
-    bool personajeQuieto;
-
     float timer = 0;
 
     bool movAlturaPermitido;
@@ -22,16 +19,13 @@ public class camaraMOV : MonoBehaviour
 
     //cuanto se balancea
     public float balanceoX = 1;
-    public float balanceoY = 0.3f;
-
-    //controla que solo se guarde una vez si es true se puede guardar si no no.
-    bool guardar = true;
+    public float balanceoY = 10f;
 
     //a que velocidad se balancea
-    public float veclocidadBalanceo = 0.5F;
+    public float veclocidadBalanceo = 0.8F;
 
-    //vector guarda posicion camra para respirar
-    Vector3 vectorGuarda = new Vector3();
+    //guarda posicion para balanceo
+    Vector3 vectorGuardaBalanceo = new Vector3();
 
     public Transform camaraTrans;
     public Transform personajeTrans;
@@ -42,9 +36,9 @@ public class camaraMOV : MonoBehaviour
     public float altoMAX = 3f;
     public float altoMIN = -3f;
 
-    public float veclocidadSeguimiento = 0.7F;
+    personajeMOV pMov;
 
-    public bool cambioDireccionBalanceo = false;
+    public float veclocidadSeguimiento = 0.7F;
 
     //distancia inicial entre camara y personaje
     float distanciaInicial;
@@ -67,9 +61,9 @@ public class camaraMOV : MonoBehaviour
 
         distanciaInicial = camaraTrans.position.y - personajeTrans.position.y;
 
-        personajeQuieto = true;
+        vectorGuardaBalanceo = Vector3.zero;
 
-
+        pMov = GameObject.Find("Personaje").GetComponent<personajeMOV>();
     }
 
     // Update is called once per frame
@@ -116,12 +110,46 @@ public class camaraMOV : MonoBehaviour
         direccionAlto = 3;
         direccionAncho = 3;
 
-        //calcular nueva posicion para el balanceo
+        if(pMov.getIsMoving())
+        {
+            vectorGuardaBalanceo = Vector3.zero;
 
-        Vector3 Seguimiento = new Vector3(personajeTrans.position.x, personajeTrans.position.y + distanciaInicial, camaraTrans.position.z);
+            //calcular nueva posicion para el mov leve
 
-        //Camara sigue despacio
-        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+            Vector3 Seguimiento = new Vector3(personajeTrans.position.x, personajeTrans.position.y + distanciaInicial, camaraTrans.position.z);
+
+            //Camara sigue despacio
+            camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+        }else
+        {
+            //balanceo
+
+            if(vectorGuardaBalanceo==Vector3.zero)
+            {
+                vectorGuardaBalanceo = new Vector3(transform.position.x, transform.position.y, -10f);
+            }
+
+            Vector3 movBalanceo = new Vector3(personajeTrans.position.x + balanceoX, personajeTrans.position.y + distanciaInicial + balanceoY, camaraTrans.position.z);
+
+            camaraTrans.position = Vector3.Lerp(camaraTrans.position, movBalanceo, veclocidadBalanceo * Time.deltaTime);
+
+            if(vectorGuardaBalanceo.y + balanceoY -1 <= camaraTrans.position.y && balanceoY >0)//ver cuando llega al limite
+            {
+                balanceoY = -balanceoY;
+            }else if(vectorGuardaBalanceo.y + balanceoY + 1 >= camaraTrans.position.y&& balanceoY <0)
+            {
+                balanceoY = -balanceoY;
+            }
+
+            if (vectorGuardaBalanceo.x + balanceoX - 0.5F <= camaraTrans.position.x && balanceoX > 0)//ver cuando llega al limite
+            {
+                balanceoX = -balanceoX;
+            }
+            else if (vectorGuardaBalanceo.x + balanceoX + 0.5F >= camaraTrans.position.x && balanceoX < 0)
+            {
+                balanceoX = -balanceoX;
+            }
+        }
 
 
         if (shake_intensity > 0)
@@ -130,11 +158,9 @@ public class camaraMOV : MonoBehaviour
             shake_intensity -= shake_decay;
             
         }
-       
-
         if(Input.GetKey(KeyCode.V))
         {
-            vectorGuarda = new Vector3(transform.position.x , transform.position.y, -10f);
+            
             Shake();
         }
 
