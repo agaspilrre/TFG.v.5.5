@@ -16,6 +16,8 @@ public class enemigo : MonoBehaviour {
 
     Rigidbody2D rb;
 
+    public int prueba = 0;
+
     public float velocidad;
 
     // Use this for initialization
@@ -85,6 +87,7 @@ public class enemigo : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Pared")
         {
+            prueba++;
             direccion = -direccion;
         }
            
