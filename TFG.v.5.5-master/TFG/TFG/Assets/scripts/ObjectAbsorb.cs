@@ -11,8 +11,12 @@ public class ObjectAbsorb : MonoBehaviour {
 
     private Transform transform;
     private Collider2D collider;
+    public Collider2D secondCollider;
     private bool canAbsorb;
     public personajeMOV player;
+    public Rigidbody2D playerRb;
+    public Transform playerTrf;
+
 
     public float speed = 1f;   
 
@@ -38,22 +42,19 @@ public class ObjectAbsorb : MonoBehaviour {
         {
             if (Input.GetKey(KeyCode.C))
             {
+                playerRb.constraints = RigidbodyConstraints2D.FreezePositionX;              
 
                 //reescalo el objeto por primera vez
                 transform.localScale = new Vector3(0.2f, 0.2f, 1);
-
+               
                 //le doy movimiento, la velocidad se controla con el deltaTime
                 transform.Translate(-speed * Time.deltaTime / 4, 0, 0);
 
                 //cuando llega a cierta posicion se vuelve a reescalar para hacerlo mas pequeño
-                if (transform.localPosition.x < -29.5f)
-                {
+                if (transform.localPosition.x < playerTrf.localPosition.x)
+                {                    
                     transform.localScale = new Vector3(0.1f, 0.1f, 1);
                 }
-
-                //cuando su x es negativa se destruye
-                if (transform.localPosition.x < -33.5f)
-                    Destroy(this.gameObject);
             }
         }
     }
@@ -62,7 +63,7 @@ public class ObjectAbsorb : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Player")
         {
-            canAbsorb = true;
+            canAbsorb = true;            
         }
     }
 
@@ -74,6 +75,14 @@ public class ObjectAbsorb : MonoBehaviour {
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {            
+                Destroy(this.gameObject);
+                playerRb.constraints = ~RigidbodyConstraints2D.FreezePositionX;            
+        }
+    }
     /*IEnumerator Coroutine(float waitTime)
     {
         while(true)
