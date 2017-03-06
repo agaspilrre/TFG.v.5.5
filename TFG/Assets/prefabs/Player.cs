@@ -10,7 +10,9 @@ public class Player : MonoBehaviour {
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
     public float moveSpeed = 6;
+    public float runSpeed;
 
+    float normalSpeed;
     public Vector2 wallJumpClimb;
     public Vector2 wallJumpOff;
     public Vector2 wallLeap;
@@ -51,6 +53,8 @@ public class Player : MonoBehaviour {
         poderesScript = GetComponent<Poderes>();
         isJumping = false;
         numeroSaltos = 0;
+        //guardamos la velocidad normal del player en una variable
+        normalSpeed = moveSpeed;
 
     }
 
@@ -69,6 +73,19 @@ public class Player : MonoBehaviour {
     void Update() {
 		CalculateVelocity ();
 		HandleWallSliding ();
+
+        //habilidad de correr
+        if (Input.GetKey(KeyCode.P))
+        {
+            //se le asigna la velocidad de correr
+            moveSpeed = runSpeed;
+        }
+
+        else
+        {
+            //se le asigna la velocidad normal
+            moveSpeed = normalSpeed;
+        }
 
         if(permitido)
 		    controller.Move (velocity * Time.deltaTime, directionalInput);

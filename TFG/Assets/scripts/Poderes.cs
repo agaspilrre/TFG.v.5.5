@@ -33,8 +33,21 @@ public class Poderes : MonoBehaviour {
 
     ObjectAbsorb objectAb;
 
-	// Use this for initialization
-	void Start () {
+    //variables para el poder de la particion de sombras
+    enum Partition { NORMAL, PARTITION }
+    Partition state;
+
+    public GameObject partitionPrefab;
+    GameObject partitonObject;
+    Vector2 positionPartition;
+    bool returnPartitionPosition;
+    private float journeyLength;
+    private float speedLerp = 10;
+    private Transform startMarker;
+    private Collider2D playerCollider;
+
+    // Use this for initialization
+    void Start () {
         //calcular la velocidad del dash
         velocidadDash = distanciaDash / duracionDash;
 
@@ -53,43 +66,92 @@ public class Poderes : MonoBehaviour {
 
         cargaDash = 0;
 
+        //al iniciar el juego inicia en estado normal
+        state = Partition.NORMAL;
+
+        playerCollider = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //input para el dash
-        if (Input.GetButton("Dash") && dashUse)//calcula cuanto tiempo llevas apretando
+        if (!returnPartitionPosition)
         {
+            //input para el dash
+            if (Input.GetButton("Dash") && dashUse)//calcula cuanto tiempo llevas apretando
+            {
+                personajeMovimiento.setPermitido(false);
+
+                cargaDash += Time.deltaTime;
+
+                if (cargaDash > 0.3)
+                {
+                    materialCargaDash.color = Color.white;
+                }
+            }
+            if (Input.GetButtonUp("Dash") && dashUse)
+            {
+
+                materialCargaDash.color = Color.black;
+
+                if (cargaDash < 0.3)//si es menor alo que este numero dash normal
+                {
+                    dash();
+                }
+                else
+                {
+                    electroDash();
+                }
+
+                cargaDash = 0;
+            }
+
+            // if (Input.GetKeyDown(KeyCode.C))
+            //     objectAb.Absorb();
+
+            //poder de particion de sombras
+            if (Input.GetKeyDown(KeyCode.F) && state == Partition.NORMAL && personajeMovimiento.getIsJumping()==false)
+            {
+                //cambio de estado
+                state = Partition.PARTITION;
+                //guardamos la posicion de la instancia dependiendo de la direccion q este mirando el personaje
+                if (personajeMovimiento.getDireccion() == 1)
+                    positionPartition = new Vector2(this.transform.position.x - 2, this.transform.position.y);
+
+                else
+                    positionPartition = new Vector2(this.transform.position.x + 2, this.transform.position.y);
+                //instanciamos cascaron vacio
+                partitonObject = Instantiate(partitionPrefab, positionPartition, Quaternion.identity);
+
+            }
+
+        }
+
+        //estamos retornando a la posicion del cascaron
+        else
+        {
+            //bloqueamos mov personaje
             personajeMovimiento.setPermitido(false);
+            //desactivar el collider para que pueda trasladarse
+            playerCollider.enabled = false;
+            //hacemos lerp
+           
+            float distCovered = Time.deltaTime * speedLerp;
+            float fracJourney = distCovered;
 
-            cargaDash += Time.deltaTime;
-
-            if (cargaDash > 0.3)
+            Debug.Log(fracJourney);
+            transform.position = Vector3.Lerp(startMarker.position, partitonObject.transform.position, fracJourney);
+            //comprobamos si ha llegado al destino si es asi ponemos bool a false de nuevo y permitimos el movimiento
+            if (this.transform.position.x - partitonObject.transform.position.x<1)
             {
-                materialCargaDash.color = Color.white;
+                returnPartitionPosition = false;
+                personajeMovimiento.setPermitido(true);
+                state = Partition.NORMAL;
+                playerCollider.enabled = true;
             }
         }
-        if (Input.GetButtonUp("Dash") && dashUse)
-        {
+       
 
-            materialCargaDash.color = Color.black;
-
-            if (cargaDash<0.3)//si es menor alo que este numero dash normal
-            {
-                dash();
-            }
-            else
-            {
-                electroDash();
-            }
-            
-            cargaDash = 0;
-        }
-
-      // if (Input.GetKeyDown(KeyCode.C))
-       //     objectAb.Absorb();
-        
         
     }
 
@@ -139,5 +201,29 @@ public class Poderes : MonoBehaviour {
     {
         dashUse = true;
     }
+
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        //si chocamos con el cuerpo cascaron vacio se destruye el objeto cascaron instanciado
+        if (coll.gameObject.tag == "Partition")
+        {
+            GameObject.Destroy(partitonObject);
+            state = Partition.NORMAL;
+            //poner permitido a true;
+        }
+
+        else if(coll.gameObject.tag=="Enemy" && state == Partition.PARTITION)
+        {
+            startMarker = this.transform;
+            journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
+            returnPartitionPosition = true;
+        }
+            
+
+    }
+
+    //funcion que devuelve la particion del player a su cascaron
+   
 
 }
