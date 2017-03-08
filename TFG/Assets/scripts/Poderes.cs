@@ -110,18 +110,30 @@ public class Poderes : MonoBehaviour {
             //     objectAb.Absorb();
 
             //poder de particion de sombras
-            if (Input.GetKeyDown(KeyCode.F) && state == Partition.NORMAL && personajeMovimiento.getIsJumping()==false)
+            if (Input.GetKeyDown(KeyCode.F) )
             {
-                //cambio de estado
-                state = Partition.PARTITION;
-                //guardamos la posicion de la instancia dependiendo de la direccion q este mirando el personaje
-                if (personajeMovimiento.getDireccion() == 1)
-                    positionPartition = new Vector2(this.transform.position.x - 2, this.transform.position.y);
 
-                else
-                    positionPartition = new Vector2(this.transform.position.x + 2, this.transform.position.y);
-                //instanciamos cascaron vacio
-                partitonObject = Instantiate(partitionPrefab, positionPartition, Quaternion.identity);
+                if( state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)
+                {
+                    //cambio de estado
+                    state = Partition.PARTITION;
+                    //guardamos la posicion de la instancia dependiendo de la direccion q este mirando el personaje
+                    if (personajeMovimiento.getDireccion() == 1)
+                        positionPartition = new Vector2(this.transform.position.x - 2, this.transform.position.y);
+
+                    else
+                        positionPartition = new Vector2(this.transform.position.x + 2, this.transform.position.y);
+                    //instanciamos cascaron vacio
+                    partitonObject = Instantiate(partitionPrefab, positionPartition, Quaternion.identity);
+                }
+
+                else if (state == Partition.PARTITION)
+                {
+                    startMarker = this.transform;
+                    journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
+                    returnPartitionPosition = true;
+                }
+               
 
             }
 
@@ -142,13 +154,29 @@ public class Poderes : MonoBehaviour {
             Debug.Log(fracJourney);
             transform.position = Vector3.Lerp(startMarker.position, partitonObject.transform.position, fracJourney);
             //comprobamos si ha llegado al destino si es asi ponemos bool a false de nuevo y permitimos el movimiento
-            if (this.transform.position.x - partitonObject.transform.position.x<1)
+            //contemplar si la sombra esta a la izquierda o derecha de la posicion del cascaron
+            if(this.transform.position.x> partitonObject.transform.position.x)
             {
-                returnPartitionPosition = false;
-                personajeMovimiento.setPermitido(true);
-                state = Partition.NORMAL;
-                playerCollider.enabled = true;
+                if (this.transform.position.x - partitonObject.transform.position.x < 1)
+                {
+                    returnPartitionPosition = false;
+                    personajeMovimiento.setPermitido(true);
+                    state = Partition.NORMAL;
+                    playerCollider.enabled = true;
+                }
             }
+
+            else
+            {
+                if (this.transform.position.x - partitonObject.transform.position.x >-1)
+                {
+                    returnPartitionPosition = false;
+                    personajeMovimiento.setPermitido(true);
+                    state = Partition.NORMAL;
+                    playerCollider.enabled = true;
+                }
+            }
+           
         }
        
 
