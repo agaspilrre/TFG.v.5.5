@@ -16,7 +16,6 @@ public class camaraMOV : MonoBehaviour
     float shake_decay;
     float shake_intensity;
 
-
     //cuanto se balancea
     public float balanceoX = 1;
     public float balanceoY = 10f;
@@ -37,6 +36,7 @@ public class camaraMOV : MonoBehaviour
     public float altoMIN = -3f;
 
     Player player;
+  
 
     public float veclocidadSeguimiento = 0.7F;
 
@@ -66,6 +66,7 @@ public class camaraMOV : MonoBehaviour
         vectorGuardaBalanceo = Vector3.zero;
 
         player = GameObject.Find("Personaje").GetComponent<Player>();
+
     }
 
     // Update is called once per frame
@@ -210,5 +211,6 @@ public class camaraMOV : MonoBehaviour
         shake_intensity = .3f;
         shake_decay = 0.002f;
     }
+   
 
 }

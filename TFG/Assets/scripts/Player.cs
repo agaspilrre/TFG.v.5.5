@@ -33,8 +33,6 @@ public class Player : MonoBehaviour {
     bool isJumping;
     int numeroSaltos;
 
-    public int prueba = 0;
-
     Controller2D controller;
 
     Vector2 directionalInput;
@@ -55,7 +53,7 @@ public class Player : MonoBehaviour {
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
-
+        
     }
 
     public void returnGravity()
@@ -109,7 +107,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void OnJumpInputDown() {
-        prueba++;
+        
         isJumping = true;
 		if (wallSliding) {
 			if (wallDirX == directionalInput.x) {
@@ -183,6 +181,32 @@ public class Player : MonoBehaviour {
             isJumping = false;
             numeroSaltos = 0;
         }
+        
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        
+        if (other.name == "Trigger")
+        {
+            triggerCameraSize tri = other.gameObject.GetComponent<triggerCameraSize>();
+
+            tri.setLerp(true);
+
+            tri.setVelocidadEscalaNegativa();
+        }
+
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.name == "Trigger")
+        {
+            triggerCameraSize tri = other.gameObject.GetComponent<triggerCameraSize>();
+
+            tri.setLerp(true);
+        }
+
     }
 
     void HandleWallSliding() {

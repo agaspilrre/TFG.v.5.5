@@ -13,6 +13,8 @@ public class personajeMOV : MonoBehaviour
     float moveSpeed = 6;
 
     bool permitido;
+
+    public int prueba = 0;
     int direccion;
 
     public Vector2 wallJumpClimb;
@@ -30,6 +32,7 @@ public class personajeMOV : MonoBehaviour
     float velocityXSmoothing;
     Poderes poderesScript;
 
+    Camera cam;
     Controller2D controller;
 
     Vector2 directionalInput;
@@ -45,6 +48,7 @@ public class personajeMOV : MonoBehaviour
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
         poderesScript = GetComponent<Poderes>();
         direccion = 1;
+        cam = GetComponent<Camera>();
     }
 
     public bool getIsJumping()
@@ -183,6 +187,22 @@ public class personajeMOV : MonoBehaviour
         {
             poderesScript.SetDashUse(true);
         }
+        if (coll.gameObject.tag == "Trigger")
+        {
+            prueba++;
+            triggerCameraSize tri = coll.gameObject.GetComponent<triggerCameraSize>();
+
+            cam.orthographicSize = tri.getSize();
+        }
+
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Trigger")
+        {
+            cam.orthographicSize = 13;
+        }
+
     }
 }
 
