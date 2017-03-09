@@ -42,6 +42,8 @@ public class camaraMOV : MonoBehaviour
 
     //distancia inicial entre camara y personaje
     float distanciaInicial;
+    //distancia entre personaje y centro de camara
+    public float desplazamientoX;
 
     //direccion en la x, 0 es derecha 1 es izquierda
 
@@ -80,14 +82,14 @@ public class camaraMOV : MonoBehaviour
         if (movPermitido & direccionAncho == 0)//diro derecha
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX, camaraTrans.position.y, -10f);
+            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX, camaraTrans.position.y, -10f);
             camaraTrans.position = newPos;
 
         }
         if (movPermitido & direccionAncho == 1)//giro izquierda
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN, camaraTrans.position.y, -10f);
+            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX, camaraTrans.position.y, -10f);
             camaraTrans.position = newPos;
 
         }
@@ -116,7 +118,7 @@ public class camaraMOV : MonoBehaviour
 
             //calcular nueva posicion para el mov leve
 
-            Vector3 Seguimiento = new Vector3(personajeTrans.position.x, personajeTrans.position.y + distanciaInicial, camaraTrans.position.z);
+            Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX, personajeTrans.position.y + distanciaInicial, camaraTrans.position.z);
 
             //Camara sigue despacio
             camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
@@ -129,7 +131,7 @@ public class camaraMOV : MonoBehaviour
                 vectorGuardaBalanceo = new Vector3(transform.position.x, transform.position.y, -10f);
             }
 
-            Vector3 movBalanceo = new Vector3(personajeTrans.position.x + balanceoX, personajeTrans.position.y + distanciaInicial + balanceoY, camaraTrans.position.z);
+            Vector3 movBalanceo = new Vector3(personajeTrans.position.x + balanceoX - desplazamientoX, personajeTrans.position.y + distanciaInicial + balanceoY, camaraTrans.position.z);
 
             camaraTrans.position = Vector3.Lerp(camaraTrans.position, movBalanceo, veclocidadBalanceo * Time.deltaTime);
 
@@ -170,13 +172,13 @@ public class camaraMOV : MonoBehaviour
     bool compararPosicion()
     {
         //se sale por la derecha
-        if (personajeTrans.position.x - camaraTrans.position.x > anchoMAX)
+        if (personajeTrans.position.x - camaraTrans.position.x - desplazamientoX > anchoMAX)
         {
             direccionAncho = 0;
             return true;
         }
         // se sale por la izquierda
-        if (personajeTrans.position.x - camaraTrans.position.x < anchoMIN)
+        if (personajeTrans.position.x - camaraTrans.position.x - desplazamientoX < anchoMIN)
         {
             direccionAncho = 1;
             return true;
