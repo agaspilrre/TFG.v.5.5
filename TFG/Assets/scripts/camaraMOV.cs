@@ -36,6 +36,8 @@ public class camaraMOV : MonoBehaviour
     public float altoMIN = -3f;
 
     Player player;
+
+    Vector2 movExtraTrigger;//mov extra eb caso de entrar en trigger
   
 
     public float veclocidadSeguimiento = 0.7F;
@@ -53,7 +55,10 @@ public class camaraMOV : MonoBehaviour
 
     int direccionAlto;
 
-
+    public void setMoveExtra(Vector2 a)
+    {
+        movExtraTrigger = a;
+    }
     // Use this for initialization
     void Start()
     {
@@ -83,28 +88,28 @@ public class camaraMOV : MonoBehaviour
         if (movPermitido & direccionAncho == 0)//diro derecha
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX, camaraTrans.position.y, -10f);
+            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX , camaraTrans.position.y , -10f);
             camaraTrans.position = newPos;
 
         }
         if (movPermitido & direccionAncho == 1)//giro izquierda
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX, camaraTrans.position.y, -10f);
+            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX , camaraTrans.position.y , -10f);
             camaraTrans.position = newPos;
 
         }
         if (movAlturaPermitido & direccionAlto == 0)//giro arriba
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMAX + distanciaInicial, -10f);
+            Vector3 newPos = new Vector3(camaraTrans.position.x , personajeTrans.position.y - altoMAX + distanciaInicial , -10f);
             camaraTrans.position = newPos;
 
         }
         if (movAlturaPermitido & direccionAlto == 1)//giro abajo
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMIN + distanciaInicial, -10f);
+            Vector3 newPos = new Vector3(camaraTrans.position.x , personajeTrans.position.y - altoMIN + distanciaInicial , -10f);
             camaraTrans.position = newPos;
 
         }
@@ -119,7 +124,7 @@ public class camaraMOV : MonoBehaviour
 
             //calcular nueva posicion para el mov leve
 
-            Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX, personajeTrans.position.y + distanciaInicial, camaraTrans.position.z);
+            Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y, camaraTrans.position.z);
 
             //Camara sigue despacio
             camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);

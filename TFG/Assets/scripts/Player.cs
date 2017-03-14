@@ -193,7 +193,7 @@ public class Player : MonoBehaviour {
 
             tri.setLerp(true);
 
-            tri.setVelocidadEscalaNegativa();
+            tri.setVelocidadEscala(-1);
         }
 
     }
@@ -205,6 +205,7 @@ public class Player : MonoBehaviour {
             triggerCameraSize tri = other.gameObject.GetComponent<triggerCameraSize>();
 
             tri.setLerp(true);
+
         }
 
     }

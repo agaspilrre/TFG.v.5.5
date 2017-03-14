@@ -8,11 +8,15 @@ public class triggerCameraSize : MonoBehaviour {
     public int size =0;
     public float velocidadEscala = 0.2F;
 
+    public Vector2 vector;
+
     public Camera cam;
+
+    camaraMOV camMov;
 
     void Start()
     {
-
+        camMov = cam.GetComponent<camaraMOV>();
     }
 
     public int getSize()
@@ -31,18 +35,24 @@ public class triggerCameraSize : MonoBehaviour {
         {
             cam.orthographicSize = cam.orthographicSize + velocidadEscala;
 
+            camMov.setMoveExtra(vector);
+
             if(cam.orthographicSize >= size || cam.orthographicSize ==13)
             {
                 lerp = false;
-                velocidadEscala = Mathf.Abs(velocidadEscala);
-            }
-                
-            
+                velocidadEscala = Mathf.Abs(velocidadEscala);               
+            }       
+            if (cam.orthographicSize == 13)
+            {
+                camMov.setMoveExtra(new Vector2(0,0));
+            }              
         }
     }
 
-    public void setVelocidadEscalaNegativa()
-    {
-        velocidadEscala = -velocidadEscala;
+    public void setVelocidadEscala(float a)
+    {    
+ 
+        velocidadEscala = a * Mathf.Abs(velocidadEscala);
+
     }
 }
