@@ -157,7 +157,7 @@ public class Poderes : MonoBehaviour {
             //contemplar si la sombra esta a la izquierda o derecha de la posicion del cascaron
             if(this.transform.position.x> partitonObject.transform.position.x)
             {
-                if (this.transform.position.x - partitonObject.transform.position.x < 1)
+                if (this.transform.position.x - partitonObject.transform.position.x < 1 && this.transform.position.y - partitonObject.transform.position.y < 0.5f)
                 {
                     returnPartitionPosition = false;
                     personajeMovimiento.setPermitido(true);
@@ -168,7 +168,7 @@ public class Poderes : MonoBehaviour {
 
             else
             {
-                if (this.transform.position.x - partitonObject.transform.position.x >-1)
+                if (this.transform.position.x - partitonObject.transform.position.x >-1 && this.transform.position.y - partitonObject.transform.position.y >-0.5f)
                 {
                     returnPartitionPosition = false;
                     personajeMovimiento.setPermitido(true);
