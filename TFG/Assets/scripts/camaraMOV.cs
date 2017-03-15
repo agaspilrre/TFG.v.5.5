@@ -10,7 +10,8 @@ public class camaraMOV : MonoBehaviour
 
     bool movAlturaPermitido;
 
-
+    float desplzamientoGuardado;
+    
     Vector3 originPosition;
     Quaternion originRotation;
     float shake_decay;
@@ -28,6 +29,8 @@ public class camaraMOV : MonoBehaviour
 
     public Transform camaraTrans;
     public Transform personajeTrans;
+
+    public float velocidadReajuste;
 
     public float anchoMAX = 3f;
     public float anchoMIN = -3f;
@@ -72,6 +75,7 @@ public class camaraMOV : MonoBehaviour
 
         player = GameObject.Find("Personaje").GetComponent<Player>();
 
+        desplzamientoGuardado = desplazamientoX;
     }
 
     // Update is called once per frame
@@ -89,13 +93,21 @@ public class camaraMOV : MonoBehaviour
         {
             //nueva posicion de la camara
             Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX , camaraTrans.position.y , -10f);
+            if(player.getDireccion() ==1 && desplazamientoX > desplzamientoGuardado)
+            {
+                desplazamientoX = desplazamientoX - velocidadReajuste;
+            }
             camaraTrans.position = newPos;
 
         }
-        if (movPermitido & direccionAncho == 1)//giro izquierda
+        if (movPermitido & direccionAncho == 1 )//giro izquierda
         {
             //nueva posicion de la camara
             Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX , camaraTrans.position.y , -10f);
+            if (player.getDireccion() == -1 && desplazamientoX < -desplzamientoGuardado)
+            {
+                desplazamientoX = desplazamientoX + velocidadReajuste;
+            }
             camaraTrans.position = newPos;
 
         }
@@ -128,7 +140,7 @@ public class camaraMOV : MonoBehaviour
 
             //Camara sigue despacio
             camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
-        }else
+        }/*else
         {
             //balanceo
 
@@ -157,7 +169,7 @@ public class camaraMOV : MonoBehaviour
             {
                 balanceoX = -balanceoX;
             }
-        }
+        }*/
 
 
         if (shake_intensity > 0)
