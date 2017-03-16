@@ -170,7 +170,10 @@ public class Player : MonoBehaviour {
 
     public bool getIsMoving()
     {
-        return true;
+        if (directionalInput.x != 0)
+            return true;
+        else
+            return false;
     }
     void OnCollisionEnter2D(Collision2D coll)
     {

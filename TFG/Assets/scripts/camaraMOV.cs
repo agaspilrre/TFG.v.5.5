@@ -93,7 +93,7 @@ public class camaraMOV : MonoBehaviour
         {
             //nueva posicion de la camara
             Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX , camaraTrans.position.y , -10f);
-            if(player.getDireccion() ==1 && desplazamientoX > desplzamientoGuardado)
+            if(player.getDireccion() ==1 && desplazamientoX > desplzamientoGuardado && player.getIsMoving())
             {
                 desplazamientoX = desplazamientoX - velocidadReajuste;
             }
@@ -104,7 +104,7 @@ public class camaraMOV : MonoBehaviour
         {
             //nueva posicion de la camara
             Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX , camaraTrans.position.y , -10f);
-            if (player.getDireccion() == -1 && desplazamientoX < -desplzamientoGuardado)
+            if (player.getDireccion() == -1 && desplazamientoX < -desplzamientoGuardado && player.getIsMoving())
             {
                 desplazamientoX = desplazamientoX + velocidadReajuste;
             }
@@ -130,17 +130,15 @@ public class camaraMOV : MonoBehaviour
         direccionAlto = 3;
         direccionAncho = 3;
 
-        if(player.getIsMoving())
-        {
-            vectorGuardaBalanceo = Vector3.zero;
+        vectorGuardaBalanceo = Vector3.zero;
 
-            //calcular nueva posicion para el mov leve
+        //calcular nueva posicion para el mov leve
 
-            Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y, camaraTrans.position.z);
+        Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y, camaraTrans.position.z);
 
-            //Camara sigue despacio
-            camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
-        }/*else
+        //Camara sigue despacio
+        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+        /*else
         {
             //balanceo
 
