@@ -10,13 +10,12 @@ public class ObjectAbsorb : MonoBehaviour {
     //private Vector3 tempPosition;
 
     private Transform transform;
-    private Collider2D collider;
-    public Collider2D secondCollider;
-    private bool canAbsorb;
-    public personajeMOV player;
+    private Collider2D collider;    
+    public Absorb objeto;
+    public Player player;
     public Rigidbody2D playerRb;
     public Transform playerTrf;
-
+    private float escala = 0.5f;
 
     public float speed = 1f;   
 
@@ -25,7 +24,7 @@ public class ObjectAbsorb : MonoBehaviour {
 
         transform = GetComponent<Transform>();
         collider = GetComponent<Collider2D>();
-        canAbsorb = false;
+        collider.isTrigger = true;       
 
         //tempPosition = transform.position;
     }
@@ -36,51 +35,56 @@ public class ObjectAbsorb : MonoBehaviour {
         transform.position = tempPosition;
     }*/
 
-    void Update() {
+    void Update() {         
 
-        if (canAbsorb)
+        if (objeto.canAbsorb)
         {
             if (Input.GetKey(KeyCode.C))
             {
-                playerRb.constraints = RigidbodyConstraints2D.FreezePositionX;              
+                collider.isTrigger = false;
+                player.permitido = false;
 
-                //reescalo el objeto por primera vez
-                transform.localScale = new Vector3(0.2f, 0.2f, 1);
-               
-                //le doy movimiento, la velocidad se controla con el deltaTime
-                transform.Translate(-speed * Time.deltaTime / 4, 0, 0);
+                if (player.getDireccion() == 1)
+                {
+                    //reescalo el objeto por primera vez
+                    if (transform.localPosition.x < playerTrf.localPosition.x)
+                    {
+                        escala = escala + (-speed * Time.deltaTime);
+                        transform.localScale = new Vector3(escala, escala, escala);
 
-                //cuando llega a cierta posicion se vuelve a reescalar para hacerlo mas pequeño
-                if (transform.localPosition.x < playerTrf.localPosition.x)
-                {                    
-                    transform.localScale = new Vector3(0.1f, 0.1f, 1);
+                        if (escala < 0.1)                       
+                            escala = 1.0f;                           
+                        
+                        //le doy movimiento, la velocidad se controla con el deltaTime
+                        transform.Translate(-speed * 2 * Time.deltaTime, 0, 0);
+                    }                   
+                }
+
+                else if (player.getDireccion() == -1)
+                {
+                    //reescalo el objeto por primera vez
+                    if (transform.localPosition.x > playerTrf.localPosition.x)
+                    {
+                        escala = escala + (speed * Time.deltaTime);
+                        transform.localScale = new Vector3(escala, escala, escala);
+
+                        if (escala < 0.1)
+                            escala = 1.0f;                       
+
+                        //le doy movimiento, la velocidad se controla con el deltaTime
+                        transform.Translate(speed * 2 * Time.deltaTime, 0, 0);
+                    }                                          
                 }
             }
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag == "Player")
-        {
-            canAbsorb = true;            
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag == "Player")
-        {
-            canAbsorb = false;
-        }
-    }
+    }   
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {            
                 Destroy(this.gameObject);
-                playerRb.constraints = ~RigidbodyConstraints2D.FreezePositionX;            
+                player.permitido = true;
         }
     }
     /*IEnumerator Coroutine(float waitTime)

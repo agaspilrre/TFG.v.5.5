@@ -27,7 +27,7 @@ public class Player : MonoBehaviour {
     Vector3 velocity;
     float velocityXSmoothing;
 
-    bool permitido;
+    public bool permitido;
     Poderes poderesScript;
     int direccion;
     bool isJumping;
