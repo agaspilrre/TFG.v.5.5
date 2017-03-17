@@ -85,21 +85,27 @@ public class Player : MonoBehaviour {
             moveSpeed = normalSpeed;
         }
 
-        if(permitido)
-		    controller.Move (velocity * Time.deltaTime, directionalInput);
+        if (permitido)
+        {
+            controller.Move(velocity * Time.deltaTime, directionalInput);
 
-		if (controller.collisions.above || controller.collisions.below) {
-			if (controller.collisions.slidingDownMaxSlope) {
-				velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
-			} else {
-				velocity.y = 0;
-			}
-		}
+            if (controller.collisions.above || controller.collisions.below)
+            {
+                if (controller.collisions.slidingDownMaxSlope)
+                {
+                    velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
+                }
+                else
+                {
+                    velocity.y = 0;
+                }
+            }
 
-        if (directionalInput.x > 0)
-            direccion = 1;
-        else if (0 > directionalInput.x)
-            direccion = -1;
+            if (directionalInput.x > 0)
+                direccion = 1;
+            else if (0 > directionalInput.x)
+                direccion = -1;
+        }
     }
 
 	public void SetDirectionalInput (Vector2 input) {

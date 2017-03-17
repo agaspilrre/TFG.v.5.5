@@ -17,7 +17,7 @@ public class ObjectAbsorb : MonoBehaviour {
     public Transform playerTrf;
     private float escala = 0.5f;
 
-    public float speed = 1f;   
+    public float speed = 0.05f;   
 
     // Use this for initialization
     void Start() {
@@ -45,35 +45,27 @@ public class ObjectAbsorb : MonoBehaviour {
                 player.permitido = false;
 
                 if (player.getDireccion() == 1)
-                {
-                    //reescalo el objeto por primera vez
-                    if (transform.localPosition.x < playerTrf.localPosition.x)
-                    {
-                        escala = escala + (-speed * Time.deltaTime);
-                        transform.localScale = new Vector3(escala, escala, escala);
+                {                     
+                   escala = escala + (-speed * Time.deltaTime);
+                   transform.localScale = new Vector3(escala, escala, escala);
 
-                        if (escala < 0.1)                       
-                            escala = 1.0f;                           
-                        
-                        //le doy movimiento, la velocidad se controla con el deltaTime
-                        transform.Translate(-speed * 2 * Time.deltaTime, 0, 0);
-                    }                   
+                   if (escala < 0.1)                       
+                       escala = 0.1f;                           
+                       
+                   //le doy movimiento, la velocidad se controla con el deltaTime
+                   transform.Translate(-speed * 2 * Time.deltaTime, 0, 0);            
                 }
 
                 else if (player.getDireccion() == -1)
                 {
-                    //reescalo el objeto por primera vez
-                    if (transform.localPosition.x > playerTrf.localPosition.x)
-                    {
-                        escala = escala + (speed * Time.deltaTime);
-                        transform.localScale = new Vector3(escala, escala, escala);
+                    escala = escala - (speed * Time.deltaTime);
+                    transform.localScale = new Vector3(escala, escala, escala);
 
-                        if (escala < 0.1)
-                            escala = 1.0f;                       
+                    if (escala < 0.1)
+                        escala = 0.1f;
 
-                        //le doy movimiento, la velocidad se controla con el deltaTime
-                        transform.Translate(speed * 2 * Time.deltaTime, 0, 0);
-                    }                                          
+                    //le doy movimiento, la velocidad se controla con el deltaTime
+                    transform.Translate(speed * 2 * Time.deltaTime, 0, 0);
                 }
             }
         }
