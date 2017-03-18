@@ -10,6 +10,8 @@ public class triggerCameraSize : MonoBehaviour {
 
     public Vector2 vector;
 
+    public float vectorGuardado;
+
     public Camera cam;
 
     camaraMOV camMov;
@@ -17,6 +19,7 @@ public class triggerCameraSize : MonoBehaviour {
     void Start()
     {
         camMov = cam.GetComponent<camaraMOV>();
+        vectorGuardado = cam.orthographicSize;
     }
 
     public int getSize()
@@ -37,7 +40,7 @@ public class triggerCameraSize : MonoBehaviour {
 
             camMov.setMoveExtra(vector);
 
-            if(cam.orthographicSize >= size || cam.orthographicSize ==13)
+            if(cam.orthographicSize >= size || cam.orthographicSize ==vectorGuardado)
             {
                 lerp = false;
                 velocidadEscala = Mathf.Abs(velocidadEscala);               
