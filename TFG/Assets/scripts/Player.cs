@@ -215,6 +215,8 @@ public class Player : MonoBehaviour {
 
             tri.setLerp(true);
 
+            tri.setVelocidadEscala(1);
+
         }
 
     }

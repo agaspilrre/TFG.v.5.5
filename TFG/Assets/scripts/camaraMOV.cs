@@ -95,7 +95,7 @@ public class camaraMOV : MonoBehaviour
             Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX , camaraTrans.position.y , -10f);
             if(player.getDireccion() ==1 && desplazamientoX > desplzamientoGuardado && player.getIsMoving())
             {
-                desplazamientoX = desplazamientoX - velocidadReajuste;
+                desplazamientoX = desplazamientoX - (velocidadReajuste * Time.deltaTime);
             }
             camaraTrans.position = newPos;
 
@@ -106,7 +106,7 @@ public class camaraMOV : MonoBehaviour
             Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX , camaraTrans.position.y , -10f);
             if (player.getDireccion() == -1 && desplazamientoX < -desplzamientoGuardado && player.getIsMoving())
             {
-                desplazamientoX = desplazamientoX + velocidadReajuste;
+                desplazamientoX = desplazamientoX + (velocidadReajuste * Time.deltaTime);
             }
             camaraTrans.position = newPos;
 

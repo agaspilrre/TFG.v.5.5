@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class triggerCameraSize : MonoBehaviour {
 
-    bool lerp = false;
+    public bool lerp = false;
     public int size =0;
     public float velocidadEscala = 0.2F;
 
     public Vector2 vector;
 
-    public float vectorGuardado;
+    float vectorGuardado;
 
     public Camera cam;
 
@@ -34,19 +34,20 @@ public class triggerCameraSize : MonoBehaviour {
 
     void Update()
     {
-        if(lerp)
+      
+        if (lerp)
         {
-            cam.orthographicSize = cam.orthographicSize + velocidadEscala;
-
+            cam.orthographicSize = cam.orthographicSize + (velocidadEscala * Time.deltaTime);
             camMov.setMoveExtra(vector);
 
-            if(cam.orthographicSize >= size || cam.orthographicSize ==vectorGuardado)
+            if(cam.orthographicSize >= size)
+            {
+                lerp = false;               
+            }
+                
+            if (cam.orthographicSize <= vectorGuardado)
             {
                 lerp = false;
-                velocidadEscala = Mathf.Abs(velocidadEscala);               
-            }       
-            if (cam.orthographicSize == 13)
-            {
                 camMov.setMoveExtra(new Vector2(0,0));
             }              
         }
