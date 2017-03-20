@@ -102,9 +102,18 @@ public class Player : MonoBehaviour {
             }
 
             if (directionalInput.x > 0)
+            {
                 direccion = 1;
+                //para voltear el sprite en la direccion a la que nos dirigmos
+                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
+                
             else if (0 > directionalInput.x)
+            {
                 direccion = -1;
+                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
+                
         }
     }
 
