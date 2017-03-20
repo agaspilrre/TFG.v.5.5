@@ -85,5 +85,7 @@ public class PlayerInput : MonoBehaviour {
             direccion = Direccion.derecha;
     }
 
+    
+
 }
 

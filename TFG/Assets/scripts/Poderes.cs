@@ -119,12 +119,16 @@ public class Poderes : MonoBehaviour {
                     state = Partition.PARTITION;
                     //guardamos la posicion de la instancia dependiendo de la direccion q este mirando el personaje
                     if (personajeMovimiento.getDireccion() == 1)
-                        positionPartition = new Vector2(this.transform.position.x - 2, this.transform.position.y);
+                        positionPartition = new Vector2(this.transform.position.x - 2.5f, this.transform.position.y);
 
                     else
-                        positionPartition = new Vector2(this.transform.position.x + 2, this.transform.position.y);
+                        positionPartition = new Vector2(this.transform.position.x + 2.5f, this.transform.position.y);
                     //instanciamos cascaron vacio
                     partitonObject = Instantiate(partitionPrefab, positionPartition, Quaternion.identity);
+
+                    if(personajeMovimiento.getDireccion() == 1)
+                        partitonObject.transform.localScale = new Vector3(transform.localScale.x*-1, transform.localScale.y, transform.localScale.z);
+
                 }
 
                 else if (state == Partition.PARTITION)
