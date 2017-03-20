@@ -39,6 +39,8 @@ public class Player : MonoBehaviour {
     bool wallSliding;
     int wallDirX;
 
+
+
     void Start() {
         controller = GetComponent<Controller2D>();
 

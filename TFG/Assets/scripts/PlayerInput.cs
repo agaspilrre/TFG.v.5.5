@@ -9,9 +9,13 @@ public class PlayerInput : MonoBehaviour {
     //variable para activar las animaciones
     private Animator anim;
 
+    enum Direccion { izquierda, derecha }
+    Direccion direccion;
+
     void Start () {
 		player = GetComponent<Player> ();
         anim = GetComponent<Animator>();
+        direccion = Direccion.derecha;
     }
 
 	void FixedUpdate () {
@@ -31,9 +35,10 @@ public class PlayerInput : MonoBehaviour {
 
             else
             {
+                
                 anim.SetBool("idle", false);
-                anim.SetBool("runLeft", true);
-                anim.SetBool("runRigth", false);
+                anim.SetBool("runLeft", false);
+                anim.SetBool("runRigth", true);
                 
 
             }
@@ -58,5 +63,27 @@ public class PlayerInput : MonoBehaviour {
 		if (Input.GetKeyUp (KeyCode.Space)) {
 			player.OnJumpInputUp ();
 		}
-	}
+
+
+        //Voltear personaje.
+        if (Input.GetAxis("Horizontal") > 0 && direccion == Direccion.izquierda)
+            flip();
+        else if (Input.GetAxis("Horizontal") < 0 && direccion == Direccion.derecha)
+            flip();
+    }
+
+
+    //funcion que voltea el personaje y animaciones
+    void flip()
+    {
+
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+
+        if (direccion == Direccion.derecha)
+            direccion = Direccion.izquierda;
+        else
+            direccion = Direccion.derecha;
+    }
+
 }
+
