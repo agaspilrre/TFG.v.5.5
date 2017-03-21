@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class triggerCameraSize : MonoBehaviour {
+public class triggerCameraSize : MonoBehaviour
+{
 
     public bool lerp = false;
-    public int size =0;
+    public int size = 0;
     public float velocidadEscala = 0.2F;
 
     public Vector2 vector;
 
     float vectorGuardado;
+
+    Vector3 vGuardado;
 
     public Camera cam;
 
@@ -20,6 +23,7 @@ public class triggerCameraSize : MonoBehaviour {
     {
         camMov = cam.GetComponent<camaraMOV>();
         vectorGuardado = cam.orthographicSize;
+        vGuardado = vector;
     }
 
     public int getSize()
@@ -34,29 +38,53 @@ public class triggerCameraSize : MonoBehaviour {
 
     void Update()
     {
-      
+        if (size == vectorGuardado)
+            velocidadEscala = 0;
         if (lerp)
         {
-            cam.orthographicSize = cam.orthographicSize + (velocidadEscala * Time.deltaTime);
+            if (size > vectorGuardado)
+                cam.orthographicSize = cam.orthographicSize + (velocidadEscala * Time.deltaTime);
+            else
+                cam.orthographicSize = cam.orthographicSize - (velocidadEscala * Time.deltaTime);
+
             camMov.setMoveExtra(vector);
 
-            if(cam.orthographicSize >= size)
-            {
-                lerp = false;               
-            }
-                
-            if (cam.orthographicSize <= vectorGuardado)
+
+            if (cam.orthographicSize >= size && size > vectorGuardado)
             {
                 lerp = false;
-                camMov.setMoveExtra(new Vector2(0,0));
-            }              
+            }
+            else if (size >= cam.orthographicSize && vectorGuardado > size)
+            {
+                lerp = false;
+            }
+
+            if (cam.orthographicSize <= vectorGuardado && size > vectorGuardado)
+            {
+                lerp = false;
+
+            }
+            else if (vectorGuardado <= cam.orthographicSize && vectorGuardado > size)
+            {
+                lerp = false;
+            }
         }
     }
 
     public void setVelocidadEscala(float a)
-    {    
- 
+    {
+
         velocidadEscala = a * Mathf.Abs(velocidadEscala);
 
+    }
+
+    public void setMoveExtra(Vector3 a)
+    {
+        vector = a;
+    }
+
+    public void setMoveExtraGuardado()
+    {
+        vector = vGuardado;
     }
 }

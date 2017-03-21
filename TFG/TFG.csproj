@@ -107,7 +107,6 @@
     <Compile Include="Assets\scripts\RaycastController.cs" />
     <Compile Include="Assets\scripts\camaraMOV.cs" />
     <Compile Include="Assets\scripts\enemigo.cs" />
-    <Compile Include="Assets\scripts\personajeMOV.cs" />
     <Compile Include="Assets\scripts\triggerCameraSize.cs" />
     <Compile Include="Assets\scripts\triggerEnemi.cs" />
   </ItemGroup>

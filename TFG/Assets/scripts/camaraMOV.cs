@@ -11,7 +11,7 @@ public class camaraMOV : MonoBehaviour
     bool movAlturaPermitido;
 
     float desplzamientoGuardado;
-    
+
     Vector3 originPosition;
     Quaternion originRotation;
     float shake_decay;
@@ -41,7 +41,7 @@ public class camaraMOV : MonoBehaviour
     Player player;
 
     Vector2 movExtraTrigger;//mov extra eb caso de entrar en trigger
-  
+
 
     public float veclocidadSeguimiento = 0.7F;
 
@@ -81,6 +81,7 @@ public class camaraMOV : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //comparar posicion del personaje con el de la camara
         movPermitido = compararPosicion();
 
@@ -88,22 +89,22 @@ public class camaraMOV : MonoBehaviour
 
         //si el personaje se sale del rango de movimiento libre
 
-        
+
         if (movPermitido & direccionAncho == 0)//diro derecha
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX , camaraTrans.position.y , -10f);
-            if(player.getDireccion() ==1 && desplazamientoX > desplzamientoGuardado && player.getIsMoving())
+            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX + movExtraTrigger.x, camaraTrans.position.y, -10f);
+            if (player.getDireccion() == 1 && desplazamientoX > desplzamientoGuardado && player.getIsMoving())
             {
                 desplazamientoX = desplazamientoX - (velocidadReajuste * Time.deltaTime);
             }
             camaraTrans.position = newPos;
 
         }
-        if (movPermitido & direccionAncho == 1 )//giro izquierda
+        if (movPermitido & direccionAncho == 1)//giro izquierda
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX , camaraTrans.position.y , -10f);
+            Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX + movExtraTrigger.x, camaraTrans.position.y, -10f);
             if (player.getDireccion() == -1 && desplazamientoX < -desplzamientoGuardado && player.getIsMoving())
             {
                 desplazamientoX = desplazamientoX + (velocidadReajuste * Time.deltaTime);
@@ -114,18 +115,18 @@ public class camaraMOV : MonoBehaviour
         if (movAlturaPermitido & direccionAlto == 0)//giro arriba
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(camaraTrans.position.x , personajeTrans.position.y - altoMAX + distanciaInicial , -10f);
+            Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMAX + distanciaInicial + movExtraTrigger.y, -10f);
             camaraTrans.position = newPos;
 
         }
         if (movAlturaPermitido & direccionAlto == 1)//giro abajo
         {
             //nueva posicion de la camara
-            Vector3 newPos = new Vector3(camaraTrans.position.x , personajeTrans.position.y - altoMIN + distanciaInicial , -10f);
+            Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMIN + distanciaInicial + movExtraTrigger.y, -10f);
             camaraTrans.position = newPos;
 
         }
-        
+
         //evitar que al volver a pasar se vuelva a meter en algun if sin querer
         direccionAlto = 3;
         direccionAncho = 3;
@@ -138,11 +139,12 @@ public class camaraMOV : MonoBehaviour
 
         //Camara sigue despacio
         camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+
         /*else
         {
             //balanceo
 
-            if(vectorGuardaBalanceo==Vector3.zero)
+            if (vectorGuardaBalanceo == Vector3.zero)
             {
                 vectorGuardaBalanceo = new Vector3(transform.position.x, transform.position.y, -10f);
             }
@@ -151,10 +153,10 @@ public class camaraMOV : MonoBehaviour
 
             camaraTrans.position = Vector3.Lerp(camaraTrans.position, movBalanceo, veclocidadBalanceo * Time.deltaTime);
 
-            if(vectorGuardaBalanceo.y + balanceoY -1 <= camaraTrans.position.y && balanceoY >0)//ver cuando llega al limite
+            if (vectorGuardaBalanceo.y + balanceoY - 1 <= camaraTrans.position.y && balanceoY > 0)//ver cuando llega al limite
             {
                 balanceoY = -balanceoY;
-            }else if(vectorGuardaBalanceo.y + balanceoY + 1 >= camaraTrans.position.y&& balanceoY <0)
+            } else if (vectorGuardaBalanceo.y + balanceoY + 1 >= camaraTrans.position.y && balanceoY < 0)
             {
                 balanceoY = -balanceoY;
             }
@@ -172,13 +174,13 @@ public class camaraMOV : MonoBehaviour
 
         if (shake_intensity > 0)
         {
-            transform.position = transform.position + Random.insideUnitSphere * shake_intensity;        
+            transform.position = transform.position + Random.insideUnitSphere * shake_intensity;
             shake_intensity -= shake_decay;
-            
+
         }
-        if(Input.GetKey(KeyCode.V))
+        if (Input.GetKey(KeyCode.V))
         {
-            
+
             Shake();
         }
 
@@ -188,13 +190,13 @@ public class camaraMOV : MonoBehaviour
     bool compararPosicion()
     {
         //se sale por la derecha
-        if (personajeTrans.position.x - camaraTrans.position.x - desplazamientoX > anchoMAX)
+        if (personajeTrans.position.x - camaraTrans.position.x - desplazamientoX + movExtraTrigger.x > anchoMAX)
         {
             direccionAncho = 0;
             return true;
         }
         // se sale por la izquierda
-        if (personajeTrans.position.x - camaraTrans.position.x - desplazamientoX < anchoMIN)
+        if (personajeTrans.position.x - camaraTrans.position.x - desplazamientoX + movExtraTrigger.x < anchoMIN)
         {
             direccionAncho = 1;
             return true;
@@ -206,12 +208,12 @@ public class camaraMOV : MonoBehaviour
     bool compararAltura()
     {
         //se sale por arriba
-        if (personajeTrans.position.y - camaraTrans.position.y + distanciaInicial > altoMAX)
+        if (personajeTrans.position.y - camaraTrans.position.y + distanciaInicial + movExtraTrigger.y > altoMAX)
         {
             direccionAlto = 0;
             return true;
         }// se sale por abajo
-        if (personajeTrans.position.y - camaraTrans.position.y + distanciaInicial < altoMIN)
+        if (personajeTrans.position.y - camaraTrans.position.y + distanciaInicial - movExtraTrigger.y < altoMIN)
         {
             direccionAlto = 1;
             return true;
@@ -226,6 +228,6 @@ public class camaraMOV : MonoBehaviour
         shake_intensity = .3f;
         shake_decay = 0.002f;
     }
-   
+
 
 }

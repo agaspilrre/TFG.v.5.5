@@ -2,7 +2,8 @@
 using System.Collections;
 
 [RequireComponent(typeof(Controller2D))]
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     public float maxJumpHeight = 4;
     public float minJumpHeight = 1;
@@ -41,7 +42,8 @@ public class Player : MonoBehaviour {
 
 
 
-    void Start() {
+    void Start()
+    {
         controller = GetComponent<Controller2D>();
 
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour {
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
-        
+
     }
 
     public void returnGravity()
@@ -67,12 +69,13 @@ public class Player : MonoBehaviour {
     {
         gravity = 0;
         velocity.y = 0;
-    
+
     }
 
-    void Update() {
-		CalculateVelocity ();
-		HandleWallSliding ();
+    void Update()
+    {
+        CalculateVelocity();
+        HandleWallSliding();
 
         //habilidad de correr
         if (Input.GetKey(KeyCode.P))
@@ -109,65 +112,75 @@ public class Player : MonoBehaviour {
                 //para voltear el sprite en la direccion a la que nos dirigmos
                 //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
-                
+
             else if (0 > directionalInput.x)
             {
                 direccion = -1;
                 //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
-                
+
         }
     }
 
-	public void SetDirectionalInput (Vector2 input) {
-		directionalInput = input;
-	}
+    public void SetDirectionalInput(Vector2 input)
+    {
+        directionalInput = input;
+    }
 
-	public void OnJumpInputDown() {
-        
+    public void OnJumpInputDown()
+    {
+
         isJumping = true;
-		if (wallSliding) {
-			if (wallDirX == directionalInput.x) {
-				velocity.x = -wallDirX * wallJumpClimb.x;
-				velocity.y = wallJumpClimb.y;
-			}
-			else if (directionalInput.x == 0) {
-				velocity.x = -wallDirX * wallJumpOff.x;
-				velocity.y = wallJumpOff.y;
-			}
-			else {
-				velocity.x = -wallDirX * wallLeap.x;
-				velocity.y = wallLeap.y;
-			}
+        if (wallSliding)
+        {
+            if (wallDirX == directionalInput.x)
+            {
+                velocity.x = -wallDirX * wallJumpClimb.x;
+                velocity.y = wallJumpClimb.y;
+            }
+            else if (directionalInput.x == 0)
+            {
+                velocity.x = -wallDirX * wallJumpOff.x;
+                velocity.y = wallJumpOff.y;
+            }
+            else {
+                velocity.x = -wallDirX * wallLeap.x;
+                velocity.y = wallLeap.y;
+            }
         }
         else
         {
             if (2 > numeroSaltos)
             {
                 numeroSaltos++;
-                velocity.y = maxJumpVelocity/numeroSaltos;
+                velocity.y = maxJumpVelocity / numeroSaltos;
             }
         }
-		if (controller.collisions.below) {       
-            if (controller.collisions.slidingDownMaxSlope) {
-				if (directionalInput.x != -Mathf.Sign (controller.collisions.slopeNormal.x)) { // not jumping against max slope
-					velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
-					velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
-				}
-			} /*else
+        if (controller.collisions.below)
+        {
+            if (controller.collisions.slidingDownMaxSlope)
+            {
+                if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x))
+                { // not jumping against max slope
+                    velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
+                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+                }
+            } /*else
             {                        
                velocity.y = maxJumpVelocity;	
 			}*/
-		}
+        }
 
-	}
+    }
 
-	public void OnJumpInputUp() {
-		if (velocity.y > minJumpVelocity) {
-			velocity.y = minJumpVelocity;
-		}
-        
-	}
+    public void OnJumpInputUp()
+    {
+        if (velocity.y > minJumpVelocity)
+        {
+            velocity.y = minJumpVelocity;
+        }
+
+    }
 
     public bool getIsJumping()
     {
@@ -176,7 +189,7 @@ public class Player : MonoBehaviour {
 
     public int getDireccion()
     {
-       return direccion;        
+        return direccion;
     }
 
     public void setPermitido(bool prueba)
@@ -201,12 +214,12 @@ public class Player : MonoBehaviour {
             isJumping = false;
             numeroSaltos = 0;
         }
-        
+
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        
+
         if (other.name == "Trigger")
         {
             triggerCameraSize tri = other.gameObject.GetComponent<triggerCameraSize>();
@@ -214,6 +227,8 @@ public class Player : MonoBehaviour {
             tri.setLerp(true);
 
             tri.setVelocidadEscala(-1);
+
+            tri.setMoveExtra(new Vector3(0, 0, 0));
         }
 
     }
@@ -228,42 +243,52 @@ public class Player : MonoBehaviour {
 
             tri.setVelocidadEscala(1);
 
+            tri.setMoveExtraGuardado();
+
+
         }
 
     }
 
-    void HandleWallSliding() {
-		wallDirX = (controller.collisions.left) ? -1 : 1;
-		wallSliding = false;
-		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {
-			wallSliding = true;
+    void HandleWallSliding()
+    {
+        wallDirX = (controller.collisions.left) ? -1 : 1;
+        wallSliding = false;
+        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
+        {
+            wallSliding = true;
 
-			if (velocity.y < -wallSlideSpeedMax) {
-				velocity.y = -wallSlideSpeedMax;
-			}
+            if (velocity.y < -wallSlideSpeedMax)
+            {
+                velocity.y = -wallSlideSpeedMax;
+            }
 
-			if (timeToWallUnstick > 0) {
-				velocityXSmoothing = 0;
-				velocity.x = 0;
+            if (timeToWallUnstick > 0)
+            {
+                velocityXSmoothing = 0;
+                velocity.x = 0;
 
-				if (directionalInput.x != wallDirX && directionalInput.x != 0) {
-					timeToWallUnstick -= Time.deltaTime;
-				}
-				else {
-					timeToWallUnstick = wallStickTime;
-				}
-			}
-			else {
-				timeToWallUnstick = wallStickTime;
-			}
+                if (directionalInput.x != wallDirX && directionalInput.x != 0)
+                {
+                    timeToWallUnstick -= Time.deltaTime;
+                }
+                else {
+                    timeToWallUnstick = wallStickTime;
+                }
+            }
+            else {
+                timeToWallUnstick = wallStickTime;
+            }
 
-		}
+        }
 
-	}
+    }
 
-	void CalculateVelocity() {
-		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
-		velocity.y += gravity * Time.deltaTime;
-	}
+    void CalculateVelocity()
+    {
+        float targetVelocityX = directionalInput.x * moveSpeed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        velocity.y += gravity * Time.deltaTime;
+    }
 }
+
