@@ -18,7 +18,7 @@ public class PlayerInput : MonoBehaviour {
         direccion = Direccion.derecha;
     }
 
-	void FixedUpdate () {
+	void Update () {
 		Vector2 directionalInput = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 
         //para activar las animaciones en caso de que nos movamos
