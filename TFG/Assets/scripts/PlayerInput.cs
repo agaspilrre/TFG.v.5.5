@@ -30,7 +30,7 @@ public class PlayerInput : MonoBehaviour {
                 anim.SetBool("idle", false);
                 anim.SetBool("runRigth", true);
                 anim.SetBool("runLeft", false);
-                
+               
             }
 
             else
