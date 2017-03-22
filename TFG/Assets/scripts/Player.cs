@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     public float wallSlideSpeedMax = 3;
     public float wallStickTime = .25f;
-    float timeToWallUnstick;
+    public float timeToWallUnstick;
 
     float gravity;
     float maxJumpVelocity;
@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     float velocityXSmoothing;
 
     public bool permitido;
+    bool entraColisionPared = false;
     Poderes poderesScript;
     int direccion;
     bool isJumping;
@@ -213,6 +214,7 @@ public class Player : MonoBehaviour
             permitido = true;
             isJumping = false;
             numeroSaltos = 0;
+            entraColisionPared = true;
         }
 
     }
@@ -267,17 +269,15 @@ public class Player : MonoBehaviour
             {
                 velocityXSmoothing = 0;
                 velocity.x = 0;
+                velocity.y = 0;
 
-                if (directionalInput.x != wallDirX && directionalInput.x != 0)
-                {
-                    timeToWallUnstick -= Time.deltaTime;
-                }
-                else {
-                    timeToWallUnstick = wallStickTime;
-                }
+               
+                timeToWallUnstick -= Time.deltaTime;
+                
             }
-            else {
+            else if(entraColisionPared){
                 timeToWallUnstick = wallStickTime;
+                entraColisionPared = false;
             }
 
         }
