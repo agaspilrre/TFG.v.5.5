@@ -12,6 +12,11 @@ public class camaraMOV : MonoBehaviour
 
     float desplzamientoGuardado;
 
+    [SerializeField]
+    private float timerBalanceo;
+
+    float tiempoBalanceo;
+
     Vector3 originPosition;
     Quaternion originRotation;
     float shake_decay;
@@ -90,6 +95,13 @@ public class camaraMOV : MonoBehaviour
     {
         if (player.getIsMoving())
         {
+            //movimiento leve
+            Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y, camaraTrans.position.z);
+
+            //Camara sigue despacio
+            camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+
+            tiempoBalanceo = 0;
             //comparar posicion del personaje con el de la camara
             movPermitido = compararPosicion();
 
@@ -141,46 +153,14 @@ public class camaraMOV : MonoBehaviour
 
             
             vectorGuardaBalanceo = Vector3.zero;
-
-                //calcular nueva posicion para el mov leve
-
-            Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y, camaraTrans.position.z);
-
-                //Camara sigue despacio
-            camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
             
+        }else
+        {
+            tiempoBalanceo += Time.deltaTime;
         }
 
-        else
+        if(tiempoBalanceo >= timerBalanceo)
         {
-            //balanceo
-
-            /*if (vectorGuardaBalanceo == Vector3.zero)
-            {
-                vectorGuardaBalanceo = new Vector3(transform.position.x, transform.position.y, -10f);
-            }
-
-            Vector3 movBalanceo = new Vector3(personajeTrans.position.x + balanceoX - desplazamientoX, personajeTrans.position.y + distanciaInicial + balanceoY, camaraTrans.position.z);
-
-            camaraTrans.position = Vector3.Lerp(camaraTrans.position, movBalanceo, veclocidadBalanceo);
-
-            if ( balanceoY <= camaraTrans.position.y - vectorGuardaBalanceo.y && balanceoY > 0)//ver cuando llega al limite
-            {
-                balanceoY = -balanceoY;
-            } else if ( balanceoY >= camaraTrans.position.y - vectorGuardaBalanceo.y && balanceoY < 0)
-            {
-                balanceoY = -balanceoY;
-            }
-
-            if (balanceoX <= camaraTrans.position.x - vectorGuardaBalanceo.x && balanceoX > 0)//ver cuando llega al limite
-            {
-                balanceoX = -balanceoX;
-            }
-            else if (balanceoX >= camaraTrans.position.x - vectorGuardaBalanceo.x && balanceoX < 0)
-            {
-                balanceoX = -balanceoX;
-            }*/
-
             if (vectorGuardaBalanceo == Vector3.zero)
             {
                 vectorGuardaBalanceo = new Vector3(camaraTrans.position.x, camaraTrans.position.y, -10f);
@@ -201,7 +181,6 @@ public class camaraMOV : MonoBehaviour
             Vector3 a = new Vector3(camaraTrans.position.x +(veclocidadBalanceoX * Time.deltaTime) , camaraTrans.position.y + (veclocidadBalanceoY * Time.deltaTime), -10);
 
             camaraTrans.position = a;
-
         }
 
 
@@ -261,6 +240,4 @@ public class camaraMOV : MonoBehaviour
         shake_intensity = .3f;
         shake_decay = 0.002f;
     }
-
-
 }

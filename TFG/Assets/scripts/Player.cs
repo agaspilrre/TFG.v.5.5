@@ -258,6 +258,12 @@ public class Player : MonoBehaviour
         wallSliding = false;
         if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
         {
+            if (entraColisionPared)
+            {
+                timeToWallUnstick = wallStickTime;
+                entraColisionPared = false;
+            }
+
             wallSliding = true;
 
             if (velocity.y < -wallSlideSpeedMax)
@@ -274,10 +280,6 @@ public class Player : MonoBehaviour
                
                 timeToWallUnstick -= Time.deltaTime;
                 
-            }
-            else if(entraColisionPared){
-                timeToWallUnstick = wallStickTime;
-                entraColisionPared = false;
             }
 
         }
