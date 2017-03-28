@@ -34,7 +34,7 @@ public class camaraMOV : MonoBehaviour
     public float veclocidadBalanceoY = 0.8F;
 
     //guarda posicion para balanceo
-    Vector3 vectorGuardaBalanceo = new Vector3();
+    public Vector3 vectorGuardaBalanceo = new Vector3();
 
     public Transform camaraTrans;
     public Transform personajeTrans;
@@ -93,13 +93,14 @@ public class camaraMOV : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //movimiento leve
+        Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x + balanceoX, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y +balanceoY, camaraTrans.position.z);
+
+        //Camara sigue despacio
+        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+
         if (player.getIsMoving())
         {
-            //movimiento leve
-            Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y, camaraTrans.position.z);
-
-            //Camara sigue despacio
-            camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
 
             tiempoBalanceo = 0;
             //comparar posicion del personaje con el de la camara
@@ -176,6 +177,7 @@ public class camaraMOV : MonoBehaviour
             {
                 veclocidadBalanceoY = -veclocidadBalanceoY;
                 balanceoY = -balanceoY;
+                print("a");
             }
 
             Vector3 a = new Vector3(camaraTrans.position.x +(veclocidadBalanceoX * Time.deltaTime) , camaraTrans.position.y + (veclocidadBalanceoY * Time.deltaTime), -10);
