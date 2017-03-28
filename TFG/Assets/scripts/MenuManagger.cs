@@ -8,7 +8,7 @@ public class MenuManagger : MonoBehaviour {
     //funcion para cargar la escena de juego
     public void OnNewGameClick()
     {
-        SceneManager.LoadScene("scenne_1");
+        SceneManager.LoadScene("fade");
     }
 
 

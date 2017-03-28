@@ -90,6 +90,13 @@ public class enemigo : MonoBehaviour {
             prueba++;
             direccion = -direccion;
         }
+
+        //nuevo para dañar al personaje
+        if (coll.gameObject.tag == "Player")
+        {
+            protagonista.GetComponent<lifeScript>().makeDamage(2);
+        }
+
            
     }
 }
