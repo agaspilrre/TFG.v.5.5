@@ -48,6 +48,7 @@ public class camaraMOV : MonoBehaviour
     public float altoMIN = -3f;
 
     Player player;
+    Poderes poder;
 
     Vector2 movExtraTrigger;//mov extra eb caso de entrar en trigger
 
@@ -83,6 +84,7 @@ public class camaraMOV : MonoBehaviour
         vectorGuardaBalanceo = Vector3.zero;
 
         player = GameObject.Find("Personaje").GetComponent<Player>();
+        poder = GameObject.Find("Personaje").GetComponent<Poderes>();
 
         desplzamientoGuardado = desplazamientoX;
 
@@ -99,7 +101,7 @@ public class camaraMOV : MonoBehaviour
         //Camara sigue despacio
         camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
 
-        if (player.getIsMoving())
+        if (player.getIsMoving() || poder.getState())
         {
 
             tiempoBalanceo = 0;
@@ -177,7 +179,7 @@ public class camaraMOV : MonoBehaviour
             {
                 veclocidadBalanceoY = -veclocidadBalanceoY;
                 balanceoY = -balanceoY;
-                print("a");
+
             }
 
             Vector3 a = new Vector3(camaraTrans.position.x +(veclocidadBalanceoX * Time.deltaTime) , camaraTrans.position.y + (veclocidadBalanceoY * Time.deltaTime), -10);

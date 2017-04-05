@@ -42,6 +42,7 @@ public class Poderes : MonoBehaviour {
     Vector2 positionPartition;
     bool returnPartitionPosition;
     private float journeyLength;
+    [SerializeField]
     private float speedLerp = 10;
     private Transform startMarker;
     private Collider2D playerCollider;
@@ -155,7 +156,6 @@ public class Poderes : MonoBehaviour {
             float distCovered = Time.deltaTime * speedLerp;
             float fracJourney = distCovered;
 
-            Debug.Log(fracJourney);
             transform.position = Vector3.Lerp(startMarker.position, partitonObject.transform.position, fracJourney);
             //comprobamos si ha llegado al destino si es asi ponemos bool a false de nuevo y permitimos el movimiento
             //contemplar si la sombra esta a la izquierda o derecha de la posicion del cascaron
@@ -185,6 +185,13 @@ public class Poderes : MonoBehaviour {
        
 
         
+    }
+    public bool getState()
+    {
+        if (state == Partition.PARTITION)
+            return true;
+        else
+            return false;
     }
 
     void dash()
