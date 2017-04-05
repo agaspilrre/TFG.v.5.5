@@ -6,8 +6,6 @@ public class camaraMOV : MonoBehaviour
 
     bool movPermitido;
 
-    float timer = 0;
-
     bool movAlturaPermitido;
 
     float desplzamientoGuardado;
@@ -17,17 +15,12 @@ public class camaraMOV : MonoBehaviour
 
     float tiempoBalanceo;
 
-    Vector3 originPosition;
-    Quaternion originRotation;
     float shake_decay;
     float shake_intensity;
 
     //cuanto se balancea
     public float balanceoX = 1;
     public float balanceoY = 10f;
-
-    float GuardadoX;
-    float GuardadoY;
 
     //a que velocidad se balancea
     public float veclocidadBalanceoX = 0.8F;
@@ -87,9 +80,6 @@ public class camaraMOV : MonoBehaviour
         poder = GameObject.Find("Personaje").GetComponent<Poderes>();
 
         desplzamientoGuardado = desplazamientoX;
-
-        GuardadoX = balanceoX;
-        GuardadoY = balanceoY;
     }
 
     // Update is called once per frame
@@ -101,7 +91,7 @@ public class camaraMOV : MonoBehaviour
         //Camara sigue despacio
         camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
 
-        if (player.getIsMoving() || poder.getState())
+        if (player.getIsMoving() || poder.getStatePartition())
         {
 
             tiempoBalanceo = 0;
@@ -239,8 +229,6 @@ public class camaraMOV : MonoBehaviour
 
     void Shake()
     {
-        originPosition = transform.position;
-        originRotation = transform.rotation;
         shake_intensity = .3f;
         shake_decay = 0.002f;
     }

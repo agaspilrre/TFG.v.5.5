@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Absorb : MonoBehaviour {
 
-    private Collider2D collider;
+    private new Collider2D collider;
 
     public bool canAbsorb;
 

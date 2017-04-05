@@ -9,8 +9,8 @@ public class ObjectAbsorb : MonoBehaviour {
     //public float amplitude;
     //private Vector3 tempPosition;
 
-    private Transform transform;
-    private Collider2D collider;    
+    private new Transform transform;
+    private new Collider2D collider;    
     public Absorb objeto;
     public Player player;
     public Rigidbody2D playerRb;

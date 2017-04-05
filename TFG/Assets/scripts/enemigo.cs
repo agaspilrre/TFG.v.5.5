@@ -4,26 +4,41 @@ using UnityEngine;
 
 public class enemigo : MonoBehaviour {
 
-    public enum Direction { ataque, patrulla };
+    public enum State { ataque, patrulla, carga, vulnerable };
 
-    public int direccion;//1 es derecha -1 izquierda
+    int direccion;//1 es derecha -1 izquierda
 
-    Direction estado;
+    State estado;
 
     public Material materialEnemigo;
 
     GameObject protagonista;
 
+    bool endAttack;//if attack has ended
+    bool canGetDamage;
+
+    [SerializeField]
+    int damage = 2;
+
+    [SerializeField]
+    float duracionCarga;
+    [SerializeField]
+    float durecionEnemigoVulnerable;
+
+    float timerCarga;
+    float timerVulnerable;
+
     Rigidbody2D rb;
 
-    public int prueba = 0;
-
-    public float velocidad;
+    [SerializeField]
+    float velocidad;
+    [SerializeField]
+    float velocidadCarga;
 
     // Use this for initialization
     void Start () {
 
-        estado = Direction.patrulla;
+        estado = State.patrulla;
 
         protagonista = GameObject.Find("Personaje");
 
@@ -33,18 +48,31 @@ public class enemigo : MonoBehaviour {
 
         materialEnemigo.color = Color.red;
 
+        timerCarga = duracionCarga;
+        timerVulnerable = durecionEnemigoVulnerable;
+
+        endAttack = true;
+        canGetDamage = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if(estado == Direction.patrulla)
+        if(estado == State.patrulla)
         {
             patrullar();
         }
-        else
+        else if(estado == State.carga)
+        {
+            carga();
+        }
+        else if(estado == State.ataque)
         {
             ataque();
+        }
+        else
+        {
+            vulnerable();
         }	
 	}
 
@@ -53,50 +81,108 @@ public class enemigo : MonoBehaviour {
         rb.velocity = new Vector2(velocidad * direccion * Time.deltaTime, 0);
     }
 
-    void ataque()
+    void carga()
     {
-        if(protagonista.transform.position.x > gameObject.transform.position.x)
-        {
-            direccion = 1;
+        timerCarga -= Time.deltaTime;
 
-            rb.velocity = new Vector2(velocidad* direccion * Time.deltaTime, 0);
-        }
-        else
+        if (timerCarga <= 0)
         {
-            direccion = -1;
+            setEstadoAtaque();
 
-            rb.velocity = new Vector2(velocidad * direccion * Time.deltaTime, 0);
+            endAttack = false;
+
+            timerCarga = duracionCarga;
         }
     }
 
-    public void setEstadoAtaque()
+    void vulnerable()
     {
-        estado = Direction.ataque;
+        timerVulnerable -= Time.deltaTime;
+
+        if(timerVulnerable <= 0)
+        {
+            setEstadoPatrulla();
+
+            canGetDamage = false;
+
+            timerVulnerable = durecionEnemigoVulnerable;
+        }
+    }
+
+    void ataque()
+    {
+        rb.velocity = new Vector2(velocidadCarga * direccion * Time.deltaTime, 0);
+    }
+
+    void setEstadoAtaque()
+    {
+        estado = State.ataque;
 
         materialEnemigo.color = Color.yellow;
     }
 
     public void setEstadoPatrulla()
     {
-        estado = Direction.patrulla;
+        estado = State.patrulla;
 
         materialEnemigo.color = Color.red;
+    }
+
+    public void setEstadoVulnerable()
+    {
+        estado = State.vulnerable;
+
+        canGetDamage = true;
+
+        materialEnemigo.color = Color.white;
+    }
+
+    public void setCanGetDamage(bool a)
+    {
+        canGetDamage = true;
+    }
+
+    public bool getCanGetDamage()
+    {
+        return canGetDamage;
+    }
+
+    public void setEstadoCarga()
+    {
+        estado = State.carga;
+
+        rb.velocity = new Vector2(0,0);
+
+        materialEnemigo.color = Color.blue;
+
+        if (protagonista.transform.position.x > gameObject.transform.position.x)//setea direccion para ataque
+            direccion = 1;
+        else
+            direccion = -1;
+    }
+   
+    public bool getEndAttack()
+    {
+        return endAttack;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "Pared")
         {
-            prueba++;
             direccion = -direccion;
+
+            if (estado == State.ataque)
+                setEstadoVulnerable();
+
+            endAttack = true;
         }
 
         //nuevo para dañar al personaje
         if (coll.gameObject.tag == "Player")
         {
-            protagonista.GetComponent<lifeScript>().makeDamage(2);
-        }
-
-           
+            protagonista.GetComponent<lifeScript>().makeDamage(damage);
+            setEstadoVulnerable();
+        }         
     }
 }

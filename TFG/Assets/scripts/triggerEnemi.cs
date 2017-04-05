@@ -8,17 +8,17 @@ public class triggerEnemi : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name=="Personaje")
+        if (other.name == "Personaje" && enemi.getEndAttack())
         {
-            enemi.setEstadoAtaque();
+            enemi.setEstadoCarga();
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.name == "Personaje")
-        {
-            enemi.setEstadoPatrulla();
-        }
-    }
+    //void OnTriggerExit2D(Collider2D other)
+    //{
+    //    if (other.name == "Personaje")
+    //    {
+    //        enemi.setEstadoPatrulla();
+    //    }
+    //}
 }

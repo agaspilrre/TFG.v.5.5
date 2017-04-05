@@ -31,8 +31,6 @@ public class Poderes : MonoBehaviour {
     //rigidbody del personaje
     Rigidbody2D personajeRB;
 
-    ObjectAbsorb objectAb;
-
     //variables para el poder de la particion de sombras
     enum Partition { NORMAL, PARTITION }
     Partition state;
@@ -41,7 +39,7 @@ public class Poderes : MonoBehaviour {
     GameObject partitonObject;
     Vector2 positionPartition;
     bool returnPartitionPosition;
-    private float journeyLength;
+    //private float journeyLength;
     [SerializeField]
     private float speedLerp = 10;
     private Transform startMarker;
@@ -59,8 +57,6 @@ public class Poderes : MonoBehaviour {
         personajeRB = GetComponent<Rigidbody2D>();
         //guarda la escala 
         initGravity = personajeRB.gravityScale;
-
-        objectAb = GetComponent<ObjectAbsorb>();
 
         //variable que controla el numero de dush que se puede hacer, en principio se activa cuando el personaje toca el suelo
         dashUse = true;
@@ -107,9 +103,6 @@ public class Poderes : MonoBehaviour {
                 cargaDash = 0;
             }
 
-            // if (Input.GetKeyDown(KeyCode.C))
-            //     objectAb.Absorb();
-
             //poder de particion de sombras
             if (Input.GetKeyDown(KeyCode.F) )
             {
@@ -135,7 +128,7 @@ public class Poderes : MonoBehaviour {
                 else if (state == Partition.PARTITION)
                 {
                     startMarker = this.transform;
-                    journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
+                    //journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
                     returnPartitionPosition = true;
                 }
                
@@ -186,7 +179,7 @@ public class Poderes : MonoBehaviour {
 
         
     }
-    public bool getState()
+    public bool getStatePartition()
     {
         if (state == Partition.PARTITION)
             return true;
@@ -255,7 +248,7 @@ public class Poderes : MonoBehaviour {
         else if(coll.gameObject.tag=="Enemy" && state == Partition.PARTITION)
         {
             startMarker = this.transform;
-            journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
+            //journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
             returnPartitionPosition = true;
         }
             
