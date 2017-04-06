@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         HandleWallSliding();
 
         //habilidad de correr
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             //se le asigna la velocidad de correr
             moveSpeed = runSpeed;

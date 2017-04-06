@@ -35,6 +35,10 @@ public class Poderes : MonoBehaviour {
     enum Partition { NORMAL, PARTITION }
     Partition state;
 
+    //variables para controlar la personalidad del personaje
+    enum Shades {ELECTRIC, SHADOW }
+    Shades playerState;
+
     public GameObject partitionPrefab;
     GameObject partitonObject;
     Vector2 positionPartition;
@@ -44,6 +48,8 @@ public class Poderes : MonoBehaviour {
     private float speedLerp = 10;
     private Transform startMarker;
     private Collider2D playerCollider;
+
+    private bool cambioPersonalidad; 
 
     // Use this for initialization
     void Start () {
@@ -66,12 +72,39 @@ public class Poderes : MonoBehaviour {
         //al iniciar el juego inicia en estado normal
         state = Partition.NORMAL;
 
+        //al iniciar el juego inicia en estado electrico
+        playerState = Shades.ELECTRIC;
+
         playerCollider = GetComponent<Collider2D>();
+
+        cambioPersonalidad = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (!cambioPersonalidad)
+            {
+                playerState = Shades.SHADOW;                
+                cambioPersonalidad = true;
+                print("sombra");
+            }
+            else
+            {
+                playerState = Shades.ELECTRIC;               
+                cambioPersonalidad = false;
+                print("elec");
+            }
+        }
+
+        //PODERES QUE TIENE LA PROTA SIENDO ELECTRICA
+        if(playerState == Shades.ELECTRIC)
+        {
+
+        }
+
         if (!returnPartitionPosition)
         {
             //input para el dash
@@ -103,6 +136,12 @@ public class Poderes : MonoBehaviour {
                 cargaDash = 0;
             }
 
+            //PODERES QUE TIENE LA PROTA SIENDO SOMBRA
+            if (playerState == Shades.SHADOW)
+            {
+
+            }
+
             //poder de particion de sombras
             if (Input.GetKeyDown(KeyCode.F) )
             {
@@ -131,10 +170,7 @@ public class Poderes : MonoBehaviour {
                     //journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
                     returnPartitionPosition = true;
                 }
-               
-
             }
-
         }
 
         //estamos retornando a la posicion del cascaron
@@ -218,14 +254,11 @@ public class Poderes : MonoBehaviour {
         {
             Invoke("dushGround",duracionDash);
         }
-        
-
     }
 
 
     public void SetDashUse(bool use)
     {
-
         dashUse = use;
     }
 
@@ -251,8 +284,6 @@ public class Poderes : MonoBehaviour {
             //journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
             returnPartitionPosition = true;
         }
-            
-
     }
 
     //funcion que devuelve la particion del player a su cascaron

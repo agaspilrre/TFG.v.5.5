@@ -15,14 +15,13 @@ public class PauseScript : MonoBehaviour {
 	void Start () {
 
         pausa = false;
-        PauseMenu = GameObject.Find("PauseMenu");
-	
+        PauseMenu = GameObject.Find("PauseMenu");	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             pausa = !pausa;
         }
