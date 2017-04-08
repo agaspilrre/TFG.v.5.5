@@ -85,13 +85,8 @@ public class camaraMOV : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //movimiento leve
-        Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x + balanceoX, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y +balanceoY, camaraTrans.position.z);
-
-        //Camara sigue despacio
-        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
-
-        if (player.getIsMoving() || poder.getStatePartition())
+     
+        //if (player.getIsMoving() || poder.getStatePartition())
         {
 
             tiempoBalanceo = 0;
@@ -147,12 +142,18 @@ public class camaraMOV : MonoBehaviour
             
             vectorGuardaBalanceo = Vector3.zero;
             
-        }else
+        }/*else
         {
             tiempoBalanceo += Time.deltaTime;
-        }
+        }*/
 
-        if(tiempoBalanceo >= timerBalanceo)
+        //movimiento leve
+        Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x + balanceoX, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y + balanceoY, camaraTrans.position.z);
+
+        //Camara sigue despacio
+        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+
+        /*if (tiempoBalanceo >= timerBalanceo)
         {
             if (vectorGuardaBalanceo == Vector3.zero)
             {
@@ -176,7 +177,7 @@ public class camaraMOV : MonoBehaviour
 
             camaraTrans.position = a;
         }
-
+        */
 
         if (shake_intensity > 0)
         {

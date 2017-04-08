@@ -2,42 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemigo : MonoBehaviour {
+public class enemigoDash : MonoBehaviour {
 
-    public enum State { ataque, patrulla, carga, vulnerable };
-
+    public enum State { ataque, dash, patrulla, carga };
     int direccion;//1 es derecha -1 izquierda
-
     State estado;
 
     public Material materialEnemigo;
 
     GameObject protagonista;
+    [SerializeField]
+    GameObject triggerDamage;
 
     bool endAttack;//if attack has ended
     bool canGetDamage;
 
     [SerializeField]
+    float spaceForAnimation;
+
+    [SerializeField]
     int damage = 2;
 
     [SerializeField]
-    float duracionCarga;
-    [SerializeField]
-    float durecionEnemigoVulnerable;
-
+    float waitTime;
     float timerCarga;
-    float timerVulnerable;
 
     Rigidbody2D rb;
+    float playerTr;
 
     [SerializeField]
-    float velocidad;
+    float velocidadPatrulla;
+
     [SerializeField]
-    float velocidadCarga;
+    float velocidadDash;
 
     // Use this for initialization
-    void Start () {
-
+    void Start()
+    {
         estado = State.patrulla;
 
         protagonista = GameObject.Find("Personaje");
@@ -48,37 +49,36 @@ public class enemigo : MonoBehaviour {
 
         materialEnemigo.color = Color.red;
 
-        timerCarga = duracionCarga;
-        timerVulnerable = durecionEnemigoVulnerable;
+        timerCarga = waitTime;
 
         endAttack = true;
-        canGetDamage = false;
+        canGetDamage = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-        if(estado == State.patrulla)
+    // Update is called once per frame
+    void Update()
+    {
+        if (estado == State.patrulla)
         {
             patrullar();
         }
-        else if(estado == State.carga)
+        else if (estado == State.carga)
         {
             carga();
         }
-        else if(estado == State.ataque)
+        else if (estado == State.ataque)
         {
             ataque();
         }
         else
         {
-            vulnerable();
-        }	
-	}
+            dash();
+        }
+    }
 
     void patrullar()
     {
-        rb.velocity = new Vector2(velocidad * direccion * Time.deltaTime, 0);
+        rb.velocity = new Vector2(velocidadPatrulla * direccion * Time.deltaTime, 0);
     }
 
     void carga()
@@ -87,31 +87,34 @@ public class enemigo : MonoBehaviour {
 
         if (timerCarga <= 0)
         {
-            setEstadoAtaque();
+            setEstadoDash();
 
             endAttack = false;
 
-            timerCarga = duracionCarga;
+            timerCarga = waitTime;
         }
     }
 
-    void vulnerable()
+    void dash()
     {
-        timerVulnerable -= Time.deltaTime;
+        rb.velocity = new Vector2(velocidadDash * direccion * Time.deltaTime, 0);
 
-        if(timerVulnerable <= 0)
+        if (Mathf.Abs(transform.position.x - playerTr) <= spaceForAnimation)
         {
-            setEstadoPatrulla();
-
-            canGetDamage = false;
-
-            timerVulnerable = durecionEnemigoVulnerable;
+            setEstadoAtaque();
+            rb.velocity = new Vector2(0, 0);
         }
     }
 
     void ataque()
     {
-        rb.velocity = new Vector2(velocidadCarga * direccion * Time.deltaTime, 0);
+        if (triggerDamage.activeSelf)
+        {
+            setEstadoPatrulla();
+            triggerDamage.SetActive(false);
+        }
+        else
+            triggerDamage.SetActive(true);
     }
 
     void setEstadoAtaque()
@@ -121,6 +124,11 @@ public class enemigo : MonoBehaviour {
         materialEnemigo.color = Color.yellow;
     }
 
+    public bool getCanGetDamage()
+    {
+        return canGetDamage;
+    }
+
     public void setEstadoPatrulla()
     {
         estado = State.patrulla;
@@ -128,30 +136,25 @@ public class enemigo : MonoBehaviour {
         materialEnemigo.color = Color.red;
     }
 
-    public void setEstadoVulnerable()
+    public void setEstadoDash()
     {
-        estado = State.vulnerable;
+        estado = State.dash;
 
-        canGetDamage = true;
+        playerTr = protagonista.transform.position.x;
 
-        materialEnemigo.color = Color.white;
+        materialEnemigo.color = Color.grey;
     }
 
-    public void setCanGetDamage(bool a)
+    public int getDamage()
     {
-        canGetDamage = true;
-    }
-
-    public bool getCanGetDamage()
-    {
-        return canGetDamage;
+        return damage;
     }
 
     public void setEstadoCarga()
     {
         estado = State.carga;
 
-        rb.velocity = new Vector2(0,0);
+        rb.velocity = new Vector2(0, 0);
 
         materialEnemigo.color = Color.blue;
 
@@ -160,7 +163,7 @@ public class enemigo : MonoBehaviour {
         else
             direccion = -1;
     }
-   
+
     public bool getEndAttack()
     {
         return endAttack;
@@ -168,21 +171,12 @@ public class enemigo : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Pared")
+        if (coll.gameObject.tag == "Suelo")
         {
             direccion = -direccion;
 
-            if (estado == State.ataque)
-                setEstadoVulnerable();
-
             endAttack = true;
         }
-
-        //nuevo para dañar al personaje
-        if (coll.gameObject.tag == "Player")
-        {
-            protagonista.GetComponent<lifeScript>().makeDamage(damage);
-            setEstadoVulnerable();
-        }         
     }
 }
+
