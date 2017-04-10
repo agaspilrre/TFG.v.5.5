@@ -130,7 +130,16 @@ public class Poderes : MonoBehaviour {
                 }
                 else
                 {
-                    electroDash();
+                    //solo puedo hacer el dash electrico si estoy en estado electrico
+                    if (playerState == Shades.ELECTRIC)
+                    {
+                        electroDash();
+                    }
+
+                    else
+                    {
+                        dash();
+                    }
                 }
 
                 cargaDash = 0;
@@ -143,7 +152,7 @@ public class Poderes : MonoBehaviour {
             }
 
             //poder de particion de sombras
-            if (Input.GetKeyDown(KeyCode.F) )
+            if (Input.GetKeyDown(KeyCode.F) && playerState==Shades.SHADOW)
             {
 
                 if( state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)
@@ -235,13 +244,16 @@ public class Poderes : MonoBehaviour {
 
     void electroDash()
     {
-        personajeMovimiento.setGravity0();
-        personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadElectroDash, 0);
+        
+            personajeMovimiento.setGravity0();
+            personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadElectroDash, 0);
 
-        dashUse = false;
-        //despues del tiempo del dash volver a permitir movimiento
-        Invoke("dashPermitido", duracionElectroDash);
+            dashUse = false;
+            //despues del tiempo del dash volver a permitir movimiento
+            Invoke("dashPermitido", duracionElectroDash);
+        
     }
+        
 
     void dashPermitido()
     {

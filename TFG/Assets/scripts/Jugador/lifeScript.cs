@@ -8,7 +8,10 @@ public class lifeScript : MonoBehaviour {
     int lifeCount = 3;
 
     public int invulnerableTime;
+
+    [SerializeField]
     bool invulnerable;
+
     int invulnerableCount;
 
     // Use this for initialization
@@ -49,6 +52,7 @@ public class lifeScript : MonoBehaviour {
                 life[lifeCount].SetActive(false);
                 lifeCount--;
             }
+            invulnerable = true;
         }
        
 
@@ -71,6 +75,11 @@ public class lifeScript : MonoBehaviour {
 
         }
 
+    }
+
+    public bool getInvulnerable()
+    {
+        return invulnerable;
     }
 
 

@@ -177,6 +177,15 @@ public class enemigoDash : MonoBehaviour {
 
             endAttack = true;
         }
+
+        //si colisiona con el player le hace daño
+        if (coll.gameObject.tag == "Player")
+        {
+            if (!protagonista.GetComponent<lifeScript>().getInvulnerable())
+            {
+                protagonista.GetComponent<lifeScript>().makeDamage(damage);
+            }
+        }
     }
 }
 

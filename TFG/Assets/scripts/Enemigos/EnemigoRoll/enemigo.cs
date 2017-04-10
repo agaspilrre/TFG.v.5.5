@@ -181,8 +181,11 @@ public class enemigo : MonoBehaviour {
         //nuevo para dañar al personaje
         if (coll.gameObject.tag == "Player")
         {
-            protagonista.GetComponent<lifeScript>().makeDamage(damage);
-            setEstadoVulnerable();
+            if (!protagonista.GetComponent<lifeScript>().getInvulnerable())
+            {
+                protagonista.GetComponent<lifeScript>().makeDamage(damage);
+            }
+            //setEstadoVulnerable();
         }         
     }
 }
