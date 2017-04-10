@@ -39,6 +39,12 @@ public class Poderes : MonoBehaviour {
     enum Shades {ELECTRIC, SHADOW }
     Shades playerState;
 
+    //para cargar los sprites dependiendo en que estado estemos
+    public Sprite ElectricShade;
+    public Sprite ShadowShade;
+
+    SpriteRenderer sr;
+
     public GameObject partitionPrefab;
     GameObject partitonObject;
     Vector2 positionPartition;
@@ -78,6 +84,10 @@ public class Poderes : MonoBehaviour {
         playerCollider = GetComponent<Collider2D>();
 
         cambioPersonalidad = false;
+
+        //para poder modificar el sprite del sprite renderer cuando cambiemos de estados
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = ElectricShade;
+        sr = this.gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -89,12 +99,17 @@ public class Poderes : MonoBehaviour {
             {
                 playerState = Shades.SHADOW;                
                 cambioPersonalidad = true;
+                sr.sprite = ShadowShade;
+                
+
                 print("sombra");
             }
             else
             {
                 playerState = Shades.ELECTRIC;               
                 cambioPersonalidad = false;
+                sr.sprite = ElectricShade;
+
                 print("elec");
             }
         }
@@ -298,7 +313,10 @@ public class Poderes : MonoBehaviour {
         }
     }
 
-    //funcion que devuelve la particion del player a su cascaron
+    public bool getPlayerStates()
+    {
+        return cambioPersonalidad;
+    }
    
 
 }

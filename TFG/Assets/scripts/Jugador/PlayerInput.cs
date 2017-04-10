@@ -5,6 +5,7 @@ using System.Collections;
 public class PlayerInput : MonoBehaviour {
 
 	Player player;
+   
 
     //variable para activar las animaciones
     private Animator anim;
@@ -15,6 +16,7 @@ public class PlayerInput : MonoBehaviour {
     void Start () {
 		player = GetComponent<Player> ();
         anim = GetComponent<Animator>();
+        
         direccion = Direccion.derecha;
     }
 
@@ -27,26 +29,45 @@ public class PlayerInput : MonoBehaviour {
             //si nos movemos se activan las animaciones
             if (Input.GetAxisRaw("Horizontal")>0)
             {
-                anim.SetBool("idle", false);
-                anim.SetBool("runRigth", true);
-                anim.SetBool("runLeft", false);
+                //si es falso corresponde animacion electro
+                if (!player.GetComponent<Poderes>().getPlayerStates())
+                {
+                    anim.SetBool("idle", false);
+                    anim.SetBool("runRigth", true);
+                }
+
+                else
+                {
+                    anim.SetBool("idle", false);
+                    anim.SetBool("runShadow", true);
+                }
+               
+                
                
             }
 
             else
             {
-                
-                anim.SetBool("idle", false);
-                anim.SetBool("runLeft", false);
-                anim.SetBool("runRigth", true);
-                
+
+                //si es falso corresponde animacion electro
+                if (!player.GetComponent<Poderes>().getPlayerStates())
+                {
+                    anim.SetBool("idle", false);
+                    anim.SetBool("runRigth", true);
+                }
+
+                else
+                {
+                    anim.SetBool("idle", false);
+                    anim.SetBool("runShadow", true);
+                }
 
             }
         }
 
         if (Input.GetAxis("Horizontal") == 0)
         {
-            anim.SetBool("runLeft", false);
+            anim.SetBool("runShadow", false);
             anim.SetBool("runRigth", false);
             anim.SetBool("idle", true);
         }
