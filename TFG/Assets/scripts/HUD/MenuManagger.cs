@@ -6,6 +6,9 @@ using UnityEngine;
 public class MenuManagger : MonoBehaviour {
 
     //funcion para cargar la escena de juego
+    /// <summary>
+    /// Erase un señor q se llamaba jose y era mari...
+    /// </summary>
     public void OnNewGameClick()
     {
         SceneManager.LoadScene("fade");
