@@ -11,6 +11,7 @@ public class PauseScript : MonoBehaviour {
     [SerializeField]
     Text muteText;
     GameManager gameManager;
+    public GameObject cameraMap;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +19,7 @@ public class PauseScript : MonoBehaviour {
         pausa = false;
         PauseMenu = GameObject.Find("PauseMenu");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        cameraMap.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -35,11 +37,13 @@ public class PauseScript : MonoBehaviour {
 
                 PauseMenu.SetActive(true);
                 Time.timeScale = 0;
+                cameraMap.SetActive(true);
             }
             else if (!pausa)
             {
                 PauseMenu.SetActive(false);
                 Time.timeScale = 1;
+                cameraMap.SetActive(false);
             }
         }
 
