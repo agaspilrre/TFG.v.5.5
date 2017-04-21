@@ -10,32 +10,40 @@ public class PauseScript : MonoBehaviour {
     bool muted;
     [SerializeField]
     Text muteText;
+    GameManager gameManager;
 
 	// Use this for initialization
 	void Start () {
 
         pausa = false;
-        PauseMenu = GameObject.Find("PauseMenu");	
+        PauseMenu = GameObject.Find("PauseMenu");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (!gameManager.getGameOverState())
         {
-            pausa = !pausa;
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                pausa = !pausa;
+            }
+
+            if (pausa)
+            {
+
+                PauseMenu.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else if (!pausa)
+            {
+                PauseMenu.SetActive(false);
+                Time.timeScale = 1;
+            }
         }
 
-        if (pausa)
-        {
-            PauseMenu.SetActive(true);
-            Time.timeScale = 0;
-        }
-        else if (!pausa)
-        {
-            PauseMenu.SetActive(false);
-            Time.timeScale = 1;
-        }
+        
 
         /*if (muted)
         {

@@ -75,9 +75,12 @@ public class lifeScript : MonoBehaviour {
     {
         if (lifeCount < 3)
         {
-            for(int i=lifeCount;lifeCount<cure;i++)
-            lifeCount++;
-            life[lifeCount].SetActive(true);
+            for(int i = lifeCount; lifeCount < cure; i++)
+            {
+                lifeCount++;
+                life[lifeCount].SetActive(true);
+            }
+            
 
         }
 

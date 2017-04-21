@@ -87,7 +87,7 @@ public class Poderes : MonoBehaviour {
 
         //para poder modificar el sprite del sprite renderer cuando cambiemos de estados
         this.gameObject.GetComponent<SpriteRenderer>().sprite = ElectricShade;
-        sr = this.gameObject.GetComponent<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
