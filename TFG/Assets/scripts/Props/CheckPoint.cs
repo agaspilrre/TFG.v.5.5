@@ -6,6 +6,7 @@ public class CheckPoint : MonoBehaviour {
 
     SpriteRenderer sr;
     public Sprite stoneOn;
+    public int id;
     public Sprite stoneOff;
 
 	// Use this for initialization
@@ -29,7 +30,7 @@ public class CheckPoint : MonoBehaviour {
             sr.sprite = stoneOn;
             //sr.color = Color.blue;
             //comunicar la posicion del personaje para que se quede guardada
-
+            PlayerPrefs.SetInt("CheckPoint",id);
         }
     }
 

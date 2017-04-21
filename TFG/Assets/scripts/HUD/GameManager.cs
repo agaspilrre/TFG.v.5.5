@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour {
     public int timeGameOver;
     int countTime;
     lifeScript lifePlayer;
+    CheckPointManager CPmanager;
+    GameObject player;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +17,9 @@ public class GameManager : MonoBehaviour {
         gameOver.SetActive(false);
         countTime = 0;
         lifePlayer = GameObject.Find("Personaje").GetComponent<lifeScript>();
-	}
+        CPmanager = this.gameObject.GetComponent<CheckPointManager>();
+        player = GameObject.Find("Personaje");
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -33,6 +37,7 @@ public class GameManager : MonoBehaviour {
                 countTime = 0;
                 lifePlayer.cureLife(3);
                 gameOver.SetActive(false);
+                player.transform.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;//position of the checkpoint
                 Time.timeScale = 1;
             }
         }

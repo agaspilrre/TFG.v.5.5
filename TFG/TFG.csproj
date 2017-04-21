@@ -81,12 +81,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
     <Reference Include="ProBuilderCore-Unity5">
       <HintPath>Assets\ProCore\ProBuilder\Classes\ProBuilderCore-Unity5.dll</HintPath>
     </Reference>
@@ -96,14 +90,15 @@
     <Reference Include="KDTree">
       <HintPath>Assets\ProCore\ProBuilder\Classes\ClassesLib\KDTree.dll</HintPath>
     </Reference>
-    <Reference Include="Triangle">
-      <HintPath>Assets\ProCore\ProBuilder\Classes\ClassesLib\Triangle.dll</HintPath>
-    </Reference>
     <Reference Include="pb_Stl">
       <HintPath>Assets\ProCore\ProBuilder\Classes\ClassesLib\pb_Stl.dll</HintPath>
     </Reference>
+    <Reference Include="Triangle">
+      <HintPath>Assets\ProCore\ProBuilder\Classes\ClassesLib\Triangle.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\scripts\CheckPointManager.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\Scripts\CameraControls.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\Scripts\IcoBumpin.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Misc\HueCube.cs" />
