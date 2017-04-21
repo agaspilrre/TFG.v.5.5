@@ -9,6 +9,7 @@ public class MenuManagger : MonoBehaviour {
     /// <summary>
     /// Erase un señor q se llamaba jose y era mari...
     /// Hay un señor se llama Luis y es MARICON
+    /// sdfsdfsdf
     /// </summary>
     public void OnNewGameClick()
     {
