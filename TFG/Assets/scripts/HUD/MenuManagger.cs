@@ -8,6 +8,7 @@ public class MenuManagger : MonoBehaviour {
     //funcion para cargar la escena de juego
     /// <summary>
     /// Erase un señor q se llamaba jose y era mari...
+    /// Hay un señor se llama Luis y es MARICON
     /// </summary>
     public void OnNewGameClick()
     {
