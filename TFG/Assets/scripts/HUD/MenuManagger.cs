@@ -10,6 +10,7 @@ public class MenuManagger : MonoBehaviour {
     /// Erase un señor q se llamaba jose y era mari...
     /// Hay un señor se llama Luis y es MARICON
     /// Hay un señor que se llama jose y es..... wuajajajajaajajajajajjajajajaja
+    /// YYYY giraaaaaaaaa la noriiiiaaaaaaa y girraaaaaaa
     /// </summary>
     public void OnNewGameClick()
     {
