@@ -9,6 +9,8 @@ public class lifeScript : MonoBehaviour {
 
     public int invulnerableTime;
 
+    GameManager gameManager;
+
     [SerializeField]
     bool invulnerable;
 
@@ -19,6 +21,8 @@ public class lifeScript : MonoBehaviour {
 
         invulnerable = false;
         invulnerableCount = 0;
+
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
@@ -59,6 +63,8 @@ public class lifeScript : MonoBehaviour {
         if (lifeCount < 0)
         {
             //cargar gameover o lo que proceda
+            gameManager.loadGameOver();
+            
         }
     }
 
