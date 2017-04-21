@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 0
     width: 1060
     height: 731
@@ -121,6 +122,15 @@ MonoBehaviour:
   m_MaxSize: {x: 14006, y: 14042}
   vertical: 1
   controlID: 285
+=======
+    y: 30
+    width: 1920
+    height: 947
+  m_MinSize: {x: 917, y: 442}
+  m_MaxSize: {x: 22012, y: 10021}
+  vertical: 0
+  controlID: 98
+>>>>>>> origin/master
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,10 +150,19 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1536
     height: 781
   m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
+=======
+    width: 967
+    height: 947
+  m_MinSize: {x: 202, y: 442}
+  m_MaxSize: {x: 4002, y: 8042}
+  vertical: 1
+  controlID: 47
+>>>>>>> origin/master
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -201,6 +220,7 @@ MonoBehaviour:
   - {fileID: 11}
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 30
     width: 1536
@@ -209,6 +229,16 @@ MonoBehaviour:
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
   controlID: 258
+=======
+    x: 967
+    y: 0
+    width: 267
+    height: 947
+  m_MinSize: {x: 204, y: 342}
+  m_MaxSize: {x: 4004, y: 8042}
+  vertical: 1
+  controlID: 99
+>>>>>>> origin/master
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -250,7 +280,36 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1060
+=======
+    x: 0
+    y: 631
+    width: 267
+    height: 316
+  m_MinSize: {x: 104, y: 121}
+  m_MaxSize: {x: 4004, y: 4021}
+  m_ActualView: {fileID: 18}
+  m_Panes:
+  - {fileID: 18}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &12
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 1234
+>>>>>>> origin/master
     y: 0
     width: 476
     height: 731
@@ -413,14 +472,20 @@ MonoBehaviour:
     width: 1058
     height: 439
   m_SceneLighting: 1
-  lastFramingTime: 1451.3168037258627
+  lastFramingTime: 441.41776237877036
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: 136.0889, y: 127.807724, z: 0}
     speed: 2
     m_Value: {x: 136.0889, y: 127.807724, z: 0}
+=======
+    m_Target: {x: 352.69867, y: 99.138695, z: 0}
+    speed: 2
+    m_Value: {x: 352.69867, y: 99.138695, z: 0}
+>>>>>>> origin/master
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -447,9 +512,15 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
+<<<<<<< HEAD
     m_Target: 51.799664
     speed: 2
     m_Value: 51.799664
+=======
+    m_Target: 26.813168
+    speed: 2
+    m_Value: 26.813168
+>>>>>>> origin/master
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -488,9 +559,15 @@ MonoBehaviour:
     height: 250
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: 84050000
     m_LastClickedID: 0
     m_ExpandedIDs: 10fbffff00000000
+=======
+    m_SelectedIDs: c2060000
+    m_LastClickedID: 0
+    m_ExpandedIDs: e2fbffff00000000
+>>>>>>> origin/master
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -584,10 +661,17 @@ MonoBehaviour:
   m_LastProjectPath: D:\TFG3\TFG.v.5.5\TFG
   m_IsLocked: 0
   m_FolderTreeState:
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 119}
     m_SelectedIDs: fe2d0000
     m_LastClickedID: 11774
     m_ExpandedIDs: 00000000b22a0000e82a00003c2d00009a2d0000a82d000000ca9a3bffffff7f
+=======
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 42290000
+    m_LastClickedID: 10562
+    m_ExpandedIDs: 00000000a8250000e42500006a280000ce28000000ca9a3bffffff7f
+>>>>>>> origin/master
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -615,7 +699,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000b22a0000e82a00003c2d00009a2d0000a82d000000ca9a3bffffff7f
+=======
+    m_ExpandedIDs: 00000000a8250000e42500006a280000ce280000
+>>>>>>> origin/master
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
