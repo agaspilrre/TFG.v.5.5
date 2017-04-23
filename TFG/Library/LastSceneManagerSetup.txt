@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scennes/scenne_1.unity
+- path: Assets/scennes/SolasFirstSteps.unity
   isLoaded: 1
   isActive: 1
