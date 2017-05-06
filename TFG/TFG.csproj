@@ -127,6 +127,10 @@
     <Compile Include="Assets\scripts\Jugador\Poderes.cs" />
     <Compile Include="Assets\scripts\Jugador\RaycastController.cs" />
     <Compile Include="Assets\scripts\Jugador\lifeScript.cs" />
+    <Compile Include="Assets\scripts\PS4\ObjectAbsorbPS4.cs" />
+    <Compile Include="Assets\scripts\PS4\PlayerInputPS4.cs" />
+    <Compile Include="Assets\scripts\PS4\PlayerPS4.cs" />
+    <Compile Include="Assets\scripts\PS4\PoderesPS4.cs" />
     <Compile Include="Assets\scripts\Props\CheckPoint.cs" />
   </ItemGroup>
   <ItemGroup>
