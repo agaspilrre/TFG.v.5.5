@@ -30,7 +30,7 @@ public class PlayerPS4 : MonoBehaviour
 
     public bool permitido;
     bool entraColisionPared = false;
-    Poderes poderesScript;
+    PoderesPS4 poderesScript;
     int direccion;
     bool isJumping;
     int numeroSaltos;
@@ -53,7 +53,7 @@ public class PlayerPS4 : MonoBehaviour
 
         permitido = true;
         direccion = 1;
-        poderesScript = GetComponent<Poderes>();
+        poderesScript = GetComponent<PoderesPS4>();
         isJumping = false;
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable

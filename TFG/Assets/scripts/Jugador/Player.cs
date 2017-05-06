@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public float wallSlideSpeedMax = 3;
     public float wallStickTime = .25f;
     public float timeToWallUnstick;
+    public float multiplicadorSalto;
+    float savedMultiplicadorSaltos;
 
     float gravity;
     float maxJumpVelocity;
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
+        savedMultiplicadorSaltos = multiplicadorSalto;
 
     }
 
@@ -151,10 +154,18 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (2 > numeroSaltos)
+            if (1 > numeroSaltos)
             {
                 numeroSaltos++;
-                velocity.y = maxJumpVelocity / numeroSaltos;
+                multiplicadorSalto = 1;
+                velocity.y = maxJumpVelocity * multiplicadorSalto;
+            }
+            else
+            if(2 > numeroSaltos)
+            {
+                numeroSaltos++;
+                multiplicadorSalto = savedMultiplicadorSaltos;
+                velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
         }
         if (controller.collisions.below)
