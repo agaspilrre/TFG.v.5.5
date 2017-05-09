@@ -21,6 +21,13 @@ public class enemigoDash : MonoBehaviour {
     float spaceForAnimation;
 
     [SerializeField]
+    float maxDistanceFromStart;
+    [SerializeField]
+    float minDistanceFromStart;
+    Vector3 startPosition;
+    float timerForDirection;//timer so that isnt always changing direction
+
+    [SerializeField]
     int damage = 2;
 
     [SerializeField]
@@ -42,6 +49,7 @@ public class enemigoDash : MonoBehaviour {
         estado = State.patrulla;
 
         protagonista = GameObject.Find("Personaje");
+        startPosition = transform.position;
 
         direccion = 1;
 
@@ -50,6 +58,7 @@ public class enemigoDash : MonoBehaviour {
         materialEnemigo.color = Color.red;
 
         timerCarga = waitTime;
+        timerForDirection = 0.5f;
 
         endAttack = true;
         canGetDamage = true;
@@ -58,9 +67,18 @@ public class enemigoDash : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //update timer
+
+        if (timerForDirection <= 0.5f)
+            timerForDirection += Time.deltaTime;
+
+        //compare states
         if (estado == State.patrulla)
         {
             patrullar();
+
+            if (CheckDistance() && timerForDirection > 0.5f) // si se pasa de los maximos
+                ChangeDirection();
         }
         else if (estado == State.carga)
         {
@@ -145,6 +163,15 @@ public class enemigoDash : MonoBehaviour {
         materialEnemigo.color = Color.grey;
     }
 
+    void ChangeDirection()
+    {
+        timerForDirection = 0;
+
+        endAttack = true;
+
+        direccion = -direccion;
+    }
+
     public int getDamage()
     {
         return damage;
@@ -167,6 +194,16 @@ public class enemigoDash : MonoBehaviour {
     public bool getEndAttack()
     {
         return endAttack;
+    }
+
+    bool CheckDistance()
+    {
+        if (startPosition.x + maxDistanceFromStart < transform.position.x)
+            return true;
+        else if (startPosition.x + minDistanceFromStart > transform.position.x)
+            return true;
+        else
+            return false;
     }
 
     void OnCollisionEnter2D(Collision2D coll)

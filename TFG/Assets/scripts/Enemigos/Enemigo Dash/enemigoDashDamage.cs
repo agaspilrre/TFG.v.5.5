@@ -12,7 +12,7 @@ public class enemigoDashDamage : MonoBehaviour {
         player = GameObject.Find("Personaje");
     }
 
-        void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.name == "Personaje")
         {

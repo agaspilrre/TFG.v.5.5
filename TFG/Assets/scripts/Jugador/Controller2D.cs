@@ -12,8 +12,7 @@ public class Controller2D : RaycastController {
 	public override void Start() {
 		base.Start ();
 		collisions.faceDir = 1;
-
-	}
+    }
 
 	public void Move(Vector2 moveAmount, bool standingOnPlatform) {
 		Move (moveAmount, Vector2.zero, standingOnPlatform);
@@ -46,6 +45,14 @@ public class Controller2D : RaycastController {
 		}
 	}
 
+    void RotatePlayer(float slope)
+    {
+        //if(slope > 10)
+        //    transform.rotation = Quaternion.Euler(0,0,15);
+        //else
+        //    transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
 	void HorizontalCollisions(ref Vector2 moveAmount) {
 		float directionX = collisions.faceDir;
 		float rayLength = Mathf.Abs (moveAmount.x) + skinWidth;
@@ -68,8 +75,9 @@ public class Controller2D : RaycastController {
 				}
 
 				float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                RotatePlayer(slopeAngle);
 
-				if (i == 0 && slopeAngle <= maxSlopeAngle) {
+                if (i == 0 && slopeAngle <= maxSlopeAngle) {
 					if (collisions.descendingSlope) {
 						collisions.descendingSlope = false;
 						moveAmount = collisions.moveAmountOld;
@@ -184,6 +192,8 @@ public class Controller2D : RaycastController {
 
 			if (hit) {
 				float slopeAngle = Vector2.Angle (hit.normal, Vector2.up);
+                RotatePlayer(slopeAngle);
+
 				if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle) {
 					if (Mathf.Sign (hit.normal.x) == directionX) {
 						if (hit.distance - skinWidth <= Mathf.Tan (slopeAngle * Mathf.Deg2Rad) * Mathf.Abs (moveAmount.x)) {
