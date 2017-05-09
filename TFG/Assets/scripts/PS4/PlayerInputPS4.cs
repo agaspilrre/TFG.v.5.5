@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerInputPS4 : MonoBehaviour
 {
 
-    Player player;
+    PlayerPS4 player;
 
 
     //variable para activar las animaciones
@@ -16,7 +16,7 @@ public class PlayerInputPS4 : MonoBehaviour
 
     void Start()
     {
-        player = GetComponent<Player>();
+        player = GetComponent<PlayerPS4>();
         anim = GetComponent<Animator>();
 
         direccion = Direccion.derecha;
@@ -80,12 +80,12 @@ public class PlayerInputPS4 : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButton("PS4_X"))
         {
 
             player.OnJumpInputDown();
         }
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetButtonUp("PS4_X"))
         {
             player.OnJumpInputUp();
         }
