@@ -28,7 +28,7 @@ public class PoderesPS4 : MonoBehaviour
 
     public Transform personajeTrans;
 
-    PlayerPS4 personajeMovimiento;
+    Player personajeMovimiento;
     //rigidbody del personaje
     Rigidbody2D personajeRB;
 
@@ -66,7 +66,7 @@ public class PoderesPS4 : MonoBehaviour
 
         velocidadElectroDash = distanciaElectroDash / duracionElectroDash;
         //referencia al protagonista
-        personajeMovimiento = GetComponent<PlayerPS4>();
+        personajeMovimiento = GetComponent<Player>();
         //referencia al personaje
         personajeRB = GetComponent<Rigidbody2D>();
         //guarda la escala 
@@ -95,7 +95,7 @@ public class PoderesPS4 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("PS4_Triangle"))
+        if (Input.GetButton("PS4_Triangle"))
         {
             if (!cambioPersonalidad)
             {
