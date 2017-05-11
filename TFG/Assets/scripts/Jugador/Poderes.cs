@@ -141,7 +141,59 @@ public class Poderes : MonoBehaviour {
                     materialCargaDash.color = Color.white;
                 }
             }
-            if (Input.GetButtonUp("Dash") && dashUse)
+            if ((Input.GetButtonUp("Dash") && dashUse) && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))&& (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)|| (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))))
+            {
+
+                materialCargaDash.color = Color.black;
+
+                if (cargaDash < 0.3)//si es menor alo que este numero dash normal
+                {
+                    DiagonalDash();
+                }
+                else
+                {
+                    //solo puedo hacer el dash electrico si estoy en estado electrico
+                    if (playerState == Shades.ELECTRIC)
+                    {
+                        electroDash();
+                    }
+
+                    else
+                    {
+
+                        DiagonalDash();
+                    }
+                }
+
+                cargaDash = 0;
+            }
+            //para el nuevo dash de seis direcciones
+            else if (Input.GetButtonUp("Dash") && dashUse && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow)))
+            {
+                materialCargaDash.color = Color.black;
+
+                if (cargaDash < 0.3)//si es menor alo que este numero dash normal
+                {
+                    verticaldash();
+                }
+                else
+                {
+                    //solo puedo hacer el dash electrico si estoy en estado electrico
+                    if (playerState == Shades.ELECTRIC)
+                    {
+                        electroDash();
+                    }
+
+                    else
+                    {
+
+                        verticaldash();
+                    }
+                }
+
+                cargaDash = 0;
+            }
+            else if(Input.GetButtonUp("Dash") && dashUse )
             {
 
                 materialCargaDash.color = Color.black;
@@ -160,7 +212,8 @@ public class Poderes : MonoBehaviour {
 
                     else
                     {
-                        dash();
+
+                       dash();
                     }
                 }
 
@@ -257,12 +310,43 @@ public class Poderes : MonoBehaviour {
     void dash()
     {
         personajeMovimiento.setGravity0();
+
+
+
         personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash , 0);
 
         dashUse = false;
         //despues del tiempo del dash volver a permitir movimiento
         Invoke("dashPermitido",duracionDash);
-    }   
+    }
+    
+    //PARA DASH SIXDIRECCIONAL
+    void verticaldash()
+    {
+        personajeMovimiento.setGravity0();
+
+
+
+        personajeRB.velocity = new Vector2(0, 1*velocidadDash);
+
+        dashUse = false;
+        //despues del tiempo del dash volver a permitir movimiento
+        Invoke("dashPermitido", duracionDash);//ATENCION QUITAR CUANDO SE IMPLEMENTE EL DUSH EN 6 DIRECCIONES Y ACTIVARLO CUANDO EL PLAYER TOQUE EL SUELO
+    }
+
+    //PARA DASH SIXDIRECCIONAL
+    void DiagonalDash()
+    {
+        personajeMovimiento.setGravity0();
+
+
+
+        personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 1 * velocidadDash);
+
+        dashUse = false;
+        //despues del tiempo del dash volver a permitir movimiento
+        Invoke("dashPermitido", duracionDash);//ATENCION QUITAR CUANDO SE IMPLEMENTE EL DUSH EN 6 DIRECCIONES Y ACTIVARLO CUANDO EL PLAYER TOQUE EL SUELO
+    }
 
     void electroDash()
     {
