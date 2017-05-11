@@ -40,6 +40,8 @@ public class camaraMOV : MonoBehaviour
     public float altoMAX = 3f;
     public float altoMIN = -3f;
 
+    bool block;
+
     Player player;
     Poderes poder;
 
@@ -69,6 +71,7 @@ public class camaraMOV : MonoBehaviour
     void Start()
     {
         movPermitido = false;
+        block = false;
 
         movAlturaPermitido = false;
 
@@ -85,73 +88,75 @@ public class camaraMOV : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
-        //if (player.getIsMoving() || poder.getStatePartition())
+        if (!block)
         {
-
-            tiempoBalanceo = 0;
-            //comparar posicion del personaje con el de la camara
-            movPermitido = compararPosicion();
-
-            movAlturaPermitido = compararAltura();
-
-            //si el personaje se sale del rango de movimiento libre
-
-
-            if (movPermitido & direccionAncho == 0)//diro derecha
+            //if (player.getIsMoving() || poder.getStatePartition())
             {
-                //nueva posicion de la camara
-                Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX + movExtraTrigger.x, camaraTrans.position.y, -10f);
-                if (player.getDireccion() == 1 && desplazamientoX > desplzamientoGuardado && player.getIsMoving())
+
+                tiempoBalanceo = 0;
+                //comparar posicion del personaje con el de la camara
+                movPermitido = compararPosicion();
+
+                movAlturaPermitido = compararAltura();
+
+                //si el personaje se sale del rango de movimiento libre
+
+
+                if (movPermitido & direccionAncho == 0)//diro derecha
                 {
-                    desplazamientoX = desplazamientoX - (velocidadReajuste * Time.deltaTime);
-                }
-                camaraTrans.position = newPos;
+                    //nueva posicion de la camara
+                    Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMAX - desplazamientoX + movExtraTrigger.x, camaraTrans.position.y, -10f);
+                    if (player.getDireccion() == 1 && desplazamientoX > desplzamientoGuardado && player.getIsMoving())
+                    {
+                        desplazamientoX = desplazamientoX - (velocidadReajuste * Time.deltaTime);
+                    }
+                    camaraTrans.position = newPos;
 
-            }
-            if (movPermitido & direccionAncho == 1)//giro izquierda
-            {
-                //nueva posicion de la camara
-                Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX + movExtraTrigger.x, camaraTrans.position.y, -10f);
-                if (player.getDireccion() == -1 && desplazamientoX < -desplzamientoGuardado && player.getIsMoving())
+                }
+                if (movPermitido & direccionAncho == 1)//giro izquierda
                 {
-                    desplazamientoX = desplazamientoX + (velocidadReajuste * Time.deltaTime);
+                    //nueva posicion de la camara
+                    Vector3 newPos = new Vector3(personajeTrans.position.x - anchoMIN - desplazamientoX + movExtraTrigger.x, camaraTrans.position.y, -10f);
+                    if (player.getDireccion() == -1 && desplazamientoX < -desplzamientoGuardado && player.getIsMoving())
+                    {
+                        desplazamientoX = desplazamientoX + (velocidadReajuste * Time.deltaTime);
+                    }
+                    camaraTrans.position = newPos;
+
                 }
-                camaraTrans.position = newPos;
+                if (movAlturaPermitido & direccionAlto == 0)//giro arriba
+                {
+                    //nueva posicion de la camara
+                    Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMAX + distanciaInicial + movExtraTrigger.y, -10f);
+                    camaraTrans.position = newPos;
 
-            }
-            if (movAlturaPermitido & direccionAlto == 0)//giro arriba
-            {
-                //nueva posicion de la camara
-                Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMAX + distanciaInicial + movExtraTrigger.y, -10f);
-                camaraTrans.position = newPos;
+                }
+                if (movAlturaPermitido & direccionAlto == 1)//giro abajo
+                {
+                    //nueva posicion de la camara
+                    Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMIN + distanciaInicial + movExtraTrigger.y, -10f);
+                    camaraTrans.position = newPos;
 
-            }
-            if (movAlturaPermitido & direccionAlto == 1)//giro abajo
-            {
-                //nueva posicion de la camara
-                Vector3 newPos = new Vector3(camaraTrans.position.x, personajeTrans.position.y - altoMIN + distanciaInicial + movExtraTrigger.y, -10f);
-                camaraTrans.position = newPos;
+                }
 
-            }
+                //evitar que al volver a pasar se vuelva a meter en algun if sin querer
+                direccionAlto = 3;
+                direccionAncho = 3;
 
-            //evitar que al volver a pasar se vuelva a meter en algun if sin querer
-            direccionAlto = 3;
-            direccionAncho = 3;
 
-            
-            vectorGuardaBalanceo = Vector3.zero;
-            
-        }/*else
+                vectorGuardaBalanceo = Vector3.zero;
+
+            }/*else
         {
             tiempoBalanceo += Time.deltaTime;
         }*/
 
-        //movimiento leve
-        Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x + balanceoX, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y + balanceoY, camaraTrans.position.z);
+            //movimiento leve
+            Vector3 Seguimiento = new Vector3(personajeTrans.position.x - desplazamientoX + movExtraTrigger.x + balanceoX, personajeTrans.position.y + distanciaInicial + movExtraTrigger.y + balanceoY, camaraTrans.position.z);
 
-        //Camara sigue despacio
-        camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+            //Camara sigue despacio
+            camaraTrans.position = Vector3.Lerp(camaraTrans.position, Seguimiento, veclocidadSeguimiento * Time.deltaTime);
+        }
 
         /*if (tiempoBalanceo >= timerBalanceo)
         {
@@ -209,6 +214,11 @@ public class camaraMOV : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void SetBlock(bool isBlock)
+    {
+        block = isBlock;
     }
 
     //mirar si se sale de rango

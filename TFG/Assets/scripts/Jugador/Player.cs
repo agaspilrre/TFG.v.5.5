@@ -244,6 +244,13 @@ public class Player : MonoBehaviour
             tri.setMoveExtra(new Vector3(0, 0, 0));
         }
 
+        if(other.name == "CameraBlock")
+        {
+            TriggerCameraBlock tri = other.gameObject.GetComponent<TriggerCameraBlock>();
+
+            tri.SetBlockMov(false);
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -257,8 +264,13 @@ public class Player : MonoBehaviour
             tri.setVelocidadEscala(1);
 
             tri.setMoveExtraGuardado();
+        }
 
+        if (other.name == "CameraBlock")
+        {
+            TriggerCameraBlock tri = other.gameObject.GetComponent<TriggerCameraBlock>();
 
+            tri.SetBlockMov(true);
         }
 
     }
