@@ -55,7 +55,9 @@ public class Poderes : MonoBehaviour {
     private Transform startMarker;
     private Collider2D playerCollider;
 
-    private bool cambioPersonalidad; 
+    private bool cambioPersonalidad;
+
+    private PlayerAnim playerAnim;
 
     // Use this for initialization
     void Start () {
@@ -88,6 +90,8 @@ public class Poderes : MonoBehaviour {
         //para poder modificar el sprite del sprite renderer cuando cambiemos de estados
         this.gameObject.GetComponent<SpriteRenderer>().sprite = ElectricShade;
         sr = GetComponent<SpriteRenderer>();
+
+        playerAnim = GetComponent<PlayerAnim>();
     }
 
     // Update is called once per frame
@@ -99,8 +103,10 @@ public class Poderes : MonoBehaviour {
             {
                 playerState = Shades.SHADOW;                
                 cambioPersonalidad = true;
-                sr.sprite = ShadowShade;
-                
+                //sr.sprite = ShadowShade;
+                //cambiamos a animacion idle de sombra
+                playerAnim.IdlSToIdlFalse();
+                playerAnim.IdlToIdlS();
 
                 print("sombra");
             }
@@ -108,8 +114,9 @@ public class Poderes : MonoBehaviour {
             {
                 playerState = Shades.ELECTRIC;               
                 cambioPersonalidad = false;
-                sr.sprite = ElectricShade;
-
+                //sr.sprite = ElectricShade;
+                playerAnim.IdlToIdlSFalse();
+                playerAnim.IdlSToIdl();
                 print("elec");
             }
         }

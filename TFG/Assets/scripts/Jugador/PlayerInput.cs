@@ -5,6 +5,7 @@ using System.Collections;
 public class PlayerInput : MonoBehaviour {
 
 	Player player;
+    private PlayerAnim playerAnim;
    
 
     //variable para activar las animaciones
@@ -18,6 +19,7 @@ public class PlayerInput : MonoBehaviour {
         anim = GetComponent<Animator>();
         
         direccion = Direccion.derecha;
+        playerAnim = GetComponent<PlayerAnim>();
     }
 
 	void Update () {
@@ -27,49 +29,40 @@ public class PlayerInput : MonoBehaviour {
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             //si nos movemos se activan las animaciones
-            if (Input.GetAxisRaw("Horizontal")>0)
-            {
-                //si es falso corresponde animacion electro
+            
+            //si es falso corresponde animacion electro
                 if (!player.GetComponent<Poderes>().getPlayerStates())
                 {
-                    anim.SetBool("idle", false);
-                    anim.SetBool("runRigth", true);
+                    playerAnim.IdlToRun();
+                    playerAnim.RunToIdlFalse();
                 }
 
                 else
                 {
-                    anim.SetBool("idle", false);
-                    anim.SetBool("runShadow", true);
+                    playerAnim.IdlSToRunS();
+                    playerAnim.RunSToIdlSFalse();
                 }
                
                 
                
+            
+
+           
+        }
+
+        else if (Input.GetAxis("Horizontal") == 0)
+        {
+            if (!player.GetComponent<Poderes>().getPlayerStates())
+            {
+                playerAnim.RunToIdl();
+                playerAnim.IdlToRunFalse();
             }
 
             else
             {
-
-                //si es falso corresponde animacion electro
-                if (!player.GetComponent<Poderes>().getPlayerStates())
-                {
-                    anim.SetBool("idle", false);
-                    anim.SetBool("runRigth", true);
-                }
-
-                else
-                {
-                    anim.SetBool("idle", false);
-                    anim.SetBool("runShadow", true);
-                }
-
+                playerAnim.RunSToIdlS();
+                playerAnim.IdlSToRunSFalse();
             }
-        }
-
-        if (Input.GetAxis("Horizontal") == 0)
-        {
-            anim.SetBool("runShadow", false);
-            anim.SetBool("runRigth", false);
-            anim.SetBool("idle", true);
         }
 
         player.SetDirectionalInput (directionalInput);
