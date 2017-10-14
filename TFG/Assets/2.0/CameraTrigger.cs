@@ -19,7 +19,7 @@ public class CameraTrigger : MonoBehaviour {
 	
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.name == "Sprite")
+        if(other.name == "Personaje")
         {
             Setters();
         }
@@ -27,7 +27,7 @@ public class CameraTrigger : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.name == "Sprite")
+        if (other.name == "Personaje")
         {
             target.SetIsTrigger(false);
         }

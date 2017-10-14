@@ -84,6 +84,9 @@ public class CameraController : MonoBehaviour {
                 Vector3 newPos = new Vector3(player.position.x - widthMin, cameraTransform.position.y, -10);
                 cameraTransform.position = newPos;
             }
+
+            Vector3 aux = new Vector3(target.position.x, cameraTransform.position.y, cameraTransform.position.z);
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
         }
 
         if(cameraState == State.active || (cameraState == State.blocked && blockedDirection == 0))
@@ -101,13 +104,13 @@ public class CameraController : MonoBehaviour {
                 Vector3 newPos = new Vector3(cameraTransform.position.x, player.position.y - heigthMin - startHeigth, -10);
                 cameraTransform.position = newPos;
             }
+
+            Vector3 aux = new Vector3(cameraTransform.position.x, target.position.y - startHeigth, cameraTransform.position.z);
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
         }
 
         heightDirection = 3;
         widthDirecion = 3;
-
-        Vector3 aux = new Vector3(target.position.x, target.position.y - startHeigth, cameraTransform.position.z);
-        cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
     }
 
     public void SetCameraState(string state)
@@ -121,6 +124,7 @@ public class CameraController : MonoBehaviour {
     public void SetCameraState(string state, string direction)
     {
         cameraState = State.blocked;
+        print("a");
 
         if (direction == "BlockWidth")
             blockedDirection = 0;
