@@ -22,7 +22,8 @@ public class lifeScript : MonoBehaviour {
         invulnerable = false;
         invulnerableCount = 0;
 
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if(GameObject.Find("GameManager") != null)
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
