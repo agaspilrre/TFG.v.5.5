@@ -107,6 +107,7 @@
     <Compile Include="Assets\scripts\Jugador\RaycastController.cs" />
     <Compile Include="Assets\scripts\Props\CheckPoint.cs" />
     <Compile Include="Assets\scripts\Props\CheckPointManager.cs" />
+    <Compile Include="Assets\scripts\Props\DamageTrigger.cs" />
     <Compile Include="Assets\scripts\PS4\ObjectAbsorbPS4.cs" />
     <Compile Include="Assets\scripts\PS4\PlayerInputPS4.cs" />
     <Compile Include="Assets\scripts\PS4\PlayerPS4.cs" />
