@@ -43,6 +43,10 @@ public class Player : MonoBehaviour
     bool wallSliding;
     int wallDirX;
 
+    //variable para modular peso en la caida
+    public float fallWeight;
+
+
 
 
     void Start()
@@ -61,6 +65,8 @@ public class Player : MonoBehaviour
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
         savedMultiplicadorSaltos = multiplicadorSalto;
+
+
 
     }
 
@@ -124,6 +130,14 @@ public class Player : MonoBehaviour
             }
 
         }
+
+        //modular peso en la caida
+        //Debug.Log("la velocidad en y es:"+velocity.y);
+        if (velocity.y <= 0 && velocity.y >= -100)
+        {
+            velocity.y *= fallWeight;
+        }
+
     }
 
     public void SetDirectionalInput(Vector2 input)
@@ -147,7 +161,8 @@ public class Player : MonoBehaviour
                 velocity.x = -wallDirX * wallJumpOff.x;
                 velocity.y = wallJumpOff.y;
             }
-            else {
+            else
+            {
                 velocity.x = -wallDirX * wallLeap.x;
                 velocity.y = wallLeap.y;
             }
@@ -161,13 +176,14 @@ public class Player : MonoBehaviour
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
             else
-            if(2 > numeroSaltos)
+            if (2 > numeroSaltos)
             {
                 numeroSaltos++;
                 multiplicadorSalto = savedMultiplicadorSaltos;
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
         }
+
         if (controller.collisions.below)
         {
             if (controller.collisions.slidingDownMaxSlope)
@@ -244,7 +260,7 @@ public class Player : MonoBehaviour
             tri.setMoveExtra(new Vector3(0, 0, 0));
         }
 
-        if(other.name == "CameraBlock")
+        if (other.name == "CameraBlock")
         {
             TriggerCameraBlock tri = other.gameObject.GetComponent<TriggerCameraBlock>();
 
@@ -300,9 +316,9 @@ public class Player : MonoBehaviour
                 velocity.x = 0;
                 velocity.y = 0;
 
-               
+
                 timeToWallUnstick -= Time.deltaTime;
-                
+
             }
 
         }

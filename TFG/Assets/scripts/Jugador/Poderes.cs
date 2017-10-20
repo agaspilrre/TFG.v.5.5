@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Poderes : MonoBehaviour {
+public class Poderes : MonoBehaviour
+{
 
     public float duracionDash = 1f;
 
@@ -23,7 +24,7 @@ public class Poderes : MonoBehaviour {
 
     public float cargaDash;
 
-     public bool dashUse;
+    public bool dashUse;
 
     public Transform personajeTrans;
 
@@ -36,7 +37,7 @@ public class Poderes : MonoBehaviour {
     Partition state;
 
     //variables para controlar la personalidad del personaje
-    enum Shades {ELECTRIC, SHADOW }
+    enum Shades { ELECTRIC, SHADOW }
     Shades playerState;
 
     //para cargar los sprites dependiendo en que estado estemos
@@ -60,7 +61,8 @@ public class Poderes : MonoBehaviour {
     private PlayerAnim playerAnim;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //calcular la velocidad del dash
         velocidadDash = distanciaDash / duracionDash;
 
@@ -97,32 +99,16 @@ public class Poderes : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log("velocidad dush" + personajeRB.velocity.x);
+
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!cambioPersonalidad)
-            {
-                playerState = Shades.SHADOW;                
-                cambioPersonalidad = true;
-                //sr.sprite = ShadowShade;
-                //cambiamos a animacion idle de sombra
-                playerAnim.IdlSToIdlFalse();
-                playerAnim.IdlToIdlS();
-
-                print("sombra");
-            }
-            else
-            {
-                playerState = Shades.ELECTRIC;               
-                cambioPersonalidad = false;
-                //sr.sprite = ElectricShade;
-                playerAnim.IdlToIdlSFalse();
-                playerAnim.IdlSToIdl();
-                print("elec");
-            }
+            personalityChange();
         }
 
         //PODERES QUE TIENE LA PROTA SIENDO ELECTRICA
-        if(playerState == Shades.ELECTRIC)
+        if (playerState == Shades.ELECTRIC)
         {
 
         }
@@ -141,7 +127,7 @@ public class Poderes : MonoBehaviour {
                     materialCargaDash.color = Color.white;
                 }
             }
-            if ((Input.GetButtonUp("Dash") && dashUse) && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))&& (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)|| (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))))
+            /*if ((Input.GetButtonUp("Dash") && dashUse) && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))&& (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)|| (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))))
             {
 
                 materialCargaDash.color = Color.black;
@@ -166,9 +152,10 @@ public class Poderes : MonoBehaviour {
                 }
 
                 cargaDash = 0;
-            }
+            }*/
             //para el nuevo dash de seis direcciones
-            else if (Input.GetButtonUp("Dash") && dashUse && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow)))
+            /*else*/
+            if (Input.GetButtonUp("Dash") && dashUse && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
                 materialCargaDash.color = Color.black;
 
@@ -193,7 +180,7 @@ public class Poderes : MonoBehaviour {
 
                 cargaDash = 0;
             }
-            else if(Input.GetButtonUp("Dash") && dashUse )
+            else if (Input.GetButtonUp("Dash") && dashUse)
             {
 
                 materialCargaDash.color = Color.black;
@@ -213,7 +200,7 @@ public class Poderes : MonoBehaviour {
                     else
                     {
 
-                       dash();
+                        dash();
                     }
                 }
 
@@ -227,10 +214,10 @@ public class Poderes : MonoBehaviour {
             }
 
             //poder de particion de sombras
-            if (Input.GetKeyDown(KeyCode.F) && playerState==Shades.SHADOW)
+            if (Input.GetKeyDown(KeyCode.F) && playerState == Shades.SHADOW)
             {
 
-                if( state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)
+                if (state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)
                 {
                     //cambio de estado
                     state = Partition.PARTITION;
@@ -243,8 +230,8 @@ public class Poderes : MonoBehaviour {
                     //instanciamos cascaron vacio
                     partitonObject = Instantiate(partitionPrefab, positionPartition, Quaternion.identity);
 
-                    if(personajeMovimiento.getDireccion() == 1)
-                        partitonObject.transform.localScale = new Vector3(transform.localScale.x*-1, transform.localScale.y, transform.localScale.z);
+                    if (personajeMovimiento.getDireccion() == 1)
+                        partitonObject.transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 
                 }
 
@@ -265,14 +252,14 @@ public class Poderes : MonoBehaviour {
             //desactivar el collider para que pueda trasladarse
             playerCollider.enabled = false;
             //hacemos lerp
-           
+
             float distCovered = Time.deltaTime * speedLerp;
             float fracJourney = distCovered;
 
             transform.position = Vector3.Lerp(startMarker.position, partitonObject.transform.position, fracJourney);
             //comprobamos si ha llegado al destino si es asi ponemos bool a false de nuevo y permitimos el movimiento
             //contemplar si la sombra esta a la izquierda o derecha de la posicion del cascaron
-            if(this.transform.position.x> partitonObject.transform.position.x)
+            if (this.transform.position.x > partitonObject.transform.position.x)
             {
                 if (this.transform.position.x - partitonObject.transform.position.x < 1 && this.transform.position.y - partitonObject.transform.position.y < 0.5f)
                 {
@@ -285,7 +272,7 @@ public class Poderes : MonoBehaviour {
 
             else
             {
-                if (this.transform.position.x - partitonObject.transform.position.x >-1 && this.transform.position.y - partitonObject.transform.position.y >-0.5f)
+                if (this.transform.position.x - partitonObject.transform.position.x > -1 && this.transform.position.y - partitonObject.transform.position.y > -0.5f)
                 {
                     returnPartitionPosition = false;
                     personajeMovimiento.setPermitido(true);
@@ -293,11 +280,11 @@ public class Poderes : MonoBehaviour {
                     playerCollider.enabled = true;
                 }
             }
-           
-        }
-       
 
-        
+        }
+
+
+
     }
     public bool getStatePartition()
     {
@@ -313,13 +300,13 @@ public class Poderes : MonoBehaviour {
 
 
 
-        personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash , 0);
+        personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 0);
 
         dashUse = false;
         //despues del tiempo del dash volver a permitir movimiento
-        Invoke("dashPermitido",duracionDash);
+        Invoke("dashPermitido", duracionDash);
     }
-    
+
     //PARA DASH SIXDIRECCIONAL
     void verticaldash()
     {
@@ -327,7 +314,7 @@ public class Poderes : MonoBehaviour {
 
 
 
-        personajeRB.velocity = new Vector2(0, 1*velocidadDash);
+        personajeRB.velocity = new Vector2(0, 1 * velocidadDash);
 
         dashUse = false;
         //despues del tiempo del dash volver a permitir movimiento
@@ -335,6 +322,7 @@ public class Poderes : MonoBehaviour {
     }
 
     //PARA DASH SIXDIRECCIONAL
+    /*
     void DiagonalDash()
     {
         personajeMovimiento.setGravity0();
@@ -347,30 +335,32 @@ public class Poderes : MonoBehaviour {
         //despues del tiempo del dash volver a permitir movimiento
         Invoke("dashPermitido", duracionDash);//ATENCION QUITAR CUANDO SE IMPLEMENTE EL DUSH EN 6 DIRECCIONES Y ACTIVARLO CUANDO EL PLAYER TOQUE EL SUELO
     }
+    */
 
     void electroDash()
     {
-        
-            personajeMovimiento.setGravity0();
-            personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadElectroDash, 0);
 
-            dashUse = false;
-            //despues del tiempo del dash volver a permitir movimiento
-            Invoke("dashPermitido", duracionElectroDash);
-        
+        personajeMovimiento.setGravity0();
+        personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadElectroDash, 0);
+
+        dashUse = false;
+        //despues del tiempo del dash volver a permitir movimiento
+        Invoke("dashPermitido", duracionElectroDash);
+
     }
-        
+
 
     void dashPermitido()
     {
         personajeMovimiento.returnGravity();
         personajeMovimiento.setPermitido(true);
         //volvemos activar la gravedad una vez finalizado el dush
+        personajeRB.velocity = new Vector2(0, 0);
         personajeRB.gravityScale = initGravity;
 
         if (!personajeMovimiento.getIsJumping())
         {
-            Invoke("dushGround",duracionDash);
+            Invoke("dushGround", duracionDash);
         }
     }
 
@@ -396,7 +386,7 @@ public class Poderes : MonoBehaviour {
             //poner permitido a true;
         }
 
-        else if(coll.gameObject.tag=="Enemy" && state == Partition.PARTITION)
+        else if (coll.gameObject.tag == "Enemy" && state == Partition.PARTITION)
         {
             startMarker = this.transform;
             //journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
@@ -408,6 +398,33 @@ public class Poderes : MonoBehaviour {
     {
         return cambioPersonalidad;
     }
-   
+
+    //funcion para cambiar de personalidad. se hace funcion porque no solo se activa con el boton R si no que hay trigger que lo cambian automaticamente
+    public void personalityChange()
+    {
+
+        if (!cambioPersonalidad)
+        {
+            playerState = Shades.SHADOW;
+            cambioPersonalidad = true;
+            //sr.sprite = ShadowShade;
+            //cambiamos a animacion idle de sombra
+            playerAnim.IdlSToIdlFalse();
+            playerAnim.IdlToIdlS();
+
+            print("sombra");
+        }
+        else
+        {
+            playerState = Shades.ELECTRIC;
+            cambioPersonalidad = false;
+            //sr.sprite = ElectricShade;
+            playerAnim.IdlToIdlSFalse();
+            playerAnim.IdlSToIdl();
+            print("elec");
+        }
+
+    }
+
 
 }
