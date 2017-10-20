@@ -105,6 +105,11 @@ public class Poderes : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             personalityChange();
+            //activa el segundo salto al cambiar de personalidad
+            if (personajeMovimiento.getNumSaltos() == 1)
+            {
+                personajeMovimiento.setCanSecondJump(true);
+            }
         }
 
         //PODERES QUE TIENE LA PROTA SIENDO ELECTRICA
@@ -364,6 +369,10 @@ public class Poderes : MonoBehaviour
         }
     }
 
+    public bool getDashUse()
+    {
+        return dashUse;
+    }
 
     public void SetDashUse(bool use)
     {

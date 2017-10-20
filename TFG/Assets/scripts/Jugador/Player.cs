@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
     //variable para modular peso en la caida
     public float fallWeight;
 
+    public bool canSecondJump;
+
 
 
 
@@ -176,7 +178,7 @@ public class Player : MonoBehaviour
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
             else
-            if (2 > numeroSaltos)
+            if (2 > numeroSaltos && canSecondJump)
             {
                 numeroSaltos++;
                 multiplicadorSalto = savedMultiplicadorSaltos;
@@ -199,6 +201,18 @@ public class Player : MonoBehaviour
 			}*/
         }
 
+    }
+
+    //funcion para controlar el numero de saltos para la accion de pulsar R despues del primer salto
+    public int getNumSaltos()
+    {
+        return numeroSaltos;
+    }
+
+    //cambiar la variable para permitir el segundo salto, se cambia cuando pulsamos R y ya hemos saltado una vez script Poderes
+    public void setCanSecondJump(bool _value)
+    {
+        canSecondJump = _value;
     }
 
     public void OnJumpInputUp()
@@ -241,6 +255,7 @@ public class Player : MonoBehaviour
             permitido = true;
             isJumping = false;
             numeroSaltos = 0;
+            canSecondJump = false;
             entraColisionPared = true;
         }
 

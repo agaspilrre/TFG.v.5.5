@@ -29,8 +29,11 @@ public class PlayerInput : MonoBehaviour {
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             //si nos movemos se activan las animaciones
-            
-            //si es falso corresponde animacion electro
+
+            //comprobamos que no esta ejecutando el dash
+            if (player.GetComponent<Poderes>().getDashUse())
+            {
+                //si es falso corresponde animacion electro
                 if (!player.GetComponent<Poderes>().getPlayerStates())
                 {
                     playerAnim.IdlToRun();
@@ -42,6 +45,8 @@ public class PlayerInput : MonoBehaviour {
                     playerAnim.IdlSToRunS();
                     playerAnim.RunSToIdlSFalse();
                 }
+            }
+           
                
                 
                
