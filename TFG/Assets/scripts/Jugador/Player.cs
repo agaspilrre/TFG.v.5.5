@@ -38,10 +38,12 @@ public class Player : MonoBehaviour
     int numeroSaltos;
 
     Controller2D controller;
+    PlayerInput input;
 
     Vector2 directionalInput;
     bool wallSliding;
     int wallDirX;
+    public bool isInAir;
 
     //variable para modular peso en la caida
     public float fallWeight;
@@ -62,14 +64,13 @@ public class Player : MonoBehaviour
         permitido = true;
         direccion = 1;
         poderesScript = GetComponent<Poderes>();
+        input = GetComponent<PlayerInput>();
         isJumping = false;
+        isInAir = false;
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
         savedMultiplicadorSaltos = multiplicadorSalto;
-
-
-
     }
 
     public void returnGravity()
@@ -88,6 +89,7 @@ public class Player : MonoBehaviour
     {
         CalculateVelocity();
         HandleWallSliding();
+        print(numeroSaltos);
 
         //habilidad de correr
         if (Input.GetKey(KeyCode.LeftShift))
@@ -120,15 +122,12 @@ public class Player : MonoBehaviour
 
             if (directionalInput.x > 0)
             {
-                direccion = 1;
-                //para voltear el sprite en la direccion a la que nos dirigmos
-                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                direccion = 1;               
             }
 
             else if (0 > directionalInput.x)
             {
-                direccion = -1;
-                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                direccion = -1;                
             }
 
         }
@@ -148,26 +147,29 @@ public class Player : MonoBehaviour
     }
 
     public void OnJumpInputDown()
-    {
-
-        isJumping = true;
+    {        
         if (wallSliding)
-        {
-            if (wallDirX == directionalInput.x)
-            {
-                velocity.x = -wallDirX * wallJumpClimb.x;
-                velocity.y = wallJumpClimb.y;
-            }
-            else if (directionalInput.x == 0)
-            {
-                velocity.x = -wallDirX * wallJumpOff.x;
-                velocity.y = wallJumpOff.y;
-            }
-            else
-            {
-                velocity.x = -wallDirX * wallLeap.x;
-                velocity.y = wallLeap.y;
-            }
+        {         
+
+            //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKeyDown(KeyCode.Space))
+            //{
+                if (wallDirX == directionalInput.x)
+                {
+                    velocity.x = -wallDirX * wallJumpClimb.x;
+                    velocity.y = wallJumpClimb.y;
+                }
+                else if (directionalInput.x == 0)
+                {
+                    velocity.x = -wallDirX * wallJumpOff.x;
+                    velocity.y = wallJumpOff.y;
+                }
+                else
+                {
+                    velocity.x = -wallDirX * wallLeap.x;
+                    velocity.y = wallLeap.y;
+                }
+            //}
+            
         }
         else
         {
@@ -177,13 +179,12 @@ public class Player : MonoBehaviour
                 multiplicadorSalto = 1;
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
-            else
-            if (2 > numeroSaltos && canSecondJump)
+            else if (2 > numeroSaltos && canSecondJump)
             {
                 numeroSaltos++;
                 multiplicadorSalto = savedMultiplicadorSaltos;
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
-            }
+            }                       
         }
 
         if (controller.collisions.below)

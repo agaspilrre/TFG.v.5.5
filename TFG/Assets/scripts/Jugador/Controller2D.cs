@@ -9,9 +9,14 @@ public class Controller2D : RaycastController {
 	[HideInInspector]
 	public Vector2 playerInput;
 
+    Poderes poderes;
+    Player player;
+
 	public override void Start() {
 		base.Start ();
 		collisions.faceDir = 1;
+        poderes = GetComponent<Poderes>();
+        player = GetComponent<Player>();
     }
 
 	public void Move(Vector2 moveAmount, bool standingOnPlatform) {
@@ -70,9 +75,10 @@ public class Controller2D : RaycastController {
 
 			if (hit) {
 
-				if (hit.distance == 0) {
-					continue;
-				}
+               
+                    //if (hit.distance == 0) {                    
+                    //continue;
+				//}
 
 				float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 RotatePlayer(slopeAngle);
@@ -116,10 +122,11 @@ public class Controller2D : RaycastController {
 			rayOrigin += Vector2.right * (verticalRaySpacing * i + moveAmount.x);
 			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
-			Debug.DrawRay(rayOrigin, Vector2.up * directionY,Color.red);
+			Debug.DrawRay(rayOrigin, Vector2.up * directionY,Color.blue);
 
-			if (hit) {
-				if (hit.collider.tag == "Through") {
+			if (hit) {               
+
+                if (hit.collider.tag == "Through") {
 					if (directionY == 1 || hit.distance == 0) {
 						continue;
 					}

@@ -72,16 +72,18 @@ public class PlayerInput : MonoBehaviour {
 
         player.SetDirectionalInput (directionalInput);
 
+              
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                player.OnJumpInputDown();
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                player.OnJumpInputUp();
+            }
+        
 
-
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
-
-			player.OnJumpInputDown ();
-		}
-		if (Input.GetKeyUp (KeyCode.Space)) {
-			player.OnJumpInputUp ();
-		}
+		
 
 
         //Voltear personaje.

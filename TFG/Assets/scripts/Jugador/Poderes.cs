@@ -99,9 +99,7 @@ public class Poderes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        Debug.Log("velocidad dush" + personajeRB.velocity.x);
-
+        
         if (Input.GetKeyDown(KeyCode.R))
         {
             personalityChange();
@@ -110,13 +108,7 @@ public class Poderes : MonoBehaviour
             {
                 personajeMovimiento.setCanSecondJump(true);
             }
-        }
-
-        //PODERES QUE TIENE LA PROTA SIENDO ELECTRICA
-        if (playerState == Shades.ELECTRIC)
-        {
-
-        }
+        }       
 
         if (!returnPartitionPosition)
         {
@@ -302,8 +294,6 @@ public class Poderes : MonoBehaviour
     void dash()
     {
         personajeMovimiento.setGravity0();
-
-
 
         personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 0);
 
