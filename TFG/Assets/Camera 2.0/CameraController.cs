@@ -45,6 +45,9 @@ public class CameraController : MonoBehaviour {
     [Range(0, 1)]
     float veclocidadSeguimiento = 0.7F;
 
+    [SerializeField]
+    float velocidadFueraDeCaja = 1.5f;
+
     void Start ()
     {
         blockedDirection = 0;
@@ -73,41 +76,50 @@ public class CameraController : MonoBehaviour {
         {
             bool movPermitido = CompareX();
 
+            Vector3 aux;
+
             if (movPermitido & widthDirecion == 0)
             {
                 Vector3 newPos = new Vector3(player.position.x - widthMax, cameraTransform.position.y, -10);
-                cameraTransform.position = newPos;
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, velocidadFueraDeCaja * Time.deltaTime);
             }
             else
             if (movPermitido & widthDirecion == 1)
             {
                 Vector3 newPos = new Vector3(player.position.x - widthMin, cameraTransform.position.y, -10);
-                cameraTransform.position = newPos;
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, velocidadFueraDeCaja * Time.deltaTime);
             }
-
-            Vector3 aux = new Vector3(target.position.x, cameraTransform.position.y, cameraTransform.position.z);
-            cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
+            else
+            {
+                aux = new Vector3(target.position.x, cameraTransform.position.y, cameraTransform.position.z);
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
+            }      
         }
 
         if(cameraState == State.active || (cameraState == State.blocked && blockedDirection == 0))
         {
             bool movAlturaPermitido = CompareY();
 
+            Vector3 aux;
+
             if (movAlturaPermitido & heightDirection == 0)
             {
                 Vector3 newPos = new Vector3(cameraTransform.position.x, player.position.y - heigthMax - startHeigth, -10);
-                cameraTransform.position = newPos;
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, velocidadFueraDeCaja * Time.deltaTime);
             }
             else
             if (movAlturaPermitido & heightDirection == 1)
             {
                 Vector3 newPos = new Vector3(cameraTransform.position.x, player.position.y - heigthMin - startHeigth, -10);
-                cameraTransform.position = newPos;
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, velocidadFueraDeCaja * Time.deltaTime);
             }
-
-            Vector3 aux = new Vector3(cameraTransform.position.x, target.position.y - startHeigth, cameraTransform.position.z);
-            cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
+            else
+            {
+                aux = new Vector3(cameraTransform.position.x, target.position.y - startHeigth, cameraTransform.position.z);
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
+            }
         }
+
 
         heightDirection = 3;
         widthDirecion = 3;
