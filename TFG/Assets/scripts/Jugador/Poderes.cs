@@ -57,6 +57,7 @@ public class Poderes : MonoBehaviour
     private Collider2D playerCollider;
 
     private bool cambioPersonalidad;
+    bool isInAir;
 
     private PlayerAnim playerAnim;
 
@@ -76,6 +77,7 @@ public class Poderes : MonoBehaviour
 
         //variable que controla el numero de dush que se puede hacer, en principio se activa cuando el personaje toca el suelo
         dashUse = true;
+        isInAir = false;
 
         cargaDash = 0;
 
@@ -98,7 +100,7 @@ public class Poderes : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {           
         
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -116,7 +118,7 @@ public class Poderes : MonoBehaviour
             if (Input.GetButton("Dash") && dashUse)//calcula cuanto tiempo llevas apretando
             {
                 personajeMovimiento.setPermitido(false);
-
+                
                 cargaDash += Time.deltaTime;
 
                 if (cargaDash > 0.3)
@@ -159,48 +161,20 @@ public class Poderes : MonoBehaviour
                 if (cargaDash < 0.3)//si es menor alo que este numero dash normal
                 {
                     verticaldash();
-                }
-                else
-                {
-                    //solo puedo hacer el dash electrico si estoy en estado electrico
-                    if (playerState == Shades.ELECTRIC)
-                    {
-                        electroDash();
-                    }
-
-                    else
-                    {
-
-                        verticaldash();
-                    }
-                }
+                    isInAir = true;
+                }               
 
                 cargaDash = 0;
             }
             else if (Input.GetButtonUp("Dash") && dashUse)
             {
-
                 materialCargaDash.color = Color.black;
 
                 if (cargaDash < 0.3)//si es menor alo que este numero dash normal
                 {
                     dash();
                 }
-                else
-                {
-                    //solo puedo hacer el dash electrico si estoy en estado electrico
-                    if (playerState == Shades.ELECTRIC)
-                    {
-                        electroDash();
-                    }
-
-                    else
-                    {
-
-                        dash();
-                    }
-                }
-
+                
                 cargaDash = 0;
             }
 
@@ -283,6 +257,12 @@ public class Poderes : MonoBehaviour
 
 
     }
+
+    public void setIsInAir(bool aux)
+    {
+        isInAir = aux;
+    }
+
     public bool getStatePartition()
     {
         if (state == Partition.PARTITION)
@@ -306,8 +286,6 @@ public class Poderes : MonoBehaviour
     void verticaldash()
     {
         personajeMovimiento.setGravity0();
-
-
 
         personajeRB.velocity = new Vector2(0, 1 * velocidadDash);
 
@@ -353,7 +331,7 @@ public class Poderes : MonoBehaviour
         personajeRB.velocity = new Vector2(0, 0);
         personajeRB.gravityScale = initGravity;
 
-        if (!personajeMovimiento.getIsJumping())
+        if (!isInAir)
         {
             Invoke("dushGround", duracionDash);
         }

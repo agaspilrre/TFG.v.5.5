@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         poderesScript = GetComponent<Poderes>();
         input = GetComponent<PlayerInput>();
         isJumping = false;
-        isInAir = false;
+       
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
@@ -89,8 +89,8 @@ public class Player : MonoBehaviour
     {
         CalculateVelocity();
         HandleWallSliding();
-        print(numeroSaltos);
 
+        isInAir = false;
         //habilidad de correr
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -240,7 +240,6 @@ public class Player : MonoBehaviour
         permitido = prueba;
     }
 
-
     public bool getIsMoving()
     {
         if (directionalInput.x != 0)
@@ -258,6 +257,7 @@ public class Player : MonoBehaviour
             numeroSaltos = 0;
             canSecondJump = false;
             entraColisionPared = true;
+            poderesScript.setIsInAir(false);
         }
 
     }
