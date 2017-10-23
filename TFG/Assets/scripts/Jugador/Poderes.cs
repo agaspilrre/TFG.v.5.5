@@ -61,6 +61,10 @@ public class Poderes : MonoBehaviour
 
     private PlayerAnim playerAnim;
 
+    //variables para testeo con y sin dush infinito
+    public bool infinityDush;
+    bool verticalDush;
+
     // Use this for initialization
     void Start()
     {
@@ -161,7 +165,7 @@ public class Poderes : MonoBehaviour
                 if (cargaDash < 0.3)//si es menor alo que este numero dash normal
                 {
                     verticaldash();
-                    isInAir = true;
+                    
                 }               
 
                 cargaDash = 0;
@@ -285,6 +289,7 @@ public class Poderes : MonoBehaviour
     //PARA DASH SIXDIRECCIONAL
     void verticaldash()
     {
+        verticalDush = true;
         personajeMovimiento.setGravity0();
 
         personajeRB.velocity = new Vector2(0, 1 * velocidadDash);
@@ -331,10 +336,22 @@ public class Poderes : MonoBehaviour
         personajeRB.velocity = new Vector2(0, 0);
         personajeRB.gravityScale = initGravity;
 
-        if (!isInAir)
+        //condicion para testear con dush infinito y sin dush infinito
+        if (infinityDush)
         {
             Invoke("dushGround", duracionDash);
         }
+
+        else
+        {
+            if (personajeMovimiento.getNumSaltos() == 0 && !verticalDush)
+            {
+                Invoke("dushGround", duracionDash);
+            }
+        }
+       
+
+        verticalDush = false;
     }
 
     public bool getDashUse()
