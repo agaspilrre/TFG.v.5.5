@@ -149,7 +149,9 @@ public class Player : MonoBehaviour
     public void OnJumpInputDown()
     {        
         if (wallSliding)
-        {         
+        {
+            //para quitar el salto extra que hay al hacer walljumping
+            numeroSaltos = 1;
 
             //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKeyDown(KeyCode.Space))
             //{
