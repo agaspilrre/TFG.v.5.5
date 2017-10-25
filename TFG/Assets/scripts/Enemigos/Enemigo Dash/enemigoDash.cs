@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class enemigoDash : MonoBehaviour {
 
-    public enum State { ataque, dash, patrulla, carga };
+    public enum State { ataque, dash, patrulla, carga, goingBack };
     int direccion;//1 es derecha -1 izquierda
     State estado;
 
@@ -34,6 +34,9 @@ public class enemigoDash : MonoBehaviour {
     float waitTime;
     float timerCarga;
 
+    [SerializeField]
+
+
     Rigidbody2D rb;
     float playerTr;
 
@@ -58,7 +61,7 @@ public class enemigoDash : MonoBehaviour {
         materialEnemigo.color = Color.red;
 
         timerCarga = waitTime;
-        timerForDirection = 0.5f;
+        timerForDirection = 0f;
 
         endAttack = true;
         canGetDamage = true;
@@ -88,15 +91,36 @@ public class enemigoDash : MonoBehaviour {
         {
             ataque();
         }
-        else
+        else if(estado == State.dash)
         {
             dash();
+        }
+        else
+        {
+            GoingBack();
         }
     }
 
     void patrullar()
     {
-        rb.velocity = new Vector2(velocidadPatrulla * direccion * Time.deltaTime, 0);
+        rb.velocity = new Vector2(velocidadPatrulla * direccion * Time.deltaTime, rb.velocity.y);
+    }
+
+    void GoingBack()
+    {
+
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = startPosition;
+
+        estado = State.patrulla;
+    }
+
+    public void SetPatrullaOut()
+    {
+        estado = State.goingBack;
     }
 
     void carga()
