@@ -6,6 +6,7 @@ public class PlayerInputPS4 : MonoBehaviour
 {
 
     Player player;
+    private PlayerAnim playerAnim;
 
 
     //variable para activar las animaciones
@@ -20,6 +21,7 @@ public class PlayerInputPS4 : MonoBehaviour
         anim = GetComponent<Animator>();
 
         direccion = Direccion.derecha;
+        playerAnim = GetComponent<PlayerAnim>();
     }
 
     void Update()
@@ -30,71 +32,67 @@ public class PlayerInputPS4 : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             //si nos movemos se activan las animaciones
-            if (Input.GetAxisRaw("Horizontal") > 0)
+
+            //comprobamos que no esta ejecutando el dash
+            if (player.GetComponent<Poderes>().getDashUse())
             {
                 //si es falso corresponde animacion electro
                 if (!player.GetComponent<Poderes>().getPlayerStates())
                 {
-                    anim.SetBool("idle", false);
-                    anim.SetBool("runRigth", true);
+                    playerAnim.IdlToRun();
+                    playerAnim.RunToIdlFalse();
                 }
 
                 else
                 {
-                    anim.SetBool("idle", false);
-                    anim.SetBool("runShadow", true);
+                    playerAnim.IdlSToRunS();
+                    playerAnim.RunSToIdlSFalse();
                 }
+            }
 
 
 
+
+
+
+
+        }
+
+        else if (Input.GetAxis("Horizontal") == 0)
+        {
+            if (!player.GetComponent<Poderes>().getPlayerStates())
+            {
+                playerAnim.RunToIdl();
+                playerAnim.IdlToRunFalse();
             }
 
             else
             {
-
-                //si es falso corresponde animacion electro
-                if (!player.GetComponent<Poderes>().getPlayerStates())
-                {
-                    anim.SetBool("idle", false);
-                    anim.SetBool("runRigth", true);
-                }
-
-                else
-                {
-                    anim.SetBool("idle", false);
-                    anim.SetBool("runShadow", true);
-                }
-
+                playerAnim.RunSToIdlS();
+                playerAnim.IdlSToRunSFalse();
             }
-        }
-
-        if (Input.GetAxis("Horizontal") == 0)
-        {
-            anim.SetBool("runShadow", false);
-            anim.SetBool("runRigth", false);
-            anim.SetBool("idle", true);
         }
 
         player.SetDirectionalInput(directionalInput);
 
 
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("PS4_X"))
         {
-
             player.OnJumpInputDown();
         }
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetButtonUp("PS4_X"))
         {
             player.OnJumpInputUp();
         }
 
 
+
+
+
         //Voltear personaje.
-        if (Input.GetAxis("Horizontal") > 0 && direccion == Direccion.izquierda)
+        if (Input.GetAxisRaw("Horizontal") > 0 && direccion == Direccion.izquierda)
             flip();
-        else if (Input.GetAxis("Horizontal") < 0 && direccion == Direccion.derecha)
+        else if (Input.GetAxisRaw("Horizontal") < 0 && direccion == Direccion.derecha)
             flip();
     }
 

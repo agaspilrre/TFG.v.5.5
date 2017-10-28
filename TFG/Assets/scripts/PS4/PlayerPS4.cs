@@ -21,6 +21,8 @@ public class PlayerPS4 : MonoBehaviour
     public float wallSlideSpeedMax = 3;
     public float wallStickTime = .25f;
     public float timeToWallUnstick;
+    public float multiplicadorSalto;
+    float savedMultiplicadorSaltos;
 
     float gravity;
     float maxJumpVelocity;
@@ -30,16 +32,24 @@ public class PlayerPS4 : MonoBehaviour
 
     public bool permitido;
     bool entraColisionPared = false;
-    PoderesPS4 poderesScript;
+    Poderes poderesScript;
     int direccion;
     bool isJumping;
     int numeroSaltos;
 
     Controller2D controller;
+    PlayerInput input;
 
     Vector2 directionalInput;
     bool wallSliding;
     int wallDirX;
+    public bool isInAir;
+
+    //variable para modular peso en la caida
+    public float fallWeight;
+
+    public bool canSecondJump;
+
 
 
 
@@ -53,12 +63,14 @@ public class PlayerPS4 : MonoBehaviour
 
         permitido = true;
         direccion = 1;
-        poderesScript = GetComponent<PoderesPS4>();
+        poderesScript = GetComponent<Poderes>();
+        input = GetComponent<PlayerInput>();
         isJumping = false;
+
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
-
+        savedMultiplicadorSaltos = multiplicadorSalto;
     }
 
     public void returnGravity()
@@ -78,6 +90,7 @@ public class PlayerPS4 : MonoBehaviour
         CalculateVelocity();
         HandleWallSliding();
 
+        isInAir = false;
         //habilidad de correr
         if (Input.GetButton("PS4_R3"))
         {
@@ -110,17 +123,22 @@ public class PlayerPS4 : MonoBehaviour
             if (directionalInput.x > 0)
             {
                 direccion = 1;
-                //para voltear el sprite en la direccion a la que nos dirigmos
-                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
 
             else if (0 > directionalInput.x)
             {
                 direccion = -1;
-                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
 
         }
+
+        //modular peso en la caida
+        //Debug.Log("la velocidad en y es:"+velocity.y);
+        if (velocity.y <= 0 && velocity.y >= -100)
+        {
+            velocity.y *= fallWeight;
+        }
+
     }
 
     public void SetDirectionalInput(Vector2 input)
@@ -130,10 +148,13 @@ public class PlayerPS4 : MonoBehaviour
 
     public void OnJumpInputDown()
     {
-
-        isJumping = true;
         if (wallSliding)
         {
+            //para quitar el salto extra que hay al hacer walljumping
+            numeroSaltos = 1;
+
+            //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKeyDown(KeyCode.Space))
+            //{
             if (wallDirX == directionalInput.x)
             {
                 velocity.x = -wallDirX * wallJumpClimb.x;
@@ -149,15 +170,25 @@ public class PlayerPS4 : MonoBehaviour
                 velocity.x = -wallDirX * wallLeap.x;
                 velocity.y = wallLeap.y;
             }
+            //}
+
         }
         else
         {
-            if (2 > numeroSaltos)
+            if (1 > numeroSaltos)
             {
                 numeroSaltos++;
-                velocity.y = maxJumpVelocity / numeroSaltos;
+                multiplicadorSalto = 1;
+                velocity.y = maxJumpVelocity * multiplicadorSalto;
+            }
+            else if (2 > numeroSaltos && canSecondJump)
+            {
+                numeroSaltos++;
+                multiplicadorSalto = savedMultiplicadorSaltos;
+                velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
         }
+
         if (controller.collisions.below)
         {
             if (controller.collisions.slidingDownMaxSlope)
@@ -173,6 +204,18 @@ public class PlayerPS4 : MonoBehaviour
 			}*/
         }
 
+    }
+
+    //funcion para controlar el numero de saltos para la accion de pulsar R despues del primer salto
+    public int getNumSaltos()
+    {
+        return numeroSaltos;
+    }
+
+    //cambiar la variable para permitir el segundo salto, se cambia cuando pulsamos R y ya hemos saltado una vez script Poderes
+    public void setCanSecondJump(bool _value)
+    {
+        canSecondJump = _value;
     }
 
     public void OnJumpInputUp()
@@ -199,7 +242,6 @@ public class PlayerPS4 : MonoBehaviour
         permitido = prueba;
     }
 
-
     public bool getIsMoving()
     {
         if (directionalInput.x != 0)
@@ -215,7 +257,9 @@ public class PlayerPS4 : MonoBehaviour
             permitido = true;
             isJumping = false;
             numeroSaltos = 0;
+            canSecondJump = false;
             entraColisionPared = true;
+            poderesScript.setIsInAir(false);
         }
 
     }
@@ -234,6 +278,13 @@ public class PlayerPS4 : MonoBehaviour
             tri.setMoveExtra(new Vector3(0, 0, 0));
         }
 
+        if (other.name == "CameraBlock")
+        {
+            TriggerCameraBlock tri = other.gameObject.GetComponent<TriggerCameraBlock>();
+
+            tri.SetBlockMov(false);
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -247,8 +298,13 @@ public class PlayerPS4 : MonoBehaviour
             tri.setVelocidadEscala(1);
 
             tri.setMoveExtraGuardado();
+        }
 
+        if (other.name == "CameraBlock")
+        {
+            TriggerCameraBlock tri = other.gameObject.GetComponent<TriggerCameraBlock>();
 
+            tri.SetBlockMov(true);
         }
 
     }

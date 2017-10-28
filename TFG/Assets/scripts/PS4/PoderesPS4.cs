@@ -57,6 +57,13 @@ public class PoderesPS4 : MonoBehaviour
     private Collider2D playerCollider;
 
     private bool cambioPersonalidad;
+    bool isInAir;
+
+    private PlayerAnim playerAnim;
+
+    //variables para testeo con y sin dush infinito
+    public bool infinityDush;
+    bool verticalDush;
 
     // Use this for initialization
     void Start()
@@ -74,6 +81,7 @@ public class PoderesPS4 : MonoBehaviour
 
         //variable que controla el numero de dush que se puede hacer, en principio se activa cuando el personaje toca el suelo
         dashUse = true;
+        isInAir = false;
 
         cargaDash = 0;
 
@@ -90,42 +98,28 @@ public class PoderesPS4 : MonoBehaviour
         //para poder modificar el sprite del sprite renderer cuando cambiemos de estados
         this.gameObject.GetComponent<SpriteRenderer>().sprite = ElectricShade;
         sr = GetComponent<SpriteRenderer>();
+
+        playerAnim = GetComponent<PlayerAnim>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("PS4_Triangle"))
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!cambioPersonalidad)
+            personalityChange();
+            //activa el segundo salto al cambiar de personalidad
+            if (personajeMovimiento.getNumSaltos() == 1)
             {
-                playerState = Shades.SHADOW;
-                cambioPersonalidad = true;
-                sr.sprite = ShadowShade;
-
-
-                print("sombra");
+                personajeMovimiento.setCanSecondJump(true);
             }
-            else
-            {
-                playerState = Shades.ELECTRIC;
-                cambioPersonalidad = false;
-                sr.sprite = ElectricShade;
-
-                print("elec");
-            }
-        }
-
-        //PODERES QUE TIENE LA PROTA SIENDO ELECTRICA
-        if (playerState == Shades.ELECTRIC)
-        {
-
         }
 
         if (!returnPartitionPosition)
         {
             //input para el dash
-            if (Input.GetButton("PS4_L1") && dashUse)//calcula cuanto tiempo llevas apretando
+            if (Input.GetButton("Dash") && dashUse)//calcula cuanto tiempo llevas apretando
             {
                 personajeMovimiento.setPermitido(false);
 
@@ -136,14 +130,14 @@ public class PoderesPS4 : MonoBehaviour
                     materialCargaDash.color = Color.white;
                 }
             }
-            if (Input.GetButtonUp("PS4_L1") && dashUse)
+            /*if ((Input.GetButtonUp("Dash") && dashUse) && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))&& (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)|| (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))))
             {
 
                 materialCargaDash.color = Color.black;
 
                 if (cargaDash < 0.3)//si es menor alo que este numero dash normal
                 {
-                    dash();
+                    DiagonalDash();
                 }
                 else
                 {
@@ -155,8 +149,34 @@ public class PoderesPS4 : MonoBehaviour
 
                     else
                     {
-                        dash();
+
+                        DiagonalDash();
                     }
+                }
+
+                cargaDash = 0;
+            }*/
+            //para el nuevo dash de seis direcciones
+            /*else*/
+            if (Input.GetButton("PS4_L1") && dashUse && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
+            {
+                materialCargaDash.color = Color.black;
+
+                if (cargaDash < 0.3)//si es menor alo que este numero dash normal
+                {
+                    verticaldash();
+
+                }
+
+                cargaDash = 0;
+            }
+            else if (Input.GetButtonUp("PS4_L1") && dashUse)
+            {
+                materialCargaDash.color = Color.black;
+
+                if (cargaDash < 0.3)//si es menor alo que este numero dash normal
+                {
+                    dash();
                 }
 
                 cargaDash = 0;
@@ -241,6 +261,12 @@ public class PoderesPS4 : MonoBehaviour
 
 
     }
+
+    public void setIsInAir(bool aux)
+    {
+        isInAir = aux;
+    }
+
     public bool getStatePartition()
     {
         if (state == Partition.PARTITION)
@@ -252,12 +278,42 @@ public class PoderesPS4 : MonoBehaviour
     void dash()
     {
         personajeMovimiento.setGravity0();
+
         personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 0);
 
         dashUse = false;
         //despues del tiempo del dash volver a permitir movimiento
         Invoke("dashPermitido", duracionDash);
     }
+
+    //PARA DASH SIXDIRECCIONAL
+    void verticaldash()
+    {
+        verticalDush = true;
+        personajeMovimiento.setGravity0();
+
+        personajeRB.velocity = new Vector2(0, 1 * velocidadDash);
+
+        dashUse = false;
+        //despues del tiempo del dash volver a permitir movimiento
+        Invoke("dashPermitido", duracionDash);//ATENCION QUITAR CUANDO SE IMPLEMENTE EL DUSH EN 6 DIRECCIONES Y ACTIVARLO CUANDO EL PLAYER TOQUE EL SUELO
+    }
+
+    //PARA DASH SIXDIRECCIONAL
+    /*
+    void DiagonalDash()
+    {
+        personajeMovimiento.setGravity0();
+
+
+
+        personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 1 * velocidadDash);
+
+        dashUse = false;
+        //despues del tiempo del dash volver a permitir movimiento
+        Invoke("dashPermitido", duracionDash);//ATENCION QUITAR CUANDO SE IMPLEMENTE EL DUSH EN 6 DIRECCIONES Y ACTIVARLO CUANDO EL PLAYER TOQUE EL SUELO
+    }
+    */
 
     void electroDash()
     {
@@ -277,14 +333,31 @@ public class PoderesPS4 : MonoBehaviour
         personajeMovimiento.returnGravity();
         personajeMovimiento.setPermitido(true);
         //volvemos activar la gravedad una vez finalizado el dush
+        personajeRB.velocity = new Vector2(0, 0);
         personajeRB.gravityScale = initGravity;
 
-        if (!personajeMovimiento.getIsJumping())
+        //condicion para testear con dush infinito y sin dush infinito
+        if (infinityDush)
         {
             Invoke("dushGround", duracionDash);
         }
+
+        else
+        {
+            if (personajeMovimiento.getNumSaltos() == 0 && !verticalDush)
+            {
+                Invoke("dushGround", duracionDash);
+            }
+        }
+
+
+        verticalDush = false;
     }
 
+    public bool getDashUse()
+    {
+        return dashUse;
+    }
 
     public void SetDashUse(bool use)
     {
@@ -320,6 +393,32 @@ public class PoderesPS4 : MonoBehaviour
         return cambioPersonalidad;
     }
 
+    //funcion para cambiar de personalidad. se hace funcion porque no solo se activa con el boton R si no que hay trigger que lo cambian automaticamente
+    public void personalityChange()
+    {
+
+        if (!cambioPersonalidad)
+        {
+            playerState = Shades.SHADOW;
+            cambioPersonalidad = true;
+            //sr.sprite = ShadowShade;
+            //cambiamos a animacion idle de sombra
+            playerAnim.IdlSToIdlFalse();
+            playerAnim.IdlToIdlS();
+
+            print("sombra");
+        }
+        else
+        {
+            playerState = Shades.ELECTRIC;
+            cambioPersonalidad = false;
+            //sr.sprite = ElectricShade;
+            playerAnim.IdlToIdlSFalse();
+            playerAnim.IdlSToIdl();
+            print("elec");
+        }
+
+    }
+
 
 }
-
