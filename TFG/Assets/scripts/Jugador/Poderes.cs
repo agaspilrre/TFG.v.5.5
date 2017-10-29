@@ -119,7 +119,7 @@ public class Poderes : MonoBehaviour
         if (!returnPartitionPosition)
         {
             //input para el dash
-            if (Input.GetButton("Dash") || Input.GetButton("PS4_L1") && dashUse)//calcula cuanto tiempo llevas apretando
+            if ((Input.GetButton("Dash") || Input.GetButton("PS4_L1")) && dashUse)//calcula cuanto tiempo llevas apretando
             {
                 personajeMovimiento.setPermitido(false);
                 
@@ -158,7 +158,7 @@ public class Poderes : MonoBehaviour
             }*/
             //para el nuevo dash de seis direcciones
             /*else*/
-            if (Input.GetButtonUp("Dash") || Input.GetButton("PS4_L1") && dashUse && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxisRaw("Vertical") == 1))
+            if ((Input.GetButtonUp("Dash") || Input.GetButton("PS4_L1")) && dashUse && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxisRaw("Vertical") == 1))
             {
                 materialCargaDash.color = Color.black;
 
@@ -170,7 +170,7 @@ public class Poderes : MonoBehaviour
 
                 cargaDash = 0;
             }
-            else if (Input.GetButtonUp("Dash") || Input.GetButton("PS4_L1") && dashUse)
+            else if ((Input.GetButtonUp("Dash") || Input.GetButton("PS4_L1") )&& dashUse)
             {
                 materialCargaDash.color = Color.black;
 

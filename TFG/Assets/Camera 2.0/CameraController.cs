@@ -80,20 +80,17 @@ public class CameraController : MonoBehaviour {
 
             if (movPermitido & widthDirecion == 0)
             {
-                Vector3 newPos = new Vector3(player.position.x - widthMax, cameraTransform.position.y, -10);
+                Vector3 newPos = new Vector3(target.position.x - widthMax, cameraTransform.position.y, -10);
                 cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, velocidadFueraDeCaja * Time.deltaTime);
             }
             else
             if (movPermitido & widthDirecion == 1)
             {
-                Vector3 newPos = new Vector3(player.position.x - widthMin, cameraTransform.position.y, -10);
+                Vector3 newPos = new Vector3(target.position.x - widthMin, cameraTransform.position.y, -10);
                 cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, velocidadFueraDeCaja * Time.deltaTime);
             }
-            else
-            {
-                aux = new Vector3(target.position.x, cameraTransform.position.y, cameraTransform.position.z);
-                cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
-            }      
+            aux = new Vector3(target.position.x, cameraTransform.position.y, cameraTransform.position.z);
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);   
         }
 
         if(cameraState == State.active || (cameraState == State.blocked && blockedDirection == 0))
@@ -104,20 +101,19 @@ public class CameraController : MonoBehaviour {
 
             if (movAlturaPermitido & heightDirection == 0)
             {
-                Vector3 newPos = new Vector3(cameraTransform.position.x, player.position.y - heigthMax - startHeigth, -10);
+                Vector3 newPos = new Vector3(cameraTransform.position.x, target.position.y - heigthMax - startHeigth, -10);
                 cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, velocidadFueraDeCaja * Time.deltaTime);
             }
             else
             if (movAlturaPermitido & heightDirection == 1)
             {
-                Vector3 newPos = new Vector3(cameraTransform.position.x, player.position.y - heigthMin - startHeigth, -10);
+                Vector3 newPos = new Vector3(cameraTransform.position.x, target.position.y - heigthMin - startHeigth, -10);
                 cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, velocidadFueraDeCaja * Time.deltaTime);
             }
-            else
-            {
-                aux = new Vector3(cameraTransform.position.x, target.position.y - startHeigth, cameraTransform.position.z);
-                cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
-            }
+
+            aux = new Vector3(cameraTransform.position.x, target.position.y - startHeigth, cameraTransform.position.z);
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, aux, veclocidadSeguimiento * Time.deltaTime);
+            
         }
 
 
@@ -136,7 +132,6 @@ public class CameraController : MonoBehaviour {
     public void SetCameraState(string state, string direction)
     {
         cameraState = State.blocked;
-        print("a");
 
         if (direction == "BlockWidth")
             blockedDirection = 0;
@@ -149,13 +144,13 @@ public class CameraController : MonoBehaviour {
     bool CompareX()
     {
         //se sale por la derecha
-        if (player.position.x - cameraTransform.position.x > widthMax)
+        if (target.position.x - cameraTransform.position.x > widthMax)
         {
             widthDirecion = 0;
             return true;
         }
         // se sale por la izquierda
-        if (player.position.x - cameraTransform.position.x < widthMin)
+        if (target.position.x - cameraTransform.position.x < widthMin)
         {
             widthDirecion = 1;
             return true;
@@ -167,12 +162,12 @@ public class CameraController : MonoBehaviour {
     bool CompareY()
     {
         //se sale por arriba
-        if (player.position.y - cameraTransform.position.y - startHeigth > heigthMax)
+        if (target.position.y - cameraTransform.position.y - startHeigth > heigthMax)
         {
             heightDirection = 0;
             return true;
         }// se sale por abajo
-        if (player.position.y - cameraTransform.position.y - startHeigth < heigthMin)
+        if (target.position.y - cameraTransform.position.y - startHeigth < heigthMin)
         {
             heightDirection = 1;
             return true;
