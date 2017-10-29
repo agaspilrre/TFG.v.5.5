@@ -106,7 +106,7 @@ public class Poderes : MonoBehaviour
     void Update()
     {           
         
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetButton("PS4_Triangle"))
         {
             personalityChange();
             //activa el segundo salto al cambiar de personalidad
@@ -119,7 +119,7 @@ public class Poderes : MonoBehaviour
         if (!returnPartitionPosition)
         {
             //input para el dash
-            if (Input.GetButton("Dash") && dashUse)//calcula cuanto tiempo llevas apretando
+            if (Input.GetButton("Dash") || Input.GetButton("PS4_L1") && dashUse)//calcula cuanto tiempo llevas apretando
             {
                 personajeMovimiento.setPermitido(false);
                 
@@ -158,7 +158,7 @@ public class Poderes : MonoBehaviour
             }*/
             //para el nuevo dash de seis direcciones
             /*else*/
-            if (Input.GetButtonUp("Dash") && dashUse && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
+            if (Input.GetButtonUp("Dash") || Input.GetButton("PS4_L1") && dashUse && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxisRaw("Vertical") == 1))
             {
                 materialCargaDash.color = Color.black;
 
@@ -170,7 +170,7 @@ public class Poderes : MonoBehaviour
 
                 cargaDash = 0;
             }
-            else if (Input.GetButtonUp("Dash") && dashUse)
+            else if (Input.GetButtonUp("Dash") || Input.GetButton("PS4_L1") && dashUse)
             {
                 materialCargaDash.color = Color.black;
 
@@ -189,7 +189,7 @@ public class Poderes : MonoBehaviour
             }
 
             //poder de particion de sombras
-            if (Input.GetKeyDown(KeyCode.F) && playerState == Shades.SHADOW)
+            if (Input.GetKeyDown(KeyCode.F) || Input.GetButton("PS4_R1") && playerState == Shades.SHADOW)
             {
 
                 if (state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)

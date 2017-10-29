@@ -73,11 +73,11 @@ public class PlayerInput : MonoBehaviour {
         player.SetDirectionalInput (directionalInput);
 
               
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
             {
                 player.OnJumpInputDown();
             }
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("PS4_X"))
             {
                 player.OnJumpInputUp();
             }

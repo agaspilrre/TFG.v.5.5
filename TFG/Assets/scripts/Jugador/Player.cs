@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 
         isInAir = false;
         //habilidad de correr
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("PS4_R3"))
         {
             //se le asigna la velocidad de correr
             moveSpeed = runSpeed;
