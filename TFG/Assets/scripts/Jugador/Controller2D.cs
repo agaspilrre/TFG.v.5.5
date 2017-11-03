@@ -74,8 +74,7 @@ public class Controller2D : RaycastController {
 			Debug.DrawRay(rayOrigin, Vector2.right * directionX,Color.red);
 
 			if (hit) {
-
-               
+                
                     //if (hit.distance == 0) {                    
                     //continue;
 				//}

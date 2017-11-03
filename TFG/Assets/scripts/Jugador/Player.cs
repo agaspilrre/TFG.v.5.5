@@ -261,6 +261,12 @@ public class Player : MonoBehaviour
             entraColisionPared = true;
             poderesScript.setIsInAir(false);
         }
+        
+        if (coll.collider.name == "Platform")
+        {
+            transform.parent = coll.transform;
+            print("entra");
+        }
 
     }
 
@@ -283,7 +289,7 @@ public class Player : MonoBehaviour
             TriggerCameraBlock tri = other.gameObject.GetComponent<TriggerCameraBlock>();
 
             tri.SetBlockMov(false);
-        }
+        }      
 
     }
 
@@ -308,6 +314,14 @@ public class Player : MonoBehaviour
         }
 
     }
+
+   
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.collider.name == "Platform")
+            transform.parent = null;
+    }
+
 
     void HandleWallSliding()
     {
@@ -349,5 +363,9 @@ public class Player : MonoBehaviour
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
+
+    
+
+   
 }
 
