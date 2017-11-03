@@ -91,10 +91,4 @@ public class lifeScript : MonoBehaviour {
     {
         return invulnerable;
     }
-
-
-
-
-
-
 }

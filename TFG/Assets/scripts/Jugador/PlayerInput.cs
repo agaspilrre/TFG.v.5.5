@@ -45,14 +45,7 @@ public class PlayerInput : MonoBehaviour {
                     playerAnim.IdlSToRunS();
                     playerAnim.RunSToIdlSFalse();
                 }
-            }
-           
-               
-                
-               
-            
-
-           
+            }           
         }
 
         else if (Input.GetAxis("Horizontal") == 0)

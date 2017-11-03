@@ -269,52 +269,6 @@ public class Player : MonoBehaviour
         }
 
     }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-
-        if (other.name == "Trigger")
-        {
-            triggerCameraSize tri = other.gameObject.GetComponent<triggerCameraSize>();
-
-            tri.setLerp(true);
-
-            tri.setVelocidadEscala(-1);
-
-            tri.setMoveExtra(new Vector3(0, 0, 0));
-        }
-
-        if (other.name == "CameraBlock")
-        {
-            TriggerCameraBlock tri = other.gameObject.GetComponent<TriggerCameraBlock>();
-
-            tri.SetBlockMov(false);
-        }      
-
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.name == "Trigger")
-        {
-            triggerCameraSize tri = other.gameObject.GetComponent<triggerCameraSize>();
-
-            tri.setLerp(true);
-
-            tri.setVelocidadEscala(1);
-
-            tri.setMoveExtraGuardado();
-        }
-
-        if (other.name == "CameraBlock")
-        {
-            TriggerCameraBlock tri = other.gameObject.GetComponent<TriggerCameraBlock>();
-
-            tri.SetBlockMov(true);
-        }
-
-    }
-
    
     private void OnCollisionExit2D(Collision2D other)
     {
@@ -352,7 +306,6 @@ public class Player : MonoBehaviour
                 timeToWallUnstick -= Time.deltaTime;
 
             }
-
         }
 
     }
