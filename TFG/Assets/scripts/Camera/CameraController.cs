@@ -116,7 +116,6 @@ public class CameraController : MonoBehaviour {
             
         }
 
-
         heightDirection = 3;
         widthDirecion = 3;
     }
@@ -135,8 +134,10 @@ public class CameraController : MonoBehaviour {
 
         if (direction == "BlockWidth")
             blockedDirection = 0;
-        else
+        else if (direction == "BlockHeigth")
             blockedDirection = 1;
+        else
+            blockedDirection = 2;
     }
 
     #region compare position
