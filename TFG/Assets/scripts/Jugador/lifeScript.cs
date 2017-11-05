@@ -9,6 +9,8 @@ public class lifeScript : MonoBehaviour {
 
     public int invulnerableTime;
 
+    CameraShake cameraShake;
+
     GameManager gameManager;
 
     [SerializeField]
@@ -24,7 +26,9 @@ public class lifeScript : MonoBehaviour {
 
         if(GameObject.Find("GameManager") != null)
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-	}
+
+        cameraShake = Camera.main.GetComponent<CameraShake>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -56,11 +60,11 @@ public class lifeScript : MonoBehaviour {
             {
                 life[lifeCount].SetActive(false);
                 lifeCount--;
+                cameraShake.Shake();
             }
             invulnerable = true;
         }
        
-
         if (lifeCount < 0)
         {
             //cargar gameover o lo que proceda
@@ -81,8 +85,6 @@ public class lifeScript : MonoBehaviour {
                 lifeCount++;
                 life[lifeCount].SetActive(true);
             }
-            
-
         }
 
     }

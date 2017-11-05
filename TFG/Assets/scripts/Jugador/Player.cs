@@ -265,7 +265,6 @@ public class Player : MonoBehaviour
         if (coll.collider.name == "Platform")
         {
             transform.parent = coll.transform;
-            print("entra");
         }
 
     }
