@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class enemigoDash : MonoBehaviour {
 
-    public enum State { ataque, dash, patrulla, carga, goingBack };
+    public enum State { ataque, dash, patrulla, carga, knockout, goingBack };
     int direccion;//1 es derecha -1 izquierda
     State estado;
 
     public Material materialEnemigo;
 
-    GameObject protagonista;
+    Transform protagonista;
     [SerializeField]
     GameObject triggerDamage;
 
-    bool endAttack;//if attack has ended
     bool canGetDamage;
 
     [SerializeField]
     float spaceForAnimation;
 
-    [SerializeField]
+    [SerializeField][Range(0,100)]
     float maxDistanceFromStart;
-    [SerializeField]
+    [SerializeField][Range(-100, 0)]
     float minDistanceFromStart;
     Vector3 startPosition;
     float timerForDirection;//timer so that isnt always changing direction
@@ -31,11 +30,12 @@ public class enemigoDash : MonoBehaviour {
     int damage = 2;
 
     [SerializeField]
-    float waitTime;
+    float chargeTime;
     float timerCarga;
 
     [SerializeField]
-
+    float knockoutTime;
+    float knockoutSaveTime;
 
     Rigidbody2D rb;
     float playerTr;
@@ -51,7 +51,7 @@ public class enemigoDash : MonoBehaviour {
     {
         estado = State.patrulla;
 
-        protagonista = GameObject.Find("Personaje");
+        protagonista = GameObject.Find("Personaje").GetComponent<Transform>();
         startPosition = transform.position;
 
         direccion = 1;
@@ -60,10 +60,11 @@ public class enemigoDash : MonoBehaviour {
 
         materialEnemigo.color = Color.red;
 
-        timerCarga = waitTime;
+        timerCarga = chargeTime;
+        knockoutSaveTime = knockoutTime;
+
         timerForDirection = 0f;
 
-        endAttack = true;
         canGetDamage = true;
     }
 
@@ -95,9 +96,13 @@ public class enemigoDash : MonoBehaviour {
         {
             dash();
         }
-        else
+        else if(estado == State.goingBack)
         {
             GoingBack();
+        }
+        else if (estado == State.knockout)
+        {
+            knockout();
         }
     }
 
@@ -108,7 +113,11 @@ public class enemigoDash : MonoBehaviour {
 
     void GoingBack()
     {
+        transform.position = startPosition;
 
+        estado = State.patrulla;
+
+        direccion = 1;
     }
 
     public void ResetPosition()
@@ -116,11 +125,6 @@ public class enemigoDash : MonoBehaviour {
         transform.position = startPosition;
 
         estado = State.patrulla;
-    }
-
-    public void SetPatrullaOut()
-    {
-        estado = State.goingBack;
     }
 
     void carga()
@@ -131,9 +135,19 @@ public class enemigoDash : MonoBehaviour {
         {
             setEstadoDash();
 
-            endAttack = false;
+            timerCarga = chargeTime;
+        }
+    }
 
-            timerCarga = waitTime;
+    void knockout()
+    {
+        knockoutTime -= Time.deltaTime;
+
+        if (knockoutTime <= 0)
+        {
+            SetStateGoingBack();
+
+            knockoutTime = knockoutSaveTime;
         }
     }
 
@@ -152,7 +166,7 @@ public class enemigoDash : MonoBehaviour {
     {
         if (triggerDamage.activeSelf)
         {
-            setEstadoPatrulla();
+            SetStateKnockout();
             triggerDamage.SetActive(false);
         }
         else
@@ -163,7 +177,21 @@ public class enemigoDash : MonoBehaviour {
     {
         estado = State.ataque;
 
+        playerTr = protagonista.position.x;
+
         materialEnemigo.color = Color.yellow;
+    }
+
+    void SetStateGoingBack()
+    {
+        estado = State.goingBack;
+    }
+
+    void SetStateKnockout()
+    {
+        estado = State.knockout;
+
+        materialEnemigo.color = Color.black;
     }
 
     public bool getCanGetDamage()
@@ -182,16 +210,12 @@ public class enemigoDash : MonoBehaviour {
     {
         estado = State.dash;
 
-        playerTr = protagonista.transform.position.x;
-
         materialEnemigo.color = Color.grey;
     }
 
     void ChangeDirection()
     {
         timerForDirection = 0;
-
-        endAttack = true;
 
         direccion = -direccion;
     }
@@ -209,44 +233,26 @@ public class enemigoDash : MonoBehaviour {
 
         materialEnemigo.color = Color.blue;
 
-        if (protagonista.transform.position.x > gameObject.transform.position.x)//setea direccion para ataque
+        if (protagonista.position.x > gameObject.transform.position.x)//setea direccion para ataque
             direccion = 1;
         else
             direccion = -1;
     }
 
-    public bool getEndAttack()
+    
+    public string GetState()
     {
-        return endAttack;
+        return estado.ToString();
     }
 
     bool CheckDistance()
     {
-        if (startPosition.x + maxDistanceFromStart < transform.position.x)
+        if (startPosition.x + maxDistanceFromStart <= transform.position.x)
             return true;
-        else if (startPosition.x + minDistanceFromStart > transform.position.x)
+        else if (startPosition.x + minDistanceFromStart >= transform.position.x)
             return true;
         else
             return false;
-    }
-
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        if (coll.gameObject.tag == "Suelo")
-        {
-            direccion = -direccion;
-
-            endAttack = true;
-        }
-
-        //si colisiona con el player le hace daño
-        if (coll.gameObject.tag == "Player")
-        {
-            if (!protagonista.GetComponent<lifeScript>().getInvulnerable())
-            {
-                protagonista.GetComponent<lifeScript>().makeDamage(damage);
-            }
-        }
     }
 }
 

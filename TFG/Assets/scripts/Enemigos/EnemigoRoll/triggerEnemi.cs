@@ -10,7 +10,7 @@ public class triggerEnemi : MonoBehaviour {
     {
         if (other.name == "Personaje" && enemi.getEndAttack())
         {
-            enemi.setEstadoCarga();
+            print("damage");
         }
     }
 

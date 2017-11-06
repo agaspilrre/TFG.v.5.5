@@ -6,9 +6,9 @@ public class triggerEnemiDash : MonoBehaviour {
 
     public enemigoDash enemi;
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if (other.name == "Personaje" && enemi.getEndAttack())
+        if (other.name == "Personaje" && enemi.GetState() == "patrulla")
         {
             enemi.setEstadoCarga();
         }

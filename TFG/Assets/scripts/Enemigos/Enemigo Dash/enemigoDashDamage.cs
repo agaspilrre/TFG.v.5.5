@@ -5,11 +5,13 @@ using UnityEngine;
 public class enemigoDashDamage : MonoBehaviour {
 
     GameObject player;
-    public enemigoDash enemi;
+    enemigoDash enemi;
 
     void Start()
     {
         player = GameObject.Find("Personaje");
+
+        enemi = gameObject.GetComponentInParent<enemigoDash>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
