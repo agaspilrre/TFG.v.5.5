@@ -177,8 +177,6 @@ public class enemigoDash : MonoBehaviour {
     {
         estado = State.ataque;
 
-        playerTr = protagonista.position.x;
-
         materialEnemigo.color = Color.yellow;
     }
 
@@ -209,6 +207,8 @@ public class enemigoDash : MonoBehaviour {
     public void setEstadoDash()
     {
         estado = State.dash;
+
+        playerTr = protagonista.position.x;
 
         materialEnemigo.color = Color.grey;
     }
