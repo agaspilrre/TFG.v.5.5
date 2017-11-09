@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Poderes : MonoBehaviour
 {
-
     public float duracionDash = 1f;
 
     public Material materialCargaDash;
@@ -65,6 +65,8 @@ public class Poderes : MonoBehaviour
     public bool infinityDush;
     bool verticalDush;
 
+    private HabilityBar staminaBar;
+
     // Use this for initialization
     void Start()
     {
@@ -82,6 +84,8 @@ public class Poderes : MonoBehaviour
         //variable que controla el numero de dush que se puede hacer, en principio se activa cuando el personaje toca el suelo
         dashUse = true;
         isInAir = false;
+
+        staminaBar = GetComponent<HabilityBar>();
 
         cargaDash = 0;
 
@@ -106,8 +110,10 @@ public class Poderes : MonoBehaviour
     void Update()
     {           
         
-        if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("PS4_Triangle"))
+        if ((Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("PS4_Triangle")) && staminaBar.slider.value > 0)
         {
+            staminaBar.LoseStamina();
+
             personalityChange();
             //activa el segundo salto al cambiar de personalidad
             if (personajeMovimiento.getNumSaltos() == 1)
@@ -119,7 +125,7 @@ public class Poderes : MonoBehaviour
         if (!returnPartitionPosition)
         {
             //input para el dash
-            if ((Input.GetButton("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse)//calcula cuanto tiempo llevas apretando
+            if ((Input.GetButton("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && staminaBar.slider.value > 0)//calcula cuanto tiempo llevas apretando
             {
                 personajeMovimiento.setPermitido(false);
                 
@@ -127,7 +133,7 @@ public class Poderes : MonoBehaviour
 
                 if (cargaDash > 0.3)
                 {
-                    materialCargaDash.color = Color.white;
+                    materialCargaDash.color = Color.white;                   
                 }
             }
             /*if ((Input.GetButtonUp("Dash") && dashUse) && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))&& (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)|| (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))))
@@ -158,21 +164,22 @@ public class Poderes : MonoBehaviour
             }*/
             //para el nuevo dash de seis direcciones
             /*else*/
-            if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxisRaw("Vertical") == 1))
+            if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxisRaw("Vertical") == 1))  && staminaBar.slider.value > 0)
             {
                 materialCargaDash.color = Color.black;
+                staminaBar.LoseStamina();
 
                 if (cargaDash < 0.3)//si es menor alo que este numero dash normal
                 {
-                    verticaldash();
-                    
+                    verticaldash();                    
                 }               
 
                 cargaDash = 0;
             }
-            else if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1") )&& dashUse)
+            else if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1") )&& dashUse && staminaBar.slider.value > 0)
             {
                 materialCargaDash.color = Color.black;
+                staminaBar.LoseStamina();
 
                 if (cargaDash < 0.3)//si es menor alo que este numero dash normal
                 {
@@ -189,8 +196,9 @@ public class Poderes : MonoBehaviour
             }
 
             //poder de particion de sombras
-            if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("PS4_R1") && playerState == Shades.SHADOW)
+            if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("PS4_R1")) && playerState == Shades.SHADOW && staminaBar.slider.value > 0)
             {
+                staminaBar.LoseStamina();
 
                 if (state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)
                 {
@@ -261,12 +269,7 @@ public class Poderes : MonoBehaviour
 
 
     }
-
-    public void setIsInAir(bool aux)
-    {
-        isInAir = aux;
-    }
-
+    
     public bool getStatePartition()
     {
         if (state == Partition.PARTITION)
@@ -290,7 +293,7 @@ public class Poderes : MonoBehaviour
     void verticaldash()
     {
         verticalDush = true;
-        personajeMovimiento.setGravity0();
+        personajeMovimiento.setGravity0();       
 
         personajeRB.velocity = new Vector2(0, 1 * velocidadDash);
 

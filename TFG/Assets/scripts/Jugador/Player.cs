@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
 
     Controller2D controller;
     PlayerInput input;
+    HabilityBar staminaBar;
 
     Vector2 directionalInput;
     bool wallSliding;
@@ -49,9 +50,6 @@ public class Player : MonoBehaviour
     public float fallWeight;
 
     public bool canSecondJump;
-
-
-
 
     void Start()
     {
@@ -65,6 +63,7 @@ public class Player : MonoBehaviour
         direccion = 1;
         poderesScript = GetComponent<Poderes>();
         input = GetComponent<PlayerInput>();
+        staminaBar = GetComponent<HabilityBar>();
         isJumping = false;
        
         numeroSaltos = 0;
@@ -90,7 +89,7 @@ public class Player : MonoBehaviour
         CalculateVelocity();
         HandleWallSliding();
 
-        isInAir = false;
+        
         //habilidad de correr
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("PS4_R3"))
         {
@@ -106,10 +105,12 @@ public class Player : MonoBehaviour
 
         if (permitido)
         {
-            controller.Move(velocity * Time.deltaTime, directionalInput);
+            controller.Move(velocity * Time.deltaTime, directionalInput);            
 
             if (controller.collisions.above || controller.collisions.below)
             {
+                staminaBar.isWallJumping = false;
+
                 if (controller.collisions.slidingDownMaxSlope)
                 {
                     velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
@@ -150,9 +151,9 @@ public class Player : MonoBehaviour
     {        
         if (wallSliding)
         {
+            staminaBar.isWallJumping = true;
             //para quitar el salto extra que hay al hacer walljumping
-            numeroSaltos = 1;
-
+            numeroSaltos = 1;            
             //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKeyDown(KeyCode.Space))
             //{
                 if (wallDirX == directionalInput.x)
@@ -196,7 +197,7 @@ public class Player : MonoBehaviour
                 if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x))
                 { // not jumping against max slope
                     velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
-                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;                    
                 }
             } /*else
             {                        
@@ -259,9 +260,8 @@ public class Player : MonoBehaviour
             numeroSaltos = 0;
             canSecondJump = false;
             entraColisionPared = true;
-            poderesScript.setIsInAir(false);
-        }
-        
+        }        
+
         if (coll.collider.name == "Platform")
         {
             transform.parent = coll.transform;
@@ -277,31 +277,29 @@ public class Player : MonoBehaviour
 
 
     void HandleWallSliding()
-    {
+    {        
         wallDirX = (controller.collisions.left) ? -1 : 1;
         wallSliding = false;
         if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
-        {
+        {            
             if (entraColisionPared)
-            {
+            {               
                 timeToWallUnstick = wallStickTime;
                 entraColisionPared = false;
             }
 
             wallSliding = true;
-
+            
             if (velocity.y < -wallSlideSpeedMax)
             {
                 velocity.y = -wallSlideSpeedMax;
             }
 
             if (timeToWallUnstick > 0)
-            {
+            {                
                 velocityXSmoothing = 0;
                 velocity.x = 0;
-                velocity.y = 0;
-
-
+                velocity.y = 0;                
                 timeToWallUnstick -= Time.deltaTime;
 
             }
