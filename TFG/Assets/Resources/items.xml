@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ItemCollection>
+  <Items> 
+    <Item name="Yo">
+      <Dialogue>Hola como estas?</Dialogue>
+    </Item>   
+    <Item name="Bufanda">
+        <Dialogue>Bien y tu?</Dialogue>
+     </Item>     
+    <Item name="Yo">
+          <Dialogue>En clase de unity </Dialogue>
+    </Item>     
+    <Item name="Bufanda">
+        <Dialogue>Oh y que haces?</Dialogue>
+     </Item>     
+    <Item name="Yo">
+          <Dialogue>Estoy programando una novela visual</Dialogue>
+    </Item>   
+    <Item name="Bufanda">
+        <Dialogue>Oh de esas japos?</Dialogue>
+     </Item>     
+    <Item name="Yo">
+          <Dialogue>Digamos que si </Dialogue>
+    </Item>   
+    <Item name="Bufanda">
+        <Dialogue>Nunca he jugado una</Dialogue>
+     </Item>     
+    <Item name="Yo">
+          <Dialogue>Yo una y no mas jaja </Dialogue>
+    </Item>   
+    <Item name="Bufanda">
+        <Dialogue>Vendras en vacaciones?</Dialogue>
+     </Item>     
+    <Item name="Elegir">
+     	  <Decision>Si, ire de todas maneras</Decision>    
+    </Item>   
+     <Item name="Elegir">
+         <Decision>No lo se, no tengo muchas ganas de regresar </Decision>
+    </Item>   
+     <Item name="Decision1">
+        <Dialogue>Oh que pena</Dialogue>
+     </Item>    
+     <Item name="Decision2">
+        <Dialogue>Me la suda</Dialogue>
+     </Item>   
+  </Items>
+
+</ItemCollection>

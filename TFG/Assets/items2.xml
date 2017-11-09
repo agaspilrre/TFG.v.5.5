@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ItemCollection>
+  <Items>
+    <Item name="Yo">
+      <Dialogue>HOLAAA</Dialogue>
+    </Item>
+    <Item name="NPC2">
+      <Dialogue>WUAJAJAJAJAJAAJ</Dialogue>
+    </Item>
+    <Item name="Yo">
+      <Dialogue>QUE TE PASA?¿ </Dialogue>
+    </Item>
+    <Item name="NPC2">
+      <Dialogue>WUAJAJAJAJA</Dialogue>
+    </Item>
+    <Item name="Yo">
+      <Dialogue>ESTAS UN POCO HECHO MIERDA NO?¿</Dialogue>
+    </Item>
+    <Item name="NPC2">
+      <Dialogue>ME GUSTA MATAR GENTE</Dialogue>
+    </Item>
+    <Item name="Yo">
+      <Dialogue>QUE TIPO DE GENTE </Dialogue>
+    </Item>
+    <Item name="NPC2">
+      <Dialogue>.............</Dialogue>
+    </Item>
+    
+  </Items>
+
+
+
+</ItemCollection>
