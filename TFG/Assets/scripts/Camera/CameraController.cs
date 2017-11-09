@@ -132,9 +132,9 @@ public class CameraController : MonoBehaviour {
     {
         cameraState = State.blocked;
 
-        if (direction == "BlockWidth")
+        if (direction == "Camera/BlockWidth")
             blockedDirection = 0;
-        else if (direction == "BlockHeigth")
+        else if (direction == "Camera/BlockHeigth")
             blockedDirection = 1;
         else
             blockedDirection = 2;

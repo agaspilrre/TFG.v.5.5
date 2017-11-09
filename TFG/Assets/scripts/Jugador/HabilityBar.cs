@@ -12,18 +12,17 @@ public class HabilityBar : MonoBehaviour {
     private float timerController;
     public float timerWaitCharge = 200f;
     public float timerWallJump = 0;
-    public bool isWallJumping = false;   
+    public bool isWallJumping = false;
 
-    // Use this for initialization
-    void Start () {    
-		
-	}
+    float Stamina;
 	
 	// Update is called once per frame
 	void Update () {       
 
         StaminaController();
         LoseStaminaWallJump();
+
+        Stamina = slider.value;
     }
 
     public void LoseStamina()
@@ -66,7 +65,11 @@ public class HabilityBar : MonoBehaviour {
 
             timerWallJump = 0;
             losedStamina = true;
-        }
-            
+        }      
+    }
+
+    public float GetStamina()
+    {
+        return Stamina;
     }
 }
