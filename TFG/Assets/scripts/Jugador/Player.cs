@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     Vector2 directionalInput;
     bool wallSliding;
     int wallDirX;
-    public bool isInAir;
+   
 
     //variable para modular peso en la caida
     public float fallWeight;
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputDown()
     {        
-        if (wallSliding)
+        if (wallSliding && staminaBar.slider.value > 0)
         {
             staminaBar.isWallJumping = true;
             //para quitar el salto extra que hay al hacer walljumping
@@ -176,13 +176,13 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (1 > numeroSaltos)
+            if (1 > numeroSaltos && staminaBar.slider.value > 0)
             {
                 numeroSaltos++;
                 multiplicadorSalto = 1;
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
-            else if (2 > numeroSaltos && canSecondJump)
+            else if (2 > numeroSaltos && canSecondJump && staminaBar.slider.value > 0)
             {
                 numeroSaltos++;
                 multiplicadorSalto = savedMultiplicadorSaltos;
@@ -266,7 +266,6 @@ public class Player : MonoBehaviour
         {
             transform.parent = coll.transform;
         }
-
     }
    
     private void OnCollisionExit2D(Collision2D other)

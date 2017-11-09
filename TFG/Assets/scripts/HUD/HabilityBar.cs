@@ -24,7 +24,6 @@ public class HabilityBar : MonoBehaviour {
 
         StaminaController();
         LoseStaminaWallJump();
-
     }
 
     public void LoseStamina()
@@ -62,6 +61,9 @@ public class HabilityBar : MonoBehaviour {
         }
         else
         {
+            if(timerWallJump > 160)
+                slider.value -= 10 * Time.deltaTime;
+
             timerWallJump = 0;
             losedStamina = true;
         }
