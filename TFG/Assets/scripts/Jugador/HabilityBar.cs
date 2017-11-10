@@ -13,6 +13,7 @@ public class HabilityBar : MonoBehaviour {
     public float timerWaitCharge = 200f;
     public float timerWallJump = 0;
     public bool isWallJumping = false;
+    public float timeRateLosingStamina = 12;
 
     float Stamina;
 	
@@ -54,17 +55,17 @@ public class HabilityBar : MonoBehaviour {
         if (isWallJumping)
         {
             timerWallJump++;
-
-            if (timerWallJump > 100) 
+            timerController = 0;
+            if (timerWallJump > timeRateLosingStamina) 
                 slider.value -= 5 * Time.deltaTime;
         }
         else
         {
-            if(timerWallJump > 160)
+            if(timerWallJump > 16)
                 slider.value -= 10 * Time.deltaTime;
 
             timerWallJump = 0;
-            losedStamina = true;
+            losedStamina = true;            
         }      
     }
 

@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (1 > numeroSaltos && staminaBar.slider.value > 0)
+            if (1 > numeroSaltos)
             {
                 numeroSaltos++;
                 multiplicadorSalto = 1;
