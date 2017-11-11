@@ -11,7 +11,19 @@ public class lifeScript : MonoBehaviour {
 
     CameraShake cameraShake;
 
+    SpriteRenderer spriteRenderer;
+
     GameManager gameManager;
+
+    [SerializeField]
+    float timeForEachColor;
+    [SerializeField]
+    float numberOfChanges;
+    float auxNumberOfChanges;
+
+    Color savedColor;
+    [SerializeField]
+    Color damageColor;
 
     [SerializeField]
     bool invulnerable;
@@ -28,6 +40,10 @@ public class lifeScript : MonoBehaviour {
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         cameraShake = Camera.main.GetComponent<CameraShake>();
+
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        savedColor = spriteRenderer.color;
     }
 	
 	// Update is called once per frame
@@ -46,8 +62,6 @@ public class lifeScript : MonoBehaviour {
         }
 	}
 
-
-
     /*
  *   Función que controla la cantidad de vida que queremos restar al jugador 
  */
@@ -60,6 +74,7 @@ public class lifeScript : MonoBehaviour {
             {
                 life[lifeCount].SetActive(false);
                 lifeCount--;
+                StartCoroutine("InvulnerableColor");
                 cameraShake.Shake();
             }
             invulnerable = true;
@@ -73,6 +88,24 @@ public class lifeScript : MonoBehaviour {
         }
     }
 
+    IEnumerator InvulnerableColor()
+    {
+        auxNumberOfChanges = 0;
+
+        while (auxNumberOfChanges < numberOfChanges)
+        {
+            if (spriteRenderer.color.a == 0)
+            {
+                spriteRenderer.color = savedColor;
+                auxNumberOfChanges++;
+            }
+            else
+                spriteRenderer.color = damageColor;
+
+            yield return new WaitForSeconds(timeForEachColor);
+
+        }
+    }
 
     //funcion que añade vida
 
