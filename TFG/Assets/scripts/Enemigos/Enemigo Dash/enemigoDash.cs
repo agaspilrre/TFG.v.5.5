@@ -208,6 +208,11 @@ public class enemigoDash : MonoBehaviour {
     {
         estado = State.dash;
 
+        if (protagonista.position.x > gameObject.transform.position.x)//setea direccion para ataque
+            direccion = 1;
+        else
+            direccion = -1;
+
         playerTr = protagonista.position.x;
 
         materialEnemigo.color = Color.grey;
@@ -232,11 +237,6 @@ public class enemigoDash : MonoBehaviour {
         rb.velocity = new Vector2(0, 0);
 
         materialEnemigo.color = Color.blue;
-
-        if (protagonista.position.x > gameObject.transform.position.x)//setea direccion para ataque
-            direccion = 1;
-        else
-            direccion = -1;
     }
 
     
