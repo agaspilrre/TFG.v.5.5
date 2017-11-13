@@ -14,6 +14,8 @@ public class PlayerInput : MonoBehaviour {
     enum Direccion { izquierda, derecha }
     Direccion direccion;
 
+    float stopTime = 0;
+
     void Start () {
 		player = GetComponent<Player> ();
         anim = GetComponent<Animator>();
@@ -28,6 +30,7 @@ public class PlayerInput : MonoBehaviour {
         //para activar las animaciones en caso de que nos movamos
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
+            stopTime = 0;
             //si nos movemos se activan las animaciones
 
             //comprobamos que no esta ejecutando el dash
@@ -50,6 +53,9 @@ public class PlayerInput : MonoBehaviour {
 
         else if (Input.GetAxis("Horizontal") == 0)
         {
+            //comprobar cuanto tiempo permanece parado para el sistema de emojis
+            stopTime += Time.deltaTime;
+
             if (!player.GetComponent<Poderes>().getPlayerStates())
             {
                 playerAnim.RunToIdl();
@@ -97,6 +103,11 @@ public class PlayerInput : MonoBehaviour {
             direccion = Direccion.izquierda;
         else
             direccion = Direccion.derecha;
+    }
+
+    public float getStopTime()
+    {
+        return stopTime;
     }
 
     

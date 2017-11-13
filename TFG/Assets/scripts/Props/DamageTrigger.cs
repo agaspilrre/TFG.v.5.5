@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class DamageTrigger : MonoBehaviour {
 
-	// Use this for initialization
+    // Use this for initialization
+    public int Damage;
+    
 	void Start () {
 		
 	}
@@ -19,9 +21,18 @@ public class DamageTrigger : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.GetComponent<lifeScript>().makeDamage(1);
+            collision.GetComponent<lifeScript>().makeDamage(Damage);
 
         }
 
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.GetComponent<lifeScript>().makeDamage(Damage);
+
+        }
     }
 }

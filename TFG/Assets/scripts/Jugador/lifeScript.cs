@@ -126,4 +126,9 @@ public class lifeScript : MonoBehaviour {
     {
         return invulnerable;
     }
+
+    public int getLifeCount()
+    {
+        return lifeCount;
+    }
 }
