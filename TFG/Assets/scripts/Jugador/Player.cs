@@ -87,7 +87,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateVelocity();
-        HandleWallSliding();
 
         
         //habilidad de correr
@@ -148,7 +147,8 @@ public class Player : MonoBehaviour
     }
 
     public void OnJumpInputDown()
-    {        
+    {
+        HandleWallSliding();
         if (wallSliding && staminaBar.slider.value > 0)
         {
             staminaBar.isWallJumping = true;
@@ -197,7 +197,7 @@ public class Player : MonoBehaviour
                 if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x))
                 { // not jumping against max slope
                     velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
-                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;                    
+                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
                 }
             } /*else
             {                        
