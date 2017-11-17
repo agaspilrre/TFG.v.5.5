@@ -110,10 +110,8 @@ public class Poderes : MonoBehaviour
     void Update()
     {           
         
-        if ((Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("PS4_Triangle")) && staminaBar.slider.value > 0)
+        if ((Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("PS4_Triangle")))
         {
-            staminaBar.LoseStamina();
-
             personalityChange();
             //activa el segundo salto al cambiar de personalidad
             if (personajeMovimiento.getNumSaltos() == 1)
