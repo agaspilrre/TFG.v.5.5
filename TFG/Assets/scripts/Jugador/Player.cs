@@ -151,6 +151,7 @@ public class Player : MonoBehaviour
     public void OnJumpInputDown()
     {
         HandleWallSliding();
+        print(wallSliding);
         if (wallSliding && staminaBar.slider.value > 0)
         {
             staminaBar.isWallJumping = true;
@@ -281,7 +282,7 @@ public class Player : MonoBehaviour
     {        
         wallDirX = (controller.collisions.left) ? -1 : 1;
         wallSliding = false;
-        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
+        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
         {            
             if (entraColisionPared)
             {               
