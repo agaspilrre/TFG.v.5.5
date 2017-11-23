@@ -102,7 +102,7 @@ public class Bullet : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag != "bullet" && coll.gameObject.tag != "Enemy")
+        if ( coll.gameObject.tag != "Enemy")
         {
             if (coll.gameObject.tag == "Player")
             {

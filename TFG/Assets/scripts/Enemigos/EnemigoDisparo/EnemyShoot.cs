@@ -30,19 +30,13 @@ public class EnemyShoot : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         rbEnemy=GetComponent<Rigidbody2D>();
         initialPositionX = this.transform.position.x;
         initialPositionY = this.transform.position.y;
 
-        verticalBullet.GetComponent<Bullet>().setEnemy(this.gameObject);
-        diagonalLBullet.GetComponent<Bullet>().setEnemy(this.gameObject);
-        diagonalRBullet.GetComponent<Bullet>().setEnemy(this.gameObject);
-
-        verticalBullet.GetComponent<Bullet>().setSpeedBullet(speedBullet);
-        diagonalLBullet.GetComponent<Bullet>().setSpeedBullet(speedBullet);
-        diagonalRBullet.GetComponent<Bullet>().setSpeedBullet(speedBullet);
+        
 
     }
 	
@@ -59,8 +53,11 @@ public class EnemyShoot : MonoBehaviour {
             if((this.transform.eulerAngles.z>=0 && this.transform.eulerAngles.z<=89)||
                ( this.transform.eulerAngles.z > 170 && this.transform.eulerAngles.z <= 260) )
             {
-               
-                if(this.transform.position.x>=initialPositionX+rangeMovement ||
+                rbEnemy.constraints= RigidbodyConstraints2D.None;
+                rbEnemy.constraints = RigidbodyConstraints2D.FreezePositionY;
+                rbEnemy.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                if (this.transform.position.x>=initialPositionX+rangeMovement ||
                     this.transform.position.x <= initialPositionX- rangeMovement)
                 {
                     directionMove *= -1;
@@ -73,6 +70,10 @@ public class EnemyShoot : MonoBehaviour {
             else if ((this.transform.eulerAngles.z >= 89 && this.transform.eulerAngles.z <= 169) ||
               (this.transform.eulerAngles.z > 260 && this.transform.eulerAngles.z <= 360))
             {
+
+                rbEnemy.constraints = RigidbodyConstraints2D.None;
+                rbEnemy.constraints = RigidbodyConstraints2D.FreezePositionX;
+                rbEnemy.constraints = RigidbodyConstraints2D.FreezeRotation;
 
                 if (this.transform.position.y >= initialPositionY + rangeMovement ||
                     this.transform.position.y <= initialPositionY - rangeMovement)
@@ -103,6 +104,15 @@ public class EnemyShoot : MonoBehaviour {
     //function to instantiate bullets
     public void InstantiateBullets()
     {
+        verticalBullet.GetComponent<Bullet>().setEnemy(this.gameObject);
+        diagonalLBullet.GetComponent<Bullet>().setEnemy(this.gameObject);
+        diagonalRBullet.GetComponent<Bullet>().setEnemy(this.gameObject);
+
+        verticalBullet.GetComponent<Bullet>().setSpeedBullet(speedBullet);
+        diagonalLBullet.GetComponent<Bullet>().setSpeedBullet(speedBullet);
+        diagonalRBullet.GetComponent<Bullet>().setSpeedBullet(speedBullet);
+
+
         bullet1 = (GameObject)Instantiate(verticalBullet, shootVerticalPoint.position, shootVerticalPoint.rotation);
         bullet2 = (GameObject)Instantiate(diagonalLBullet, shootDiagonalLPoint.position, shootDiagonalLPoint.rotation);
         bullet3 = (GameObject)Instantiate(diagonalRBullet, shootDiagonalRPoint.position, shootDiagonalRPoint.rotation);
