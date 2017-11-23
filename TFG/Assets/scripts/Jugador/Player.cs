@@ -88,7 +88,6 @@ public class Player : MonoBehaviour
     {
         CalculateVelocity();
 
-        
         //habilidad de correr
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("PS4_R3"))
         {
@@ -252,7 +251,7 @@ public class Player : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.collider.tag == "Suelo")
+        if (coll.collider.tag == "Suelo" || coll.collider.tag == "Trhough")
         {
             poderesScript.SetDashUse(true);
             permitido = true;
