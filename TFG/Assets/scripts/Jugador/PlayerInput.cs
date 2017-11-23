@@ -87,10 +87,11 @@ public class PlayerInput : MonoBehaviour
         }
 
         //CAMBIO PERSONALIDAD
+        /*
         if ((Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("PS4_Triangle")))
         {
             poderes.ControlChangePersonality();
-        }
+        }*/
 
         //DUSH
 

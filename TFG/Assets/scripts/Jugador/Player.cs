@@ -90,6 +90,7 @@ public class Player : MonoBehaviour
 
         
         //habilidad de correr
+        /*
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("PS4_R3"))
         {
             //se le asigna la velocidad de correr
@@ -101,6 +102,7 @@ public class Player : MonoBehaviour
             //se le asigna la velocidad normal
             moveSpeed = normalSpeed;
         }
+        */
 
         if (permitido)
         {
@@ -182,7 +184,7 @@ public class Player : MonoBehaviour
                 multiplicadorSalto = 1;
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
-            else if (2 > numeroSaltos && canSecondJump && staminaBar.slider.value > 0)
+            else if (2 > numeroSaltos  && staminaBar.slider.value > 0)
             {
                 numeroSaltos++;
                 multiplicadorSalto = savedMultiplicadorSaltos;
