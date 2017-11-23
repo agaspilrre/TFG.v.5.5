@@ -252,7 +252,7 @@ public class Player : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.collider.tag == "Suelo")
+        if (coll.collider.tag == "Suelo" || coll.collider.tag == "Through")
         {
             poderesScript.SetDashUse(true);
             permitido = true;
