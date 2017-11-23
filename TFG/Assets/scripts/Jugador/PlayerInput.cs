@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (Player))]
-public class PlayerInput : MonoBehaviour {
+[RequireComponent(typeof(Player))]
+public class PlayerInput : MonoBehaviour
+{
 
-	Player player;
+    Player player;
     private PlayerAnim playerAnim;
-   
+    Poderes poderes;
+
 
     //variable para activar las animaciones
     private Animator anim;
@@ -16,17 +18,20 @@ public class PlayerInput : MonoBehaviour {
 
     float stopTime = 0;
 
-    void Start () {
-		player = GetComponent<Player> ();
+    void Start()
+    {
+        player = GetComponent<Player>();
         anim = GetComponent<Animator>();
-        
+        poderes = GetComponent<Poderes>();
         direccion = Direccion.derecha;
         playerAnim = GetComponent<PlayerAnim>();
     }
 
-	void Update () {
-		Vector2 directionalInput = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
+    void Update()
+    {
+        Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
+        //MOVIMIENTO HORIZONTAL
         //para activar las animaciones en caso de que nos movamos
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
@@ -48,7 +53,7 @@ public class PlayerInput : MonoBehaviour {
                     playerAnim.IdlSToRunS();
                     playerAnim.RunSToIdlSFalse();
                 }
-            }           
+            }
         }
 
         else if (Input.GetAxis("Horizontal") == 0)
@@ -69,9 +74,9 @@ public class PlayerInput : MonoBehaviour {
             }
         }
 
-        player.SetDirectionalInput (directionalInput);
+        player.SetDirectionalInput(directionalInput);
 
-              
+        //SALTO  
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
         {
             player.OnJumpInputDown();
@@ -80,9 +85,20 @@ public class PlayerInput : MonoBehaviour {
         {
             player.OnJumpInputUp();
         }
-        
 
-		
+        //CAMBIO PERSONALIDAD
+        if ((Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("PS4_Triangle")))
+        {
+            poderes.ControlChangePersonality();
+        }
+
+        //DUSH
+
+        if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1"))
+        {
+            poderes.checkDush();
+        }
+
 
 
         //Voltear personaje.
@@ -110,7 +126,8 @@ public class PlayerInput : MonoBehaviour {
         return stopTime;
     }
 
-    
+
 
 }
+
 

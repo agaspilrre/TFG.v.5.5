@@ -108,166 +108,75 @@ public class Poderes : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {           
-        
-        if ((Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("PS4_Triangle")))
+    {
+
+
+
+
+        //input para el dash
+        /*
+        if ((Input.GetButton("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && staminaBar.slider.value > 0)//calcula cuanto tiempo llevas apretando
         {
-            personalityChange();
-            //activa el segundo salto al cambiar de personalidad
-            if (personajeMovimiento.getNumSaltos() == 1)
-            {
-                personajeMovimiento.setCanSecondJump(true);
-            }
-        }       
-
-        if (!returnPartitionPosition)
-        {
-            //input para el dash
-            if ((Input.GetButton("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && staminaBar.slider.value > 0)//calcula cuanto tiempo llevas apretando
-            {
-                personajeMovimiento.setPermitido(false);
-                
-                cargaDash += Time.deltaTime;
-
-                if (cargaDash > 0.3)
-                {
-                    materialCargaDash.color = Color.white;                   
-                }
-            }
-            /*if ((Input.GetButtonUp("Dash") && dashUse) && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))&& (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)|| (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))))
-            {
-
-                materialCargaDash.color = Color.black;
-
-                if (cargaDash < 0.3)//si es menor alo que este numero dash normal
-                {
-                    DiagonalDash();
-                }
-                else
-                {
-                    //solo puedo hacer el dash electrico si estoy en estado electrico
-                    if (playerState == Shades.ELECTRIC)
-                    {
-                        electroDash();
-                    }
-
-                    else
-                    {
-
-                        DiagonalDash();
-                    }
-                }
-
-                cargaDash = 0;
-            }*/
-            //para el nuevo dash de seis direcciones
-            /*else*/
-            if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxisRaw("Vertical") == 1))  && staminaBar.slider.value > 0)
-            {
-                materialCargaDash.color = Color.black;
-                staminaBar.LoseStamina();
-
-                if (cargaDash < 0.3)//si es menor alo que este numero dash normal
-                {
-                    verticaldash();                    
-                }               
-
-                cargaDash = 0;
-            }
-            else if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1") )&& dashUse && staminaBar.slider.value > 0)
-            {
-                materialCargaDash.color = Color.black;
-                staminaBar.LoseStamina();
-
-                if (cargaDash < 0.3)//si es menor alo que este numero dash normal
-                {
-                    dash();
-                }
-                
-                cargaDash = 0;
-            }
-
-            //PODERES QUE TIENE LA PROTA SIENDO SOMBRA
-            if (playerState == Shades.SHADOW)
-            {
-
-            }
-
-            //poder de particion de sombras
-            if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("PS4_R1")) && playerState == Shades.SHADOW && staminaBar.slider.value > 0)
-            {
-                staminaBar.LoseStamina();
-
-                if (state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)
-                {
-                    //cambio de estado
-                    state = Partition.PARTITION;
-                    //guardamos la posicion de la instancia dependiendo de la direccion q este mirando el personaje
-                    if (personajeMovimiento.getDireccion() == 1)
-                        positionPartition = new Vector2(this.transform.position.x - 2.5f, this.transform.position.y);
-
-                    else
-                        positionPartition = new Vector2(this.transform.position.x + 2.5f, this.transform.position.y);
-                    //instanciamos cascaron vacio
-                    partitonObject = Instantiate(partitionPrefab, positionPartition, Quaternion.identity);
-
-                    if (personajeMovimiento.getDireccion() == 1)
-                        partitonObject.transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-
-                }
-
-                else if (state == Partition.PARTITION)
-                {
-                    startMarker = this.transform;
-                    //journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
-                    returnPartitionPosition = true;
-                }
-            }
-        }
-
-        //estamos retornando a la posicion del cascaron
-        else
-        {
-            //bloqueamos mov personaje
             personajeMovimiento.setPermitido(false);
-            //desactivar el collider para que pueda trasladarse
-            playerCollider.enabled = false;
-            //hacemos lerp
 
-            float distCovered = Time.deltaTime * speedLerp;
-            float fracJourney = distCovered;
+            cargaDash += Time.deltaTime;
 
-            transform.position = Vector3.Lerp(startMarker.position, partitonObject.transform.position, fracJourney);
-            //comprobamos si ha llegado al destino si es asi ponemos bool a false de nuevo y permitimos el movimiento
-            //contemplar si la sombra esta a la izquierda o derecha de la posicion del cascaron
-            if (this.transform.position.x > partitonObject.transform.position.x)
+            if (cargaDash > 0.3)
             {
-                if (this.transform.position.x - partitonObject.transform.position.x < 1 && this.transform.position.y - partitonObject.transform.position.y < 0.5f)
-                {
-                    returnPartitionPosition = false;
-                    personajeMovimiento.setPermitido(true);
-                    state = Partition.NORMAL;
-                    playerCollider.enabled = true;
-                }
+                materialCargaDash.color = Color.white;                   
             }
+        }*/
 
-            else
-            {
-                if (this.transform.position.x - partitonObject.transform.position.x > -1 && this.transform.position.y - partitonObject.transform.position.y > -0.5f)
-                {
-                    returnPartitionPosition = false;
-                    personajeMovimiento.setPermitido(true);
-                    state = Partition.NORMAL;
-                    playerCollider.enabled = true;
-                }
-            }
+        /*
+         if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1") )&& dashUse && staminaBar.slider.value > 0)
+         {
+             materialCargaDash.color = Color.black;
+             staminaBar.LoseStamina();
 
+             if (cargaDash < 0.3)//si es menor alo que este numero dash normal
+             {
+                 dash();
+             }
+
+             cargaDash = 0;
+         }*/
+
+
+    }
+
+    //llama a cambio de personalidad y comprueba el salto para la transformacion doble salto
+    public void ControlChangePersonality()
+    {
+        personalityChange();
+        //activa el segundo salto al cambiar de personalidad
+        if (personajeMovimiento.getNumSaltos() == 1)
+        {
+            personajeMovimiento.setCanSecondJump(true);
         }
+    }
+    //comprueba si puede realizar el dush y si es posible lo realiza 
+    public void checkDush()
+    {
+        if (dashUse && staminaBar.slider.value > 0)
+        {
+            materialCargaDash.color = Color.black;
+            staminaBar.LoseStamina();
+
+            if (cargaDash < 0.3)//si es menor alo que este numero dash normal
+            {
+                dash();
+            }
+
+            cargaDash = 0;
+        }
+
 
 
 
     }
-    
+
+
+
     public bool getStatePartition()
     {
         if (state == Partition.PARTITION)
@@ -287,46 +196,7 @@ public class Poderes : MonoBehaviour
         Invoke("dashPermitido", duracionDash);
     }
 
-    //PARA DASH SIXDIRECCIONAL
-    void verticaldash()
-    {
-        verticalDush = true;
-        personajeMovimiento.setGravity0();       
 
-        personajeRB.velocity = new Vector2(0, 1 * velocidadDash);
-
-        dashUse = false;
-        //despues del tiempo del dash volver a permitir movimiento
-        Invoke("dashPermitido", duracionDash);//ATENCION QUITAR CUANDO SE IMPLEMENTE EL DUSH EN 6 DIRECCIONES Y ACTIVARLO CUANDO EL PLAYER TOQUE EL SUELO
-    }
-
-    //PARA DASH SIXDIRECCIONAL
-    /*
-    void DiagonalDash()
-    {
-        personajeMovimiento.setGravity0();
-
-
-
-        personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 1 * velocidadDash);
-
-        dashUse = false;
-        //despues del tiempo del dash volver a permitir movimiento
-        Invoke("dashPermitido", duracionDash);//ATENCION QUITAR CUANDO SE IMPLEMENTE EL DUSH EN 6 DIRECCIONES Y ACTIVARLO CUANDO EL PLAYER TOQUE EL SUELO
-    }
-    */
-
-    void electroDash()
-    {
-
-        personajeMovimiento.setGravity0();
-        personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadElectroDash, 0);
-
-        dashUse = false;
-        //despues del tiempo del dash volver a permitir movimiento
-        Invoke("dashPermitido", duracionElectroDash);
-
-    }
 
 
     void dashPermitido()
@@ -350,7 +220,7 @@ public class Poderes : MonoBehaviour
                 Invoke("dushGround", duracionDash);
             }
         }
-       
+
 
         verticalDush = false;
     }
