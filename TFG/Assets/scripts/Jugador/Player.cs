@@ -170,7 +170,6 @@ public class Player : MonoBehaviour
     public void OnJumpInputDown()
     {
         HandleWallSliding();
-        print(wallSliding);
         if (wallSliding && staminaBar.slider.value > 0)
         {
             staminaBar.isWallJumping = true;

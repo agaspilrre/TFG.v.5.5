@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     private PlayerAnim playerAnim;
     Poderes poderes;
 
+    BasicAttack basicAttack;
 
     //variable para activar las animaciones
     private Animator anim;
@@ -25,6 +26,7 @@ public class PlayerInput : MonoBehaviour
         poderes = GetComponent<Poderes>();
         direccion = Direccion.derecha;
         playerAnim = GetComponent<PlayerAnim>();
+        basicAttack = GetComponent<BasicAttack>();
     }
 
     void Update()
@@ -100,7 +102,10 @@ public class PlayerInput : MonoBehaviour
             poderes.checkDush();
         }
 
-
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            basicAttack.Attack(new Vector3(1,0));
+        }
 
         //Voltear personaje.
         if (Input.GetAxis("Horizontal") > 0 && direccion == Direccion.izquierda)
