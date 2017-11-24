@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     Controller2D controller;
     PlayerInput input;
     HabilityBar staminaBar;
+    PowerUp controlPU;
 
     Vector2 directionalInput;
     bool wallSliding;
@@ -65,6 +66,7 @@ public class Player : MonoBehaviour
         permitido = true;
         direccion = 1;
         poderesScript = GetComponent<Poderes>();
+        controlPU = GameObject.Find("ControlPowerUp").GetComponent<PowerUp>();
         input = GetComponent<PlayerInput>();
         staminaBar = GetComponent<HabilityBar>();
         isJumping = false;
@@ -285,6 +287,13 @@ public class Player : MonoBehaviour
         if (coll.collider.name == "Platform")
         {
             transform.parent = coll.transform;
+        }
+
+        if (coll.gameObject.tag == "PowerUp")
+        {
+            Destroy(coll.gameObject);
+            controlPU.setBoxBroken(true);
+            controlPU.PowerUpInstantiate();
         }
     }
 
