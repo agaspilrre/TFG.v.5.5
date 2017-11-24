@@ -15,6 +15,7 @@ public class PowerUp : MonoBehaviour {
     float timer;
     public GameObject dashIcon;
     public float timeAscendParticle = 3;
+    public float timeSuspensionParticle = 2;
 	// Use this for initialization
 	void Start () {
 
@@ -38,7 +39,7 @@ public class PowerUp : MonoBehaviour {
         if (timer >= timeAscendParticle)
         {
             isBoxBroken = false;
-            Invoke("MoveToPlayer", 2);
+            Invoke("MoveToPlayer", timeSuspensionParticle);
         }                
         
         if(lifes < 0)

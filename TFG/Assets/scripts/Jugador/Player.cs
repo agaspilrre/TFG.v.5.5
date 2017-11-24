@@ -295,6 +295,11 @@ public class Player : MonoBehaviour
             controlPU.setBoxBroken(true);
             controlPU.PowerUpInstantiate();
         }
+
+        if (coll.gameObject.tag == "EnemyRotate")
+        {
+            setMakeSlow(true, 3, 3);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
