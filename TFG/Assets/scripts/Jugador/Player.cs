@@ -44,8 +44,11 @@ public class Player : MonoBehaviour
     Vector2 directionalInput;
     bool wallSliding;
     int wallDirX;
-   
 
+    private bool makeSlow;
+    private float timer;
+    private float timerSlow;
+    private float slowSpeed;
     //variable para modular peso en la caida
     public float fallWeight;
 
@@ -88,7 +91,7 @@ public class Player : MonoBehaviour
     {
         CalculateVelocity();
 
-        
+
         //habilidad de correr
         /*
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("PS4_R3"))
@@ -103,6 +106,20 @@ public class Player : MonoBehaviour
             moveSpeed = normalSpeed;
         }
         */
+
+        //realentizacion o aumento de velocidad
+        if (makeSlow)
+        {
+            moveSpeed = slowSpeed;
+            timer += Time.deltaTime;
+            if (timer >= timerSlow)
+            {
+                
+                makeSlow = false;
+                timer = 0;
+                moveSpeed = normalSpeed;
+            }
+        }
 
         if (permitido)
         {
@@ -255,7 +272,7 @@ public class Player : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.collider.tag == "Suelo" || coll.collider.tag == "Through")
+        if (coll.collider.tag == "Suelo" )
         {
             poderesScript.SetDashUse(true);
             permitido = true;
@@ -270,7 +287,20 @@ public class Player : MonoBehaviour
             transform.parent = coll.transform;
         }
     }
-   
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if ( coll.tag == "Through")
+        {
+            poderesScript.SetDashUse(true);
+            permitido = true;
+            isJumping = false;
+            numeroSaltos = 0;
+            canSecondJump = false;
+            entraColisionPared = true;
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.collider.name == "Platform")
@@ -317,6 +347,13 @@ public class Player : MonoBehaviour
     }
 
     
+    public void setMakeSlow(bool _makeS,float _timeSlow,float _speed)
+    {
+        
+        timerSlow = _timeSlow;
+        slowSpeed = _speed;
+        makeSlow = _makeS;
+    }
 
    
 }

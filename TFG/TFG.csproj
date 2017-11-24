@@ -175,6 +175,8 @@
     <Compile Include="Assets\scripts\Enemigos\EnemigoRoll\enemigo.cs" />
     <Compile Include="Assets\scripts\Enemigos\EnemigoRoll\triggerEnemi.cs" />
     <Compile Include="Assets\scripts\Enemigos\SmallEnemies\SmallEnemyOne.cs" />
+    <Compile Include="Assets\scripts\Enemigos\SmallEnemy2\bulletSE2.cs" />
+    <Compile Include="Assets\scripts\Enemigos\SmallEnemy2\SmallEnemy2.cs" />
     <Compile Include="Assets\scripts\HUD\FadeManagger.cs" />
     <Compile Include="Assets\scripts\HUD\GameManager.cs" />
     <Compile Include="Assets\scripts\HUD\MenuManagger.cs" />
