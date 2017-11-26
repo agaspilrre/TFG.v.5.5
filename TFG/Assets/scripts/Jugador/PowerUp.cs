@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour {
 
-    public ParticleSystem power;
+    public GameObject power;
     GameObject powerUpBox;
     public bool isBoxBroken = false;
-    float speed = 5;
+    public float speed = 5;
     public float speedGoToPlayer = 10;
-    ParticleSystem clone;
+    GameObject clone;
     Transform playerTr;
     lifeScript lifeScript;
     float timer;
@@ -52,8 +52,9 @@ public class PowerUp : MonoBehaviour {
     {
         if (isBoxBroken)
         {
-            clone = Instantiate(power, transform.position, transform.rotation) as ParticleSystem;
-            clone.transform.SetParent(gameObject.transform);            
+            clone = Instantiate(power, transform.position, transform.rotation) as GameObject;
+            clone.transform.SetParent(gameObject.transform);
+           
         }
     }
     
@@ -67,6 +68,7 @@ public class PowerUp : MonoBehaviour {
             CancelInvoke();
             Destroy(gameObject);
             dashIcon.SetActive(true);
+
         }
     }
 
