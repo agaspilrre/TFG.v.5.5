@@ -104,7 +104,12 @@ public class PlayerInput : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.L))
         {
-            basicAttack.Attack(new Vector3(1,0));
+            Vector2 aux = Mathf.Abs(directionalInput.x) > Mathf.Abs(directionalInput.y) ? new Vector2(directionalInput.x, 0) : new Vector2(0, directionalInput.y);
+
+            if (aux == Vector2.zero)
+                basicAttack.Attack(new Vector2(player.getDireccion(), 0));
+            else
+                basicAttack.Attack(aux);
         }
 
         //Voltear personaje.

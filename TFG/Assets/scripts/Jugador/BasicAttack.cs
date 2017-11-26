@@ -18,11 +18,13 @@ public class BasicAttack : MonoBehaviour {
     float bulletSpeed;
 
     Transform playerTransform;
+    Player player;
 
 	void Start ()
     {
         playerTransform = GameObject.Find("Personaje").transform;
-	}
+        player = playerTransform.gameObject.GetComponent<Player>();
+    }
 	
     public void Attack(Vector3 direction)
     {
@@ -31,6 +33,7 @@ public class BasicAttack : MonoBehaviour {
             prueba = Instantiate(basicAttack, playerTransform.position, Quaternion.identity);
             prueba.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
             Invoke("CancelAttack", lifeSeconds);
+            player.Shoot();
             isAttacking = true;
         }
     }

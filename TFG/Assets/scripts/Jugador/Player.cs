@@ -86,7 +86,6 @@ public class Player : MonoBehaviour
     {
         gravity = 0;
         velocity.y = 0;
-
     }
 
     void Update()
@@ -160,6 +159,14 @@ public class Player : MonoBehaviour
             velocity.y *= fallWeight;
         }
 
+    }
+
+    public void Shoot()
+    {
+        if(!controller.collisions.below)
+        {
+            velocity = Vector2.zero;
+        }
     }
 
     public void SetDirectionalInput(Vector2 input)
