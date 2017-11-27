@@ -26,7 +26,7 @@ public class EnemyShoot : MonoBehaviour {
     float initialPositionX;
     float initialPositionY;
 
-  
+    public int life;
 
 
 	// Use this for initialization
@@ -126,6 +126,16 @@ public class EnemyShoot : MonoBehaviour {
         {
             Destroy(gameObject);
         }*/
+
+    }
+
+    public void EnemyMakeDamage(int _damage)
+    {
+        life -= _damage;
+        if (life <= 0)
+        {
+            Destroy(this.gameObject);
+        }
 
     }
 }

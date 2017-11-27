@@ -12,6 +12,7 @@ public class EnemyThree : MonoBehaviour {
     bool isHit; 
     public float timeToRespawn = 2;
     bool hasDead;
+    public int life;
 
 
     private void Start()
@@ -80,5 +81,15 @@ public class EnemyThree : MonoBehaviour {
         gameObject.transform.position = initialPosition;
         gameObject.SetActive(true);
         isHit = false;       
+    }
+
+    public void EnemyMakeDamage(int _damage)
+    {
+        life -= _damage;
+        if (life <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 }

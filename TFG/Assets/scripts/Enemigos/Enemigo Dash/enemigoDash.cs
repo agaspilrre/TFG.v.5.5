@@ -46,6 +46,8 @@ public class enemigoDash : MonoBehaviour {
     [SerializeField]
     float velocidadDash;
 
+    public int life;
+
     // Use this for initialization
     void Start()
     {
@@ -253,6 +255,16 @@ public class enemigoDash : MonoBehaviour {
             return true;
         else
             return false;
+    }
+
+    public void EnemyMakeDamage(int _damage)
+    {
+        life -= _damage;
+        if (life <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 }
 

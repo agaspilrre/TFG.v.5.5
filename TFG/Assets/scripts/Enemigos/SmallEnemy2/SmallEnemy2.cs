@@ -16,6 +16,7 @@ public class SmallEnemy2 : MonoBehaviour {
     private GameObject bullet;
     public float timeBetwenShoot;
     private float timer;
+    public int life;
 
     // Use this for initialization
     void Start () {
@@ -47,5 +48,15 @@ public class SmallEnemy2 : MonoBehaviour {
         bullet= (GameObject)Instantiate(bulletSmallEnemy2, spawnBulletPoint.position, spawnBulletPoint.rotation);
 
        
+    }
+
+    public void EnemyMakeDamage(int _damage)
+    {
+        life -= _damage;
+        if (life <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 }

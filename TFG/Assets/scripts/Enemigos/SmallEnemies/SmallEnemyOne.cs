@@ -16,6 +16,8 @@ public class SmallEnemyOne : MonoBehaviour {
     private float timer;
     private int count;
 
+    
+
 
     
 
@@ -71,6 +73,8 @@ public class SmallEnemyOne : MonoBehaviour {
             
 
     }
+
+   
 
 
 
