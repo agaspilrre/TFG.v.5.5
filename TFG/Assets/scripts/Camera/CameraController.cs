@@ -19,6 +19,9 @@ public class CameraController : MonoBehaviour {
 
     int blockedDirection; //0 width 1 heigth
 
+    [SerializeField]
+    Vector3 cameraPositionFromPlayer;
+
     State cameraState;
 
     [SerializeField]
@@ -120,24 +123,31 @@ public class CameraController : MonoBehaviour {
         widthDirecion = 3;
     }
 
+    public void ChangeGameScreen()
+    {
+        Vector3 aux = player.position + cameraPositionFromPlayer;
+        aux.z = -10;
+        cameraTransform.position = aux;
+    }
+
     public void SetCameraState(string state)
     {
         if (state == "active")
             cameraState = State.active;
         else if (state == "inactive")
             cameraState = State.inactive;
-    }
-
-    public void SetCameraState(string state, string direction)
-    {
-        cameraState = State.blocked;
-
-        if (direction == "Camera/BlockWidth")
-            blockedDirection = 0;
-        else if (direction == "Camera/BlockHeigth")
-            blockedDirection = 1;
         else
-            blockedDirection = 2;
+        {
+            cameraState = State.blocked;
+
+            if (state == "Camera/BlockWidth")
+                blockedDirection = 0;
+            else if (state == "Camera/BlockHeigth")
+                blockedDirection = 1;
+            else
+                blockedDirection = 2;
+        }
+
     }
 
     #region compare position

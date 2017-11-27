@@ -17,13 +17,15 @@ public class CollisionController : MonoBehaviour {
             mainCamera.SetCameraState("inactive");
         else if (other.name == "CameraStartPoint")
             mainCamera.SetCameraState("active");
-        else if (other.name == "CameraBlockPoint")
-            mainCamera.SetCameraState("blocked", other.tag);
+        else if (other.name == "CameraBlockPoint" || other.name == "PrefabPantalla")
+            mainCamera.SetCameraState(other.tag);
+        else if (other.tag == "Camera/Pantalla")
+            mainCamera.ChangeGameScreen();
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.name == "CameraBlockPoint")
+        if (other.name == "CameraBlockPoint" || other.name == "PrefabPantalla")
             mainCamera.SetCameraState("active");
     }
     #endregion
