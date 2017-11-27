@@ -185,6 +185,8 @@ public class Poderes : MonoBehaviour
             return false;
     }
 
+  
+
     void dash()
     {
         personajeMovimiento.setGravity0();

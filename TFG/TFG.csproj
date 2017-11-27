@@ -199,11 +199,15 @@
     <Compile Include="Assets\scripts\Jugador\RaycastController.cs" />
     <Compile Include="Assets\scripts\LoadXml.cs" />
     <Compile Include="Assets\scripts\NPCScript.cs" />
+    <Compile Include="Assets\scripts\Props\BouncyTrigger.cs" />
     <Compile Include="Assets\scripts\Props\CheckPoint.cs" />
     <Compile Include="Assets\scripts\Props\CheckPointManager.cs" />
     <Compile Include="Assets\scripts\Props\DamageTrigger.cs" />
     <Compile Include="Assets\scripts\Props\ManaNPC.cs" />
     <Compile Include="Assets\scripts\Props\MovementPlatform.cs" />
+    <Compile Include="Assets\scripts\STARTS\fixedVar.cs" />
+    <Compile Include="Assets\scripts\STARTS\StartItem.cs" />
+    <Compile Include="Assets\scripts\STARTS\StartsManager.cs" />
     <Compile Include="Assets\scripts\StoreItems.cs" />
     <Compile Include="Assets\scripts\ThroughtPlatform.cs" />
     <Compile Include="Assets\scripts\Timer\TimerManager.cs" />
