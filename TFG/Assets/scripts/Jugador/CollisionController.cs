@@ -19,8 +19,6 @@ public class CollisionController : MonoBehaviour {
             mainCamera.SetCameraState("active");
         else if (other.name == "CameraBlockPoint" || other.name == "PrefabPantalla")
             mainCamera.SetCameraState(other.tag);
-        else if (other.tag == "Camera/Pantalla")
-            mainCamera.ChangeGameScreen();
     }
 
     void OnTriggerExit2D(Collider2D other)

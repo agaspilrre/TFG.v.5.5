@@ -19,9 +19,6 @@ public class CameraController : MonoBehaviour {
 
     int blockedDirection; //0 width 1 heigth
 
-    [SerializeField]
-    Vector3 cameraPositionFromPlayer;
-
     State cameraState;
 
     [SerializeField]
@@ -123,11 +120,9 @@ public class CameraController : MonoBehaviour {
         widthDirecion = 3;
     }
 
-    public void ChangeGameScreen()
+    public void ChangeGameScreen(Vector3 position)
     {
-        Vector3 aux = player.position + cameraPositionFromPlayer;
-        aux.z = -10;
-        cameraTransform.position = aux;
+        cameraTransform.position = position;
     }
 
     public void SetCameraState(string state)
