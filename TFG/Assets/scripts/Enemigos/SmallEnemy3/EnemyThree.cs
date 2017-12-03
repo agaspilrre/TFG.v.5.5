@@ -7,18 +7,20 @@ public class EnemyThree : MonoBehaviour {
     public List<Transform> targets;
 
     Transform destination;   
-    public float speed;
-    Vector3 initialPosition;
+    public float speed;    
     bool isHit; 
     public float timeToRespawn = 2;
     bool hasDead;
     public int life;
+    Transform playerTr;
+    public float speedSlow;
+    public float timeSlow;
 
 
     private void Start()
     {
         SetDestination(targets[0]);
-        initialPosition = transform.position;
+        playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         isHit = false;
         hasDead = false;
     }
@@ -54,12 +56,7 @@ public class EnemyThree : MonoBehaviour {
 
         CancelInvoke();
     }
-
-    private void OnEnable()
-    {
-        SetDestination(targets[0]);
-    }
-
+    
     //Cambia el destino
     void SetDestination(Transform dest)
     {
@@ -73,12 +70,19 @@ public class EnemyThree : MonoBehaviour {
             isHit = true;
             gameObject.SetActive(false);
             Invoke("Respawn", timeToRespawn);
+            collision.gameObject.GetComponent<Player>().setMakeSlow(true, timeSlow, speedSlow);
         }
     }
 
     void Respawn()
     {
-        gameObject.transform.position = initialPosition;
+        float dist = Vector3.Distance(playerTr.position, targets[0].position);
+
+        if(dist > 5)
+            gameObject.transform.position = targets[0].position;
+        else
+            gameObject.transform.position = targets[1].position;
+
         gameObject.SetActive(true);
         isHit = false;       
     }

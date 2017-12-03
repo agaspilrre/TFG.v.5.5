@@ -18,8 +18,7 @@ public class PowerUp : MonoBehaviour {
     public float timeSuspensionParticle = 2;
 	// Use this for initialization
 	void Start () {
-
-        powerUpBox = GameObject.FindGameObjectWithTag("PowerUp").GetComponent<GameObject>();
+        
         playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         lifeScript = GameObject.FindGameObjectWithTag("Player").GetComponent<lifeScript>();
         

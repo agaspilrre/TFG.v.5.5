@@ -293,14 +293,7 @@ public class Player : MonoBehaviour
         if (coll.collider.name == "Platform")
         {
             transform.parent = coll.transform;
-        }
-
-        if (coll.gameObject.tag == "PowerUp")
-        {
-            Destroy(coll.gameObject);
-            controlPU.setBoxBroken(true);
-            controlPU.PowerUpInstantiate();
-        }
+        }        
 
         if (coll.gameObject.tag == "EnemyRotate")
         {
@@ -318,6 +311,13 @@ public class Player : MonoBehaviour
             numeroSaltos = 0;
             canSecondJump = false;
             entraColisionPared = true;
+        }
+
+        if (coll.tag == "PowerUp")
+        {
+            Destroy(coll.gameObject);
+            controlPU.setBoxBroken(true);
+            controlPU.PowerUpInstantiate();
         }
     }
 
