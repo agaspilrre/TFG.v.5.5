@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         permitido = true;
         direccion = 1;
         poderesScript = GetComponent<Poderes>();
-        controlPU = GameObject.Find("ControlPowerUp").GetComponent<PowerUp>();
+        controlPU = GameObject.FindGameObjectWithTag("ControlPowerUp").GetComponent<PowerUp>();
         input = GetComponent<PlayerInput>();
         staminaBar = GetComponent<HabilityBar>();
         isJumping = false;

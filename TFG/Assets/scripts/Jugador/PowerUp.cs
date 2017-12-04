@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour {
 
     public GameObject power;
-    GameObject powerUpBox;
+    public GameObject allPowerUp;
     public bool isBoxBroken = false;
     public float speed = 5;
     public float speedGoToPlayer = 10;
@@ -16,12 +16,13 @@ public class PowerUp : MonoBehaviour {
     public GameObject dashIcon;
     public float timeAscendParticle = 3;
     public float timeSuspensionParticle = 2;
+    public Transform spawner;
+
 	// Use this for initialization
 	void Start () {
         
         playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        lifeScript = GameObject.FindGameObjectWithTag("Player").GetComponent<lifeScript>();
-        
+        lifeScript = GameObject.FindGameObjectWithTag("Player").GetComponent<lifeScript>();        
     }
 	
 	// Update is called once per frame
@@ -31,7 +32,7 @@ public class PowerUp : MonoBehaviour {
 
         if (isBoxBroken)
         {
-            transform.Translate(Vector3.up * Time.deltaTime * speed);
+            clone.transform.Translate(Vector3.up * Time.deltaTime * speed);
             timer += Time.deltaTime;
         }            
 
@@ -51,24 +52,26 @@ public class PowerUp : MonoBehaviour {
     {
         if (isBoxBroken)
         {
-            clone = Instantiate(power, transform.position, transform.rotation) as GameObject;
-            clone.transform.SetParent(gameObject.transform);
-           
+            clone = Instantiate(power, spawner.position, spawner.rotation);          
         }
     }
     
     public void MoveToPlayer()
     {
-        float step = speedGoToPlayer * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, playerTr.position, step);
+        if(clone != null)
+        {
+            float step = speedGoToPlayer * Time.deltaTime;
+            clone.transform.position = Vector3.MoveTowards(clone.transform.position, playerTr.position, step);
 
-        if (transform.position == playerTr.position)
-        {           
-            CancelInvoke();
-            Destroy(gameObject);
-            dashIcon.SetActive(true);
+            if (clone.transform.position == playerTr.position)
+            {
+                CancelInvoke();
+                Destroy(clone);
+                Destroy(allPowerUp);
+                dashIcon.SetActive(true);
 
-        }
+            }
+        }        
     }
 
     public void setBoxBroken(bool value)
