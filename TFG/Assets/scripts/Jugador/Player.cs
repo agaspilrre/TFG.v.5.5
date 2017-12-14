@@ -316,8 +316,8 @@ public class Player : MonoBehaviour
         if (coll.tag == "PowerUp")
         {
             Destroy(coll.gameObject);
-            controlPU.setBoxBroken(true);
-            controlPU.PowerUpInstantiate();
+            coll.transform.parent.GetComponent<PowerUp>().setBoxBroken(true);
+            coll.transform.parent.GetComponent<PowerUp>().PowerUpInstantiate();
         }
     }
 
