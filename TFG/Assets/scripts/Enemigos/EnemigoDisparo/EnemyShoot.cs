@@ -27,21 +27,31 @@ public class EnemyShoot : MonoBehaviour {
     float initialPositionY;
 
     public int life;
+    bool startCountTime;
+    public float TimeToStart;
+    private float timer;
 
-
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake () {
 
         rbEnemy=GetComponent<Rigidbody2D>();
         initialPositionX = this.transform.position.x;
         initialPositionY = this.transform.position.y;
 
-        
+        StartCoroutine(StartCount());
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    IEnumerator StartCount()
+    {
+
+        yield return new WaitForSeconds(TimeToStart);
+        startCountTime = true;
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 
 
 
@@ -90,16 +100,26 @@ public class EnemyShoot : MonoBehaviour {
         }
 
         //timer instantiate bullets
+        /*
         countTimer++;
         if (countTimer > timeBetwenShoot)
         {
             InstantiateBullets();
             countTimer = 0;
+        }*/
+        if (startCountTime)
+        {
+            timer += Time.deltaTime;
+            if (timer >= timeBetwenShoot)
+            {
+                InstantiateBullets();
+                timer = 0;
+            }
         }
 
 
-		
-	}
+
+    }
 
     //function to instantiate bullets
     public void InstantiateBullets()

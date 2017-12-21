@@ -16,39 +16,63 @@ public class SmallEnemyOne : MonoBehaviour {
     private float timer;
     private int count;
 
-    
-
-
-    
+    bool startCountTime;
+    public float TimeToStart;
+    Rigidbody2D rb;
+    public float jumpPower;
 
     private void Start()
     {
         SetDestination(targets[1]);
+        StartCoroutine(StartCount());
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    IEnumerator StartCount()
+    {
+
+        yield return new WaitForSeconds(TimeToStart);
+        startCountTime = true;
+
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= timeAttack)
+        if (startCountTime)
         {
-            float step = speed * Time.deltaTime;
-            
-            //Movimiento de la plataforma
-            transform.position = Vector3.MoveTowards(transform.position, destination.position, step);
+            if (rb.velocity.y == 0)
+                timer += Time.deltaTime;
 
-            //Retorno a la plataforma desde donde empieza
-            if (Vector3.Distance(transform.position, destination.position) < speed * Time.deltaTime)
+            if (timer >= timeAttack)
             {
-                SetDestination(destination == targets[0] ? targets[1] : targets[0]);
-                
+                /*
+                float step = speed * Time.deltaTime;
 
-                if ( destination==targets[1])
+                //Movimiento de la plataforma
+                transform.position = Vector3.MoveTowards(transform.position, destination.position, step);
+
+                //Retorno a la plataforma desde donde empieza
+                if (Vector3.Distance(transform.position, destination.position) < speed * Time.deltaTime)
                 {
-                    timer = 0;
-                    //SetDestination(targets[1]);
-                }
+                    SetDestination(destination == targets[0] ? targets[1] : targets[0]);
+
+
+                    if (destination == targets[1])
+                    {
+                        timer = 0;
+                        //SetDestination(targets[1]);
+                    }
+                }*/
+
+
+                //rb.AddForce(Vector2.up * jumpPower);
+                rb.velocity = new Vector2(0, 1 * jumpPower);
+                timer = 0;
+                
+                
             }
         }
+           
         
     }
 
