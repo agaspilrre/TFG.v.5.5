@@ -183,9 +183,7 @@ public class Poderes : MonoBehaviour
             return true;
         else
             return false;
-    }
-
-  
+    }  
 
     void dash()
     {
@@ -194,12 +192,10 @@ public class Poderes : MonoBehaviour
         personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 0);
 
         dashUse = false;
+        
         //despues del tiempo del dash volver a permitir movimiento
         Invoke("dashPermitido", duracionDash);
     }
-
-
-
 
     void dashPermitido()
     {
@@ -208,6 +204,12 @@ public class Poderes : MonoBehaviour
         //volvemos activar la gravedad una vez finalizado el dush
         personajeRB.velocity = new Vector2(0, 0);
         personajeRB.gravityScale = initGravity;
+
+        if (Input.GetAxisRaw("Horizontal") != 0)
+            playerAnim.runToDashFalse();
+        else
+            playerAnim.idlToDashFalse();
+        
 
         //condicion para testear con dush infinito y sin dush infinito
         if (infinityDush)
@@ -239,7 +241,7 @@ public class Poderes : MonoBehaviour
 
     void dushGround()
     {
-        dashUse = true;
+        dashUse = true;        
     }
 
 

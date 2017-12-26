@@ -47,7 +47,6 @@ public class PlayerAnim : MonoBehaviour {
        
     }
 
-   
 
     //Si esta parado en estado sombra y corre
     public void IdlSToRunS()
@@ -73,7 +72,31 @@ public class PlayerAnim : MonoBehaviour {
         
     }
 
-   
+    //si esta parado y hace dash
+    public void idlToDash()
+    {
+        animator.SetBool("idlToDash", true);
+    }
+
+    //si esta corriendo y hace dash
+    public void runToDash()
+    {
+        animator.SetBool("runToDash", true);
+    }
+
+    //si esta quieto y salta
+    public void idlToJump()
+    {
+        animator.SetBool("idlToJump", true);
+    }
+
+    //si esta corriendo y salta
+    public void runToJump()
+    {
+        animator.SetBool("runToJump", true);
+    }
+
+
 
     //PASAR A FALSO
 
@@ -128,7 +151,27 @@ public class PlayerAnim : MonoBehaviour {
 
     }
 
-    
+    //si hace dash y se tiene que detener
+    public void idlToDashFalse()
+    {
+        animator.SetBool("idlToDash", false);
+    }
 
+    //si ha hecho dash y tiene que volver a correr
+    public void runToDashFalse()
+    {
+        animator.SetBool("runToDash", false);
+    }
 
+    //si ha saltado y tiene que volver a estar quieto
+    public void idlToJumpFalse()
+    {
+        animator.SetBool("idlToJump", false);
+    }
+
+    //si ha saltado y tiene que volver a correr
+    public void runToJumpFalse()
+    {
+        animator.SetBool("runToJump", false);
+    }
 }

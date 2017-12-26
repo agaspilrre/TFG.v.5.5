@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
     PlayerInput input;
     HabilityBar staminaBar;
     PowerUp controlPU;
+    PlayerAnim playerAnim;
 
     Vector2 directionalInput;
     bool wallSliding;
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
         permitido = true;
         direccion = 1;
         poderesScript = GetComponent<Poderes>();
+        playerAnim = GetComponent<PlayerAnim>();
         controlPU = GameObject.FindGameObjectWithTag("ControlPowerUp").GetComponent<PowerUp>();
         input = GetComponent<PlayerInput>();
         staminaBar = GetComponent<HabilityBar>();
@@ -215,6 +217,7 @@ public class Player : MonoBehaviour
                 numeroSaltos++;
                 multiplicadorSalto = savedMultiplicadorSaltos;
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
+
             }                       
         }
 
@@ -284,7 +287,8 @@ public class Player : MonoBehaviour
         {
             poderesScript.SetDashUse(true);
             permitido = true;
-            isJumping = false;
+            isJumping = false;            
+            playerAnim.idlToJumpFalse();     
             numeroSaltos = 0;
             canSecondJump = false;
             entraColisionPared = true;
@@ -308,6 +312,7 @@ public class Player : MonoBehaviour
             poderesScript.SetDashUse(true);
             permitido = true;
             isJumping = false;
+            playerAnim.idlToJumpFalse();            
             numeroSaltos = 0;
             canSecondJump = false;
             entraColisionPared = true;

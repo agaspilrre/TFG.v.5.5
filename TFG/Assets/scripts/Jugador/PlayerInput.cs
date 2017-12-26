@@ -43,6 +43,7 @@ public class PlayerInput : MonoBehaviour
             //comprobamos que no esta ejecutando el dash
             if (player.GetComponent<Poderes>().getDashUse())
             {
+               
                 //si es falso corresponde animacion electro
                 if (!player.GetComponent<Poderes>().getPlayerStates())
                 {
@@ -56,10 +57,16 @@ public class PlayerInput : MonoBehaviour
                     playerAnim.RunSToIdlSFalse();
                 }
             }
+
+            if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1"))
+                playerAnim.runToDash();
+
+            //if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
+            //    playerAnim.runToJump();
         }
 
         else if (Input.GetAxis("Horizontal") == 0)
-        {
+        {            
             //comprobar cuanto tiempo permanece parado para el sistema de emojis
             stopTime += Time.deltaTime;
 
@@ -74,6 +81,9 @@ public class PlayerInput : MonoBehaviour
                 playerAnim.RunSToIdlS();
                 playerAnim.IdlSToRunSFalse();
             }
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
+                playerAnim.idlToJump();
         }
 
         player.SetDirectionalInput(directionalInput);
@@ -81,12 +91,14 @@ public class PlayerInput : MonoBehaviour
         //SALTO  
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
         {
-            player.OnJumpInputDown();
+            player.OnJumpInputDown();            
         }
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("PS4_X"))
         {
-            player.OnJumpInputUp();
+            player.OnJumpInputUp();           
         }
+
+       
 
         //CAMBIO PERSONALIDAD
         /*
@@ -99,7 +111,8 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1"))
         {
-            poderes.checkDush();
+            poderes.checkDush();           
+            playerAnim.idlToDash();
         }
 
         if(Input.GetKeyDown(KeyCode.L))
