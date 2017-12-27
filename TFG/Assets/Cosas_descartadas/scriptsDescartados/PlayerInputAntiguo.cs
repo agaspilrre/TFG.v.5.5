@@ -43,13 +43,13 @@ public class PlayerInputAntiguo : MonoBehaviour
                 if (!player.GetComponent<Poderes>().getPlayerStates())
                 {
                     playerAnim.IdlToRun();
-                    playerAnim.RunToIdlFalse();
+                    //playerAnim.RunToIdlFalse();
                 }
 
                 else
                 {
-                    playerAnim.IdlSToRunS();
-                    playerAnim.RunSToIdlSFalse();
+                    //playerAnim.IdlSToRunS();
+                    //playerAnim.RunSToIdlSFalse();
                 }
             }
         }
@@ -62,13 +62,13 @@ public class PlayerInputAntiguo : MonoBehaviour
             if (!player.GetComponent<Poderes>().getPlayerStates())
             {
                 playerAnim.RunToIdl();
-                playerAnim.IdlToRunFalse();
+                //playerAnim.IdlToRunFalse();
             }
 
             else
             {
-                playerAnim.RunSToIdlS();
-                playerAnim.IdlSToRunSFalse();
+                //playerAnim.RunSToIdlS();
+                //playerAnim.IdlSToRunSFalse();
             }
         }
 

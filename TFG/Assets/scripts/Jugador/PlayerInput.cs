@@ -17,6 +17,9 @@ public class PlayerInput : MonoBehaviour
     enum Direccion { izquierda, derecha }
     Direccion direccion;
 
+    enum PlayerMoving { yes,no}
+    PlayerMoving moving;
+
     float stopTime = 0;
 
     void Start()
@@ -25,6 +28,7 @@ public class PlayerInput : MonoBehaviour
         anim = GetComponent<Animator>();
         poderes = GetComponent<Poderes>();
         direccion = Direccion.derecha;
+        moving = PlayerMoving.no;
         playerAnim = GetComponent<PlayerAnim>();
         basicAttack = GetComponent<BasicAttack>();
     }
@@ -38,52 +42,27 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             stopTime = 0;
-            //si nos movemos se activan las animaciones
-
-            //comprobamos que no esta ejecutando el dash
-            if (player.GetComponent<Poderes>().getDashUse())
-            {
+            moving = PlayerMoving.yes;
+            //si nos movemos se activan las animaciones 
+            playerAnim.IdlToRun();
+            
                
-                //si es falso corresponde animacion electro
-                if (!player.GetComponent<Poderes>().getPlayerStates())
-                {
-                    playerAnim.IdlToRun();
-                    playerAnim.RunToIdlFalse();
-                }
 
-                else
-                {
-                    playerAnim.IdlSToRunS();
-                    playerAnim.RunSToIdlSFalse();
-                }
-            }
-
-            if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1"))
-                playerAnim.runToDash();
-
-            //if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
-            //    playerAnim.runToJump();
         }
 
         else if (Input.GetAxis("Horizontal") == 0)
         {            
             //comprobar cuanto tiempo permanece parado para el sistema de emojis
             stopTime += Time.deltaTime;
+            moving = PlayerMoving.no;
 
-            if (!player.GetComponent<Poderes>().getPlayerStates())
-            {
-                playerAnim.RunToIdl();
-                playerAnim.IdlToRunFalse();
-            }
+            playerAnim.RunToIdl();
+            //playerAnim.RunToIdl();
+            //playerAnim.IdlToRunFalse();
+            
 
-            else
-            {
-                playerAnim.RunSToIdlS();
-                playerAnim.IdlSToRunSFalse();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
-                playerAnim.idlToJump();
+            
+                
         }
 
         player.SetDirectionalInput(directionalInput);
@@ -91,11 +70,23 @@ public class PlayerInput : MonoBehaviour
         //SALTO  
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
         {
-            player.OnJumpInputDown();            
+            player.OnJumpInputDown();
+            if (moving == PlayerMoving.no)
+            {
+                //de idl a salto
+                playerAnim.idlToJump();
+            }
+            else
+            {
+                //de correr a salto
+                playerAnim.runToJump();
+            }
+            //playerAnim.idlToJump();
         }
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("PS4_X"))
         {
-            player.OnJumpInputUp();           
+            player.OnJumpInputUp();
+            //playerAnim.idlToJump();
         }
 
        
@@ -111,8 +102,17 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1"))
         {
-            poderes.checkDush();           
-            playerAnim.idlToDash();
+            poderes.checkDush();
+            if (moving == PlayerMoving.no)
+            {
+                //de idl a dash
+                playerAnim.idlToDash();
+            }
+            else
+            {
+                //de correr a dash
+                playerAnim.runToDash();
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.L))

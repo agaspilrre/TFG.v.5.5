@@ -287,8 +287,18 @@ public class Player : MonoBehaviour
         {
             poderesScript.SetDashUse(true);
             permitido = true;
-            isJumping = false;            
-            playerAnim.idlToJumpFalse();     
+            isJumping = false;
+             if (Input.GetAxisRaw("Horizontal") != 0)
+            {
+                playerAnim.jumpToRun();
+                //playerAnim.dashToRun();
+            }
+            else
+            {
+                playerAnim.JumpToIdl();
+                //playerAnim.DashToIdl();
+            }
+               
             numeroSaltos = 0;
             canSecondJump = false;
             entraColisionPared = true;
@@ -312,7 +322,20 @@ public class Player : MonoBehaviour
             poderesScript.SetDashUse(true);
             permitido = true;
             isJumping = false;
-            playerAnim.idlToJumpFalse();            
+            //playerAnim.idlToJumpFalse(); 
+
+            //PARA CRTAR LA ANIMACION DE SALTO CUANDO CAE AL SUELO
+            if (Input.GetAxisRaw("Horizontal") != 0)
+            {
+                playerAnim.jumpToRun();
+                //playerAnim.dashToRun();
+            }
+            else
+            {
+                playerAnim.JumpToIdl();
+                //playerAnim.DashToIdl();
+            }
+
             numeroSaltos = 0;
             canSecondJump = false;
             entraColisionPared = true;

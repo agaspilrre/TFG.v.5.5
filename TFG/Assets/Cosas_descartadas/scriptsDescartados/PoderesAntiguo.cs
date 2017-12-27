@@ -404,8 +404,8 @@ public class PoderesAntiguo : MonoBehaviour
             cambioPersonalidad = true;
             //sr.sprite = ShadowShade;
             //cambiamos a animacion idle de sombra
-            playerAnim.IdlSToIdlFalse();
-            playerAnim.IdlToIdlS();
+            //playerAnim.IdlSToIdlFalse();
+            //playerAnim.IdlToIdlS();
 
             print("sombra");
         }
@@ -414,8 +414,8 @@ public class PoderesAntiguo : MonoBehaviour
             playerState = Shades.ELECTRIC;
             cambioPersonalidad = false;
             //sr.sprite = ElectricShade;
-            playerAnim.IdlToIdlSFalse();
-            playerAnim.IdlSToIdl();
+            //playerAnim.IdlToIdlSFalse();
+            //playerAnim.IdlSToIdl();
             print("elec");
         }
 

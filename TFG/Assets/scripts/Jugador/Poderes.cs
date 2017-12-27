@@ -205,10 +205,11 @@ public class Poderes : MonoBehaviour
         personajeRB.velocity = new Vector2(0, 0);
         personajeRB.gravityScale = initGravity;
 
+        //quitar las animaciones del dush
         if (Input.GetAxisRaw("Horizontal") != 0)
-            playerAnim.runToDashFalse();
+            playerAnim.dashToRun();
         else
-            playerAnim.idlToDashFalse();
+            playerAnim.DashToIdl();
         
 
         //condicion para testear con dush infinito y sin dush infinito
@@ -278,8 +279,8 @@ public class Poderes : MonoBehaviour
             cambioPersonalidad = true;
             //sr.sprite = ShadowShade;
             //cambiamos a animacion idle de sombra
-            playerAnim.IdlSToIdlFalse();
-            playerAnim.IdlToIdlS();
+            //playerAnim.IdlSToIdlFalse();
+            //playerAnim.IdlToIdlS();
 
             print("sombra");
         }
@@ -288,8 +289,8 @@ public class Poderes : MonoBehaviour
             playerState = Shades.ELECTRIC;
             cambioPersonalidad = false;
             //sr.sprite = ElectricShade;
-            playerAnim.IdlToIdlSFalse();
-            playerAnim.IdlSToIdl();
+            //playerAnim.IdlToIdlSFalse();
+            //playerAnim.IdlSToIdl();
             print("elec");
         }
 
