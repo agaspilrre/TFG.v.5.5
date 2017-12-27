@@ -10,6 +10,9 @@ public class BasicAttack : MonoBehaviour {
     public bool isAttacking { get; set; }
 
     [SerializeField]
+    float cargaAtaque;
+
+    [SerializeField]
     GameObject basicAttack;
 
     GameObject prueba;
@@ -32,15 +35,23 @@ public class BasicAttack : MonoBehaviour {
         {
             prueba = Instantiate(basicAttack, playerTransform.position, Quaternion.identity);
             prueba.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
-            Invoke("CancelAttack", lifeSeconds);
-            player.Shoot();
+            Invoke("StopAttack", lifeSeconds);
+            player.Shoot(cargaAtaque);
             isAttacking = true;
         }
     }
 
-    void CancelAttack()
+    public void CancelAttack()
+    {
+        StopAllCoroutines();
+        StopAttack();
+    }
+
+    void StopAttack()
     {
         isAttacking = false;
-        Destroy(prueba);
+
+        if(prueba != null)
+            Destroy(prueba);
     }
 }

@@ -66,6 +66,7 @@ public class Poderes : MonoBehaviour
     bool verticalDush;
 
     private HabilityBar staminaBar;
+    BasicAttack basicAttack;
 
     // Use this for initialization
     void Start()
@@ -104,15 +105,12 @@ public class Poderes : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
 
         playerAnim = GetComponent<PlayerAnim>();
+        basicAttack = gameObject.GetComponent<BasicAttack>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-
-
         //input para el dash
         /*
         if ((Input.GetButton("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && staminaBar.slider.value > 0)//calcula cuanto tiempo llevas apretando
@@ -169,13 +167,7 @@ public class Poderes : MonoBehaviour
 
             cargaDash = 0;
         }
-
-
-
-
     }
-
-
 
     public bool getStatePartition()
     {
@@ -195,6 +187,8 @@ public class Poderes : MonoBehaviour
         
         //despues del tiempo del dash volver a permitir movimiento
         Invoke("dashPermitido", duracionDash);
+
+        basicAttack.CancelAttack();
     }
 
     void dashPermitido()

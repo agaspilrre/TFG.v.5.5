@@ -163,12 +163,20 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Shoot()
+    public void Shoot(float chargeTime)
     {
         if(!controller.collisions.below)
         {
-            velocity = Vector2.zero;
+            IEnumerator coroutine = Charge(chargeTime);
+            StartCoroutine(coroutine);
         }
+    }
+
+    private IEnumerator Charge(float waitTime)
+    {
+        setGravity0();
+        yield return new WaitForSeconds(waitTime);
+        returnGravity();
     }
 
     public void SetDirectionalInput(Vector2 input)
