@@ -70,7 +70,7 @@ public class EnemyThree : MonoBehaviour {
             isHit = true;
             gameObject.SetActive(false);
             Invoke("Respawn", timeToRespawn);
-            collision.gameObject.GetComponent<Player>().setMakeSlow(true, timeSlow, speedSlow);
+            collision.gameObject.GetComponent<Player>().setMakeSlow(true, timeSlow, speedSlow);            
         }
     }
 

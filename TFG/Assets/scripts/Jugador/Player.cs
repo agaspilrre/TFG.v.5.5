@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     HabilityBar staminaBar;
     PowerUp controlPU;
     PlayerAnim playerAnim;
+    
 
     Vector2 directionalInput;
     bool wallSliding;
@@ -161,7 +162,7 @@ public class Player : MonoBehaviour
             velocity.y *= fallWeight;
         }
 
-    }
+    }  
 
     public void Shoot(float chargeTime)
     {
@@ -296,6 +297,7 @@ public class Player : MonoBehaviour
             poderesScript.SetDashUse(true);
             permitido = true;
             isJumping = false;
+            velocity = new Vector3(0, 0, 0);
              if (Input.GetAxisRaw("Horizontal") != 0)
             {
                 playerAnim.jumpToRun();
@@ -315,12 +317,28 @@ public class Player : MonoBehaviour
         if (coll.collider.name == "Platform")
         {
             transform.parent = coll.transform;
+
         }        
 
         if (coll.gameObject.tag == "EnemyRotate")
         {
             setMakeSlow(true, 3, 3);
         }
+    }
+
+    private void OnCollisionStay2D(Collision2D coll)
+    {
+        if (coll.collider.name == "Platform")
+        {
+            transform.parent = coll.transform;
+
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.collider.name == "Platform")
+            transform.parent = null;
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
@@ -357,11 +375,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.collider.name == "Platform")
-            transform.parent = null;
-    }
+   
 
 
     void HandleWallSliding()
