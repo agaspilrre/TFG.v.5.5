@@ -187,8 +187,10 @@
     <Compile Include="Assets\scripts\Enemigos\SmallEnemy2\SmallEnemy2.cs" />
     <Compile Include="Assets\scripts\Enemigos\SmallEnemy3\DifferentEnemyThree.cs" />
     <Compile Include="Assets\scripts\Enemigos\SmallEnemy3\EnemyThree.cs" />
+    <Compile Include="Assets\scripts\HUD\ButtonsController.cs" />
     <Compile Include="Assets\scripts\HUD\FadeManagger.cs" />
     <Compile Include="Assets\scripts\HUD\GameManager.cs" />
+    <Compile Include="Assets\scripts\HUD\MenuManager.cs" />
     <Compile Include="Assets\scripts\HUD\MenuManagger.cs" />
     <Compile Include="Assets\scripts\HUD\PauseScript.cs" />
     <Compile Include="Assets\scripts\Item.cs" />
@@ -256,6 +258,7 @@
     <None Include="Assets\Resources\Decision2.xml" />
     <None Include="Assets\Resources\items.xml" />
     <None Include="Assets\Resources\items2.xml" />
+    <None Include="Assets\Shaders\Blur.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />

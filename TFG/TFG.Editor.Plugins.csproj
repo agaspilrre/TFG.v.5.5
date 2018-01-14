@@ -187,6 +187,7 @@
     <None Include="Assets\Resources\Decision2.xml" />
     <None Include="Assets\Resources\items.xml" />
     <None Include="Assets\Resources\items2.xml" />
+    <None Include="Assets\Shaders\Blur.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
