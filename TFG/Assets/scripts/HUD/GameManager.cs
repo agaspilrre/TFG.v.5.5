@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -39,10 +40,11 @@ public class GameManager : MonoBehaviour {
                 countTime = 0;
                 lifePlayer.cureLife(3);
                 gameOver.SetActive(false);
-                player.transform.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;//position of the checkpoint
-                camera.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;
-                camera.position = new Vector3(camera.position.x, camera.position.y, -10);
-                Time.timeScale = 1;
+                //player.transform.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;//position of the checkpoint
+                //camera.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;
+                //camera.position = new Vector3(camera.position.x, camera.position.y, -10);
+                //Time.timeScale = 1;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
 

@@ -8,7 +8,7 @@ public class PlayerInput : MonoBehaviour
     Player player;
     private PlayerAnim playerAnim;
     Poderes poderes;
-
+  
     BasicAttack basicAttack;
 
     //variable para activar las animaciones
@@ -50,13 +50,19 @@ public class PlayerInput : MonoBehaviour
 
         }
 
-        else if (Input.GetAxis("Horizontal") == 0)
-        {            
+        else if (Input.GetAxis("Horizontal") == 0 )
+        {    
+            
             //comprobar cuanto tiempo permanece parado para el sistema de emojis
             stopTime += Time.deltaTime;
-            moving = PlayerMoving.no;
 
-            playerAnim.RunToIdl();
+            if (stopTime >= 0.1f)
+            {
+                moving = PlayerMoving.no;
+
+                playerAnim.RunToIdl();
+            }
+           
             //playerAnim.RunToIdl();
             //playerAnim.IdlToRunFalse();
             

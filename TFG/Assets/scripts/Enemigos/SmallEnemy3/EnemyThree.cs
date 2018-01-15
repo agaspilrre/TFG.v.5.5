@@ -15,7 +15,7 @@ public class EnemyThree : MonoBehaviour {
     Transform playerTr;
     public float speedSlow;
     public float timeSlow;
-
+    int countCollision;
 
     private void Start()
     {
@@ -23,6 +23,7 @@ public class EnemyThree : MonoBehaviour {
         playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         isHit = false;
         hasDead = false;
+        countCollision = 0;
     }
 
     void Update()
@@ -70,7 +71,19 @@ public class EnemyThree : MonoBehaviour {
             isHit = true;
             gameObject.SetActive(false);
             Invoke("Respawn", timeToRespawn);
-            collision.gameObject.GetComponent<Player>().setMakeSlow(true, timeSlow, speedSlow);            
+            
+            //solo se llama una vez por cada colision
+            if(countCollision<=0)
+                collision.gameObject.GetComponent<Player>().setMakeSlow(true, timeSlow, speedSlow);
+            countCollision++;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            countCollision = 0;
         }
     }
 

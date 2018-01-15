@@ -8,7 +8,8 @@ public class SmallEnemyOne : MonoBehaviour {
 
     Transform destination;
 
-    public float speed;
+   
+
     public int Damage;
     private bool attack;
 
@@ -19,13 +20,17 @@ public class SmallEnemyOne : MonoBehaviour {
     bool startCountTime;
     public float TimeToStart;
     Rigidbody2D rb;
-    public float jumpPower;
+    //variables para ajustar el salto del enemigo
+    public float durationJump;
+    public float distanceJump;
+    float speedJump;
 
     private void Start()
     {
         SetDestination(targets[1]);
         StartCoroutine(StartCount());
         rb = GetComponent<Rigidbody2D>();
+        speedJump = distanceJump / durationJump;
     }
 
     IEnumerator StartCount()
@@ -66,7 +71,9 @@ public class SmallEnemyOne : MonoBehaviour {
 
 
                 //rb.AddForce(Vector2.up * jumpPower);
-                rb.velocity = new Vector2(0, 1 * jumpPower);
+                rb.velocity = new Vector2(0, 1 * speedJump);
+                rb.gravityScale = 0;
+                Invoke("setGravity", durationJump);
                 timer = 0;
                 
                 
@@ -76,10 +83,18 @@ public class SmallEnemyOne : MonoBehaviour {
         
     }
 
+    void setGravity()
+    {
+        //freno el salto anulando con una 4 parte de la velocidad que lleva en este momento
+        rb.velocity = new Vector2(0, -1 * (rb.velocity.y/4));
+        rb.gravityScale = 1;
+    }
+
     //Cambia el destino
     void SetDestination(Transform dest)
     {
         destination = dest;
+
     }
 
 

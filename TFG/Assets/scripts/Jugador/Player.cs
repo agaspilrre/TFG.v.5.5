@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
     public float fallWeight;
 
     public bool canSecondJump;
+    
 
     void Start()
     {
@@ -115,12 +116,14 @@ public class Player : MonoBehaviour
         if (makeSlow)
         {
             moveSpeed = slowSpeed;
+            playerAnim.setAnimatorSpeed(0.5f);
             timer += Time.deltaTime;
             if (timer >= timerSlow)
             {
                 
                 makeSlow = false;
                 timer = 0;
+                playerAnim.setAnimatorSpeed(1f);
                 moveSpeed = normalSpeed;
             }
         }

@@ -8,15 +8,20 @@ using UnityEngine;
 public class PlayerAnim : MonoBehaviour {
 
     Animator animator;
-    
+    float initialSpeedAnimator;
+
 	// Use this for initialization
 	void Start () {
 
         animator = GetComponent<Animator>();
-	}
+        initialSpeedAnimator = animator.speed;
+    }
 	
 	
-
+    public void setAnimatorSpeed(float _speed)
+    {
+        animator.speed = _speed;
+    }
 
     //metodos encargados de todas las transiciones 
 
