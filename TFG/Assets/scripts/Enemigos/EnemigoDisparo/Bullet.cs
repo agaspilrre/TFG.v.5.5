@@ -100,6 +100,7 @@ public class Bullet : MonoBehaviour {
         speed = _speed;
     }
 
+    /*
     void OnCollisionEnter2D(Collision2D coll)
     {
         if ( coll.gameObject.tag != "Enemy")
@@ -117,5 +118,22 @@ public class Bullet : MonoBehaviour {
          
 
 
+    }*/
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag != "Enemy")
+        {
+            if (coll.gameObject.tag == "Player")
+            {
+                //call die function
+
+                coll.gameObject.GetComponent<lifeScript>().makeDamage(1);
+            }
+
+            if(coll.gameObject.tag=="Player" || coll.gameObject.tag == "Pared" || coll.gameObject.tag == "Suelo" || coll.gameObject.tag == "techo" || coll.gameObject.tag == "Platform")
+                Destroy(gameObject);
+
+        }
     }
 }

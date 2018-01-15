@@ -119,6 +119,7 @@ public class bulletSE2 : MonoBehaviour {
         timeSlow = _timer;
     }
 
+    /*
     void OnCollisionEnter2D(Collision2D coll)
     {
         
@@ -139,6 +140,25 @@ public class bulletSE2 : MonoBehaviour {
 
 
 
+    }*/
+
+
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "Player")
+        {
+            //call die function
+            if (makeDamage)
+                coll.gameObject.GetComponent<lifeScript>().makeDamage(damage);
+
+            //hacer realentizacion tb
+            if (makeSlow)
+                coll.gameObject.GetComponent<Player>().setMakeSlow(true, timeSlow, speedSlow);
+        }
+
+        if (coll.gameObject.tag == "Player" || coll.gameObject.tag == "Pared" || coll.gameObject.tag == "Suelo" || coll.gameObject.tag == "techo" || coll.gameObject.tag == "Platform")
+            Destroy(gameObject);
     }
 
 }
