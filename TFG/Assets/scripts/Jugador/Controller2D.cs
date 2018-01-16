@@ -153,9 +153,10 @@ public class Controller2D : RaycastController
                     }
                     if (collisions.fallingThroughPlatform)
                     {
+                        print("ss");
                         continue;
                     }
-                    if (playerInput.y == -1)
+                    if (playerInput.y == -1 && playerInput.x == 0)
                     {
                         collisions.fallingThroughPlatform = true;
                         Invoke("ResetFallingThroughPlatform", .5f);
