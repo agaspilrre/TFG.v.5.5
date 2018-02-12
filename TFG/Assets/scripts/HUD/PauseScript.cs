@@ -46,9 +46,7 @@ public class PauseScript : MonoBehaviour {
                 Time.timeScale = 1;
                 cameraMap.SetActive(false);
             }
-        }
-
-        
+        }        
 
         /*if (muted)
         {
@@ -61,8 +59,6 @@ public class PauseScript : MonoBehaviour {
             AudioListener.volume = 1;
             muteText.text = "Mute";
         }*/
-
-
     }
 
     public void Resume()

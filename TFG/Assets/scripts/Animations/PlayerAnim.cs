@@ -28,9 +28,7 @@ public class PlayerAnim : MonoBehaviour {
     //Si el player esta parado y corre
     public void IdlToRun()
     {
-        animator.SetBool("idlToRun", true);
-
-        
+        animator.SetBool("idlToRun", true);        
     }
 
 
@@ -66,6 +64,12 @@ public class PlayerAnim : MonoBehaviour {
     {
         setFalseAllAnimations();
         animator.SetBool("jumpToRun", true);
+    }
+
+    public void jumpToDash()
+    {
+        setFalseAllAnimations();
+        animator.SetBool("jumpToDash", true);
     }
 
     //DASH

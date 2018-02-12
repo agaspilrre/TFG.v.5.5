@@ -119,6 +119,12 @@ public class PlayerInput : MonoBehaviour
                 //de correr a dash
                 playerAnim.runToDash();
             }
+            if (player.getIsJumping())
+                playerAnim.jumpToDash();
+            else
+            {
+                playerAnim.dashToRun();
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.L))

@@ -301,7 +301,8 @@ public class Player : MonoBehaviour
             permitido = true;
             isJumping = false;
             velocity = new Vector3(0, 0, 0);
-             if (Input.GetAxisRaw("Horizontal") != 0)
+
+            if (Input.GetAxisRaw("Horizontal") != 0)
             {
                 playerAnim.jumpToRun();
                 //playerAnim.dashToRun();
