@@ -13,12 +13,17 @@ public class PauseScript : MonoBehaviour {
     GameManager gameManager;
     public GameObject cameraMap;
 
+    private void Awake()
+    {
+        PauseMenu = GameObject.Find("PauseMenu");
+    }
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
 
         pausa = false;
-        PauseMenu = GameObject.Find("PauseMenu");
+        
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         cameraMap.SetActive(false);
 	}

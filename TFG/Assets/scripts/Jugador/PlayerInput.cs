@@ -14,6 +14,8 @@ public class PlayerInput : MonoBehaviour
     //variable para activar las animaciones
     private Animator anim;
 
+    public AnimationClip jump;
+
     enum Direccion { izquierda, derecha }
     Direccion direccion;
 
@@ -21,9 +23,11 @@ public class PlayerInput : MonoBehaviour
     PlayerMoving moving;
 
     float stopTime = 0;
+    UnityEditor.AnimationClipSettings settings;
 
     void Start()
     {
+        settings = UnityEditor.AnimationUtility.GetAnimationClipSettings(jump);
         player = GetComponent<Player>();
         anim = GetComponent<Animator>();
         poderes = GetComponent<Poderes>();
@@ -35,6 +39,21 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
+
+        //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
+        if (player.getNumSaltos() == 0)
+        {           
+            settings.loopTime = true;
+            UnityEditor.AnimationUtility.SetAnimationClipSettings(jump, settings);
+        }
+
+        if(player.getNumSaltos() == 1)
+        {
+            settings.loopTime = false;
+            UnityEditor.AnimationUtility.SetAnimationClipSettings(jump, settings);
+        }
+
+
         Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         //MOVIMIENTO HORIZONTAL
