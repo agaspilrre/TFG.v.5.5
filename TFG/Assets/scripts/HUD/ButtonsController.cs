@@ -19,18 +19,27 @@ public class ButtonsController : MonoBehaviour {
     public EventSystem eventSyst;
 
     public GameObject yesButton;
+    public GameObject menu;
     public GameObject startButton;
+
+   
 
 	// Use this for initialization
 	void Start () {
 
-        rectTransform = GetComponent<RectTransform>();		
+        rectTransform = GetComponent<RectTransform>();	
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-	}
+	}   
+
+    public void seeChange()
+    {
+       Invoke("makeBigger", 0.00005f);
+    }
 
     public void makeBigger()
     {
@@ -47,7 +56,9 @@ public class ButtonsController : MonoBehaviour {
         blurImage.SetActive(true);
         auxImage.SetActive(true);
         newGameMenu.SetActive(true);
+        menu.SetActive(false);
         eventSyst.firstSelectedGameObject = yesButton;
+        eventSyst.SetSelectedGameObject(yesButton);
     }
 
     public void loadGame()
@@ -60,6 +71,7 @@ public class ButtonsController : MonoBehaviour {
         blurImage.SetActive(true);
         auxImage.SetActive(true);
         settingsMenu.SetActive(true);
+        menu.SetActive(false);
     }
 
     public void showQuitGameMenu()
@@ -67,7 +79,9 @@ public class ButtonsController : MonoBehaviour {
         blurImage.SetActive(true);
         auxImage.SetActive(true);
         quitGameMenu.SetActive(true);
+        menu.SetActive(false);
         eventSyst.firstSelectedGameObject = yesButton;
+        eventSyst.SetSelectedGameObject(yesButton);
     }
 
     public void yesNewGameButton()
@@ -80,7 +94,9 @@ public class ButtonsController : MonoBehaviour {
         blurImage.SetActive(false);
         auxImage.SetActive(false);
         newGameMenu.SetActive(false);
+        menu.SetActive(true);
         eventSyst.firstSelectedGameObject = startButton;
+        eventSyst.SetSelectedGameObject(startButton);
     }
 
     public void yesQuitButton()
@@ -93,6 +109,8 @@ public class ButtonsController : MonoBehaviour {
         blurImage.SetActive(false);
         auxImage.SetActive(false);
         newGameMenu.SetActive(false);
+        menu.SetActive(true);
         eventSyst.firstSelectedGameObject = startButton;
+        eventSyst.SetSelectedGameObject(startButton);
     }
 }
