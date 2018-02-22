@@ -146,14 +146,19 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
-            Vector2 aux = Mathf.Abs(directionalInput.x) > Mathf.Abs(directionalInput.y) ? new Vector2(directionalInput.x, 0) : new Vector2(0, directionalInput.y);
+            basicAttack.Charge();
+        }
 
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            // Vector2 aux = Mathf.Abs(directionalInput.x) > Mathf.Abs(directionalInput.y) ? new Vector2(directionalInput.x, 0) : new Vector2(0, directionalInput.y);
+            Vector2 aux = new Vector2(directionalInput.x,directionalInput.y);
             if (aux == Vector2.zero)
-                basicAttack.Attack(new Vector2(player.getDireccion(), 0));
+                basicAttack.StopCharging(new Vector2(player.getDireccion(), 0));
             else
-                basicAttack.Attack(aux);
+                basicAttack.StopCharging(aux);
         }
 
         //Voltear personaje.

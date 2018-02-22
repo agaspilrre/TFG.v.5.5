@@ -8,6 +8,19 @@ public class BasicAttack : MonoBehaviour {
     float lifeSeconds;
 
     public bool isAttacking { get; set; }
+    public bool isCharging { get; set; }
+
+    [SerializeField]
+    [Range(0, 1)]
+    float decreaseSpeed;
+
+    float timer;
+
+    [SerializeField]
+    float maxTimer;
+
+    [SerializeField]
+    float minTimer;
 
     [SerializeField]
     float cargaAtaque;
@@ -27,8 +40,32 @@ public class BasicAttack : MonoBehaviour {
     {
         playerTransform = GameObject.Find("Personaje").transform;
         player = playerTransform.gameObject.GetComponent<Player>();
+
+        timer = 0;
     }
-	
+
+    void Update()
+    {
+        if(isCharging)
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
+    public void StopCharging(Vector3 direction)
+    {
+        isCharging = false;
+
+        player.decreeseSpeed = 1;
+        Attack(direction);
+    }
+
+    public void Charge()
+    {
+        isCharging = true;
+        player.decreeseSpeed = decreaseSpeed;
+    }
+   
     public void Attack(Vector3 direction)
     {
         if(!isAttacking)

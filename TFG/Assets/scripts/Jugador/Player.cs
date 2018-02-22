@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     float accelerationTimeGrounded = .1f;
     public float moveSpeed = 6;
     public float runSpeed;
+    public float decreeseSpeed;
 
     float normalSpeed;
     public Vector2 wallJumpClimb;
@@ -79,6 +80,8 @@ public class Player : MonoBehaviour
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
         savedMultiplicadorSaltos = multiplicadorSalto;
+
+        decreeseSpeed = 1;
     }
 
     public void returnGravity()
@@ -415,7 +418,7 @@ public class Player : MonoBehaviour
 
     void CalculateVelocity()
     {
-        float targetVelocityX = directionalInput.x * moveSpeed;
+        float targetVelocityX = directionalInput.x * moveSpeed * decreeseSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
