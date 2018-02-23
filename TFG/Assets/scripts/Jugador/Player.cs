@@ -57,6 +57,8 @@ public class Player : MonoBehaviour
     public float fallWeight;
 
     public bool canSecondJump;
+
+    Rigidbody2D rb;
     
 
     void Start()
@@ -82,6 +84,7 @@ public class Player : MonoBehaviour
         savedMultiplicadorSaltos = multiplicadorSalto;
 
         decreeseSpeed = 1;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public void returnGravity()
@@ -324,7 +327,7 @@ public class Player : MonoBehaviour
         if (coll.collider.name == "Platform")
         {
             transform.parent = coll.transform;
-
+            //rb.AddForce(new Vector2(0, -2), ForceMode2D.Force);
         }        
 
         if (coll.gameObject.tag == "EnemyRotate")
@@ -338,7 +341,7 @@ public class Player : MonoBehaviour
         if (coll.collider.name == "Platform")
         {
             transform.parent = coll.transform;
-
+            //rb.AddForce(new Vector2(0, -2), ForceMode2D.Force);
         }
     }
 

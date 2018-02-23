@@ -53,8 +53,17 @@ public class PlayerInput : MonoBehaviour
             UnityEditor.AnimationUtility.SetAnimationClipSettings(jump, settings);
         }
 
+        Vector2 directionalInput = Vector2.zero;
+        if (Input.GetAxis("Horizontal") > 0)
+            directionalInput.x = 1;
+        else if (Input.GetAxis("Horizontal") < 0)
+            directionalInput.x = -1;
 
-        Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (Input.GetAxis("Vertical") > 0)
+            directionalInput.y = 1;
+        else if (Input.GetAxis("Vertical") < 0)
+            directionalInput.y = -1;
+        ///Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         //MOVIMIENTO HORIZONTAL
         //para activar las animaciones en caso de que nos movamos

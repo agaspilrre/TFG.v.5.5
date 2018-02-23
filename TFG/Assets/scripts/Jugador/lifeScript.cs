@@ -5,7 +5,8 @@ using UnityEngine;
 public class lifeScript : MonoBehaviour {
 
     public GameObject[] life = new GameObject[4];
-    int lifeCount = 3;
+    int lifeCount;
+    int numberLifes;
 
     public int invulnerableTime;
 
@@ -44,6 +45,9 @@ public class lifeScript : MonoBehaviour {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         savedColor = spriteRenderer.color;
+
+        lifeCount = life.Length - 1;
+        numberLifes = life.Length - 1;
     }
 	
 	// Update is called once per frame
@@ -111,7 +115,7 @@ public class lifeScript : MonoBehaviour {
 
     public void cureLife(int cure)
     {
-        if (lifeCount < 3)
+        if (lifeCount < numberLifes)
         {
             for(int i = lifeCount; lifeCount < cure; i++)
             {
