@@ -5,72 +5,104 @@ using UnityEngine.UI;
 
 public class HabilityBar : MonoBehaviour {
 
-    [SerializeField] private float currentAmount;
-    [SerializeField] private float speed;
-    public Slider slider;
-    private bool losedStamina;
-    private float timerController;
-    public float timerWaitCharge = 200f;
-    public float timerWallJump = 0;
-    public bool isWallJumping = false;
-    public float timeRateLosingStamina = 12;
+    [SerializeField]
+    List<GameObject> energySquares;
 
-    float Stamina;
-	
-	// Update is called once per frame
-	void Update () {       
+    bool activeRecover;
+    public float cooldownTime;
+    public float generalTimeCooldown;
 
-        StaminaController();
-        LoseStaminaWallJump();
+    bool isPaused;
+    float timer;
 
-        Stamina = slider.value;
+    private void Start()
+    {
+        isPaused = false;
     }
 
-    public void LoseStamina()
-    {
-        slider.value -= 25;
-        losedStamina = true;
-        timerController = 0;
-    }
 
-    public void StaminaController()
+    // Update is called once per frame
+    void Update()
     {
-        if (losedStamina)
-            timerController++;
+        if (Input.GetMouseButtonDown(0))
+            loseSquare();
 
-        if (timerController >= timerWaitCharge && slider.value < 100)
+
+        if (!energySquares[0].activeSelf && !energySquares[1].activeSelf && !energySquares[2].activeSelf && !energySquares[3].activeSelf)
         {
-            slider.value += speed * Time.deltaTime;           
+
         }
 
-        if (slider.value == 100)
-        {
-            losedStamina = false;
-            timerController = 0;
-        }        
     }
 
-    public void LoseStaminaWallJump()
+
+
+    public void loseSquare()
     {
-        if (isWallJumping)
+        for (int i = 0; i < energySquares.Count; i++)
         {
-            timerWallJump++;
-            timerController = 0;
-            if (timerWallJump > timeRateLosingStamina) 
-                slider.value -= 5 * Time.deltaTime;
+            //Si se usa la primera se desactiva y tras el cooldownTime se vuelve a activar
+            if (energySquares[i].activeSelf)
+            {
+                energySquares[i].SetActive(false);
+
+                //if(!isPaused)
+                Invoke("recoverSquare", cooldownTime);
+                return;
+            }
+
+            //else if(energySquares[i].activeSelf)
+            //{
+            //    energySquares[i].SetActive(false);
+            //    Invoke("recoverSquare", cooldownTime * i * 2);
+            //    return;
+            //}
+        }
+    }
+
+    public void recoverSquare()
+    {
+        for (int i = 3; i >= 0; i--)
+        {
+            if (!energySquares[i].activeSelf)
+            {
+                energySquares[i].SetActive(true);
+                return;
+            }
+            //else if (!energySquares[i-1].activeSelf)
+            //{
+            //    StartCoroutine(activeSquare(i-1));
+            //    return;
+            //}
+
+            //if (!energySquares[0].activeSelf)
+            //{
+            //    energySquares[0].SetActive(true);
+            //    return;
+            //}
+            //else if(!energySquares[i].activeSelf)
+            //{
+            //    if (energySquares[i - 1].activeSelf)
+            //    {
+            //        energySquares[i].SetActive(true);
+            //        return;
+            //    }
+            //}
+        }
+    }
+
+    public bool isBarEmpty()
+    {
+        if (!energySquares[0].activeSelf && !energySquares[1].activeSelf && !energySquares[2].activeSelf && !energySquares[3].activeSelf)
+        {
+            return true;
         }
         else
-        {
-            if(timerWallJump > 16)
-                slider.value -= 10 * Time.deltaTime;
-
-            timerWallJump = 0;
-            losedStamina = true;            
-        }      
+            return false;
     }
 
-    public float GetStamina()
+    public void activeSquare(float value)
     {
-        return Stamina;
+
     }
 }

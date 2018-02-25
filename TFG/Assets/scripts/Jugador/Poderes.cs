@@ -155,10 +155,10 @@ public class Poderes : MonoBehaviour
     //comprueba si puede realizar el dush y si es posible lo realiza 
     public void checkDush()
     {
-        if (dashUse && staminaBar.slider.value > 0)
+        if (dashUse && !staminaBar.isBarEmpty())
         {
             materialCargaDash.color = Color.black;
-            staminaBar.LoseStamina();
+            staminaBar.loseSquare();
 
             if (cargaDash < 0.3)//si es menor alo que este numero dash normal
             {

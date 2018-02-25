@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
 
             if (controller.collisions.above || controller.collisions.below)
             {
-                staminaBar.isWallJumping = false;
+                //staminaBar.isWallJumping = false;
 
                 if (controller.collisions.slidingDownMaxSlope)
                 {
@@ -197,9 +197,9 @@ public class Player : MonoBehaviour
     public void OnJumpInputDown()
     {
         HandleWallSliding();
-        if (wallSliding && staminaBar.slider.value > 0)
+        if (wallSliding) //&& staminaBar.slider.value > 0)
         {
-            staminaBar.isWallJumping = true;
+            //staminaBar.isWallJumping = true;
             //para quitar el salto extra que hay al hacer walljumping
             numeroSaltos = 1;            
             //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKeyDown(KeyCode.Space))
@@ -230,7 +230,7 @@ public class Player : MonoBehaviour
                 multiplicadorSalto = 1;
                 velocity.y = maxJumpVelocity * multiplicadorSalto;
             }
-            else if (2 > numeroSaltos  && staminaBar.slider.value > 0)
+            else if (2 > numeroSaltos) // && staminaBar.slider.value > 0)
             {
                 numeroSaltos++;
                 multiplicadorSalto = savedMultiplicadorSaltos;

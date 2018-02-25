@@ -123,7 +123,7 @@ public class PoderesAntiguo : MonoBehaviour
         if (!returnPartitionPosition)
         {
             //input para el dash
-            if ((Input.GetButton("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && staminaBar.slider.value > 0)//calcula cuanto tiempo llevas apretando
+            if ((Input.GetButton("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && !staminaBar.isBarEmpty())//calcula cuanto tiempo llevas apretando
             {
                 personajeMovimiento.setPermitido(false);
 
@@ -162,10 +162,10 @@ public class PoderesAntiguo : MonoBehaviour
             }*/
             //para el nuevo dash de seis direcciones
             /*else*/
-            if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxisRaw("Vertical") == 1)) && staminaBar.slider.value > 0)
+            if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxisRaw("Vertical") == 1)) && !staminaBar.isBarEmpty())
             {
                 materialCargaDash.color = Color.black;
-                staminaBar.LoseStamina();
+                staminaBar.loseSquare();
 
                 if (cargaDash < 0.3)//si es menor alo que este numero dash normal
                 {
@@ -174,10 +174,10 @@ public class PoderesAntiguo : MonoBehaviour
 
                 cargaDash = 0;
             }
-            else if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && staminaBar.slider.value > 0)
+            else if ((Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1")) && dashUse && !staminaBar.isBarEmpty())
             {
                 materialCargaDash.color = Color.black;
-                staminaBar.LoseStamina();
+                staminaBar.loseSquare();
 
                 if (cargaDash < 0.3)//si es menor alo que este numero dash normal
                 {
@@ -194,9 +194,9 @@ public class PoderesAntiguo : MonoBehaviour
             }
 
             //poder de particion de sombras
-            if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("PS4_R1")) && playerState == Shades.SHADOW && staminaBar.slider.value > 0)
+            if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("PS4_R1")) && playerState == Shades.SHADOW) //&& staminaBar.slider.value > 0)
             {
-                staminaBar.LoseStamina();
+                //staminaBar.LoseStamina();
 
                 if (state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)
                 {

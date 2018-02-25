@@ -27,10 +27,10 @@ public class ManaNPC : MonoBehaviour
 
     void UpdateMana()
     {
-        float auxVar = habilityBar.GetStamina();
+        //float auxVar = habilityBar.GetStamina();
 
-        auxVar = ((auxVar / 100) * (maxIntensity - minIntensity)) + minIntensity;
+        //auxVar = ((auxVar / 100) * (maxIntensity - minIntensity)) + minIntensity;
 
-        myLight.intensity = auxVar;
+        //myLight.intensity = auxVar;
     }
 }
