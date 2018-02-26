@@ -30,7 +30,8 @@ public class HabilityBar : MonoBehaviour {
 
         if (!energySquares[0].activeSelf && !energySquares[1].activeSelf && !energySquares[2].activeSelf && !energySquares[3].activeSelf)
         {
-
+            CancelInvoke("recoverSquare");
+            Invoke("recoverAllSquares", generalTimeCooldown);
         }
 
     }
@@ -88,6 +89,18 @@ public class HabilityBar : MonoBehaviour {
             //        return;
             //    }
             //}
+        }
+    }
+
+    public void recoverAllSquares()
+    {
+        for (int i = 3; i >= 0; i--)
+        {
+            if (!energySquares[i].activeSelf)
+            {
+                energySquares[i].SetActive(true);
+                return;
+            }           
         }
     }
 
