@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour {
     lifeScript lifePlayer;
     CheckPointManager CPmanager;
     GameObject player;
+    RawImage fadeImage;
+    public float fadeTime;
+
+    bool finishedFade;
 
 	// Use this for initialization
 	void Start () {
@@ -22,10 +27,12 @@ public class GameManager : MonoBehaviour {
         CPmanager = this.gameObject.GetComponent<CheckPointManager>();
         player = GameObject.Find("Personaje");
         camera = Camera.main.transform;
+        fadeImage = GameObject.Find("FadeInGameOver").GetComponent<RawImage>();
+        finishedFade = false;
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {        
 
         if (gameOver.activeSelf == true)
         {
@@ -35,16 +42,27 @@ public class GameManager : MonoBehaviour {
                 //quitar game over
 
                 //poner fade
-                //poner al personaje en la posicion del checkpoint
-                //rellenar la vida del personaje de nuevo
-                countTime = 0;
-                lifePlayer.cureLife(3);
-                gameOver.SetActive(false);
-                //player.transform.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;//position of the checkpoint
-                //camera.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;
-                //camera.position = new Vector3(camera.position.x, camera.position.y, -10);
-                //Time.timeScale = 1;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                if (fadeImage.color.a <= 1)
+                {
+                    Color color = fadeImage.color;
+                    color.a += fadeTime;
+                    fadeImage.color = color;                   
+                }
+
+                if(fadeImage.color.a >= 1)
+                {
+                    //poner al personaje en la posicion del checkpoint
+                    //rellenar la vida del personaje de nuevo                    
+                    countTime = 0;
+                    lifePlayer.cureLife(3);
+                    gameOver.SetActive(false);
+                    //player.transform.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;//position of the checkpoint
+                    //camera.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;
+                    //camera.position = new Vector3(camera.position.x, camera.position.y, -10);
+                    //Time.timeScale = 1;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
+                
             }
         }
 
