@@ -115,11 +115,14 @@ public class lifeScript : MonoBehaviour {
 
     public void cureLife(int cure)
     {
+        //si la vida esta incompleta entonces curamos
         if (lifeCount < numberLifes)
         {
-            for(int i = lifeCount; lifeCount < cure; i++)
+            int count = 0;
+            for(int i = lifeCount; count < cure; i++)
             {
                 lifeCount++;
+                count++;
                 life[lifeCount].SetActive(true);
             }
         }
