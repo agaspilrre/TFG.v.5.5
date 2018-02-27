@@ -10,14 +10,16 @@ public class HabilityBar : MonoBehaviour {
 
     bool activeRecover;
     public float cooldownTime;
+    float initCooldown;
     public float generalTimeCooldown;
 
-    bool isPaused;
+    bool start;
     float timer;
 
     private void Start()
     {
-        isPaused = false;
+        start = false;
+        initCooldown = cooldownTime;
     }
 
 
@@ -30,13 +32,25 @@ public class HabilityBar : MonoBehaviour {
 
         if (!energySquares[0].activeSelf && !energySquares[1].activeSelf && !energySquares[2].activeSelf && !energySquares[3].activeSelf)
         {
-            CancelInvoke("recoverSquare");
-            Invoke("recoverAllSquares", generalTimeCooldown);
+            cooldownTime = generalTimeCooldown;            
+        }
+        else
+            cooldownTime = initCooldown;       
+        
+        if(start)
+            timer += Time.deltaTime;
+
+        if (timer >= cooldownTime)
+        {
+            recoverSquare();
+            timer = 0;           
         }
 
+        if (energySquares[0].activeSelf && energySquares[1].activeSelf && energySquares[2].activeSelf && energySquares[3].activeSelf)
+        {
+            start = false;
+        }
     }
-
-
 
     public void loseSquare()
     {
@@ -46,55 +60,16 @@ public class HabilityBar : MonoBehaviour {
             if (energySquares[i].activeSelf)
             {
                 energySquares[i].SetActive(false);
+                start = true;             
+                return;                
+            }          
 
-                //if(!isPaused)
-                Invoke("recoverSquare", cooldownTime);
-                return;
-            }
-
-            //else if(energySquares[i].activeSelf)
-            //{
-            //    energySquares[i].SetActive(false);
-            //    Invoke("recoverSquare", cooldownTime * i * 2);
-            //    return;
-            //}
         }
     }
 
     public void recoverSquare()
     {
-        for (int i = 3; i >= 0; i--)
-        {
-            if (!energySquares[i].activeSelf)
-            {
-                energySquares[i].SetActive(true);
-                return;
-            }
-            //else if (!energySquares[i-1].activeSelf)
-            //{
-            //    StartCoroutine(activeSquare(i-1));
-            //    return;
-            //}
-
-            //if (!energySquares[0].activeSelf)
-            //{
-            //    energySquares[0].SetActive(true);
-            //    return;
-            //}
-            //else if(!energySquares[i].activeSelf)
-            //{
-            //    if (energySquares[i - 1].activeSelf)
-            //    {
-            //        energySquares[i].SetActive(true);
-            //        return;
-            //    }
-            //}
-        }
-    }
-
-    public void recoverAllSquares()
-    {
-        for (int i = 3; i >= 0; i--)
+        for (int i = energySquares.Count -1; i >= 0; i--)
         {
             if (!energySquares[i].activeSelf)
             {
@@ -102,7 +77,7 @@ public class HabilityBar : MonoBehaviour {
                 return;
             }           
         }
-    }
+    }   
 
     public bool isBarEmpty()
     {
@@ -112,10 +87,5 @@ public class HabilityBar : MonoBehaviour {
         }
         else
             return false;
-    }
-
-    public void activeSquare(float value)
-    {
-
-    }
+    }    
 }
