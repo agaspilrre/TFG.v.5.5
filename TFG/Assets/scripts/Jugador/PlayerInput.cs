@@ -23,11 +23,11 @@ public class PlayerInput : MonoBehaviour
     PlayerMoving moving;
 
     float stopTime = 0;
-    UnityEditor.AnimationClipSettings settings;
+   // UnityEditor.AnimationClipSettings settings;
 
     void Start()
     {
-        settings = UnityEditor.AnimationUtility.GetAnimationClipSettings(jump);
+        //settings = UnityEditor.AnimationUtility.GetAnimationClipSettings(jump);
         player = GetComponent<Player>();
         anim = GetComponent<Animator>();
         poderes = GetComponent<Poderes>();
@@ -40,7 +40,7 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
 
-        //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
+       /* //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
         if (player.getNumSaltos() == 0)
         {           
             settings.loopTime = true;
@@ -51,7 +51,7 @@ public class PlayerInput : MonoBehaviour
         {
             settings.loopTime = false;
             UnityEditor.AnimationUtility.SetAnimationClipSettings(jump, settings);
-        }
+        }*/
 
         Vector2 directionalInput = Vector2.zero;
         if (Input.GetAxis("Horizontal") > 0)
