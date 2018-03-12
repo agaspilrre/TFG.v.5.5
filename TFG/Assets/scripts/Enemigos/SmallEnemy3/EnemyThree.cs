@@ -16,6 +16,7 @@ public class EnemyThree : MonoBehaviour {
     public float speedSlow;
     public float timeSlow;
     int countCollision;
+    bool isFinish;
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class EnemyThree : MonoBehaviour {
         isHit = false;
         hasDead = false;
         countCollision = 0;
+        isFinish = false;
     }
 
     void Update()
@@ -42,19 +44,19 @@ public class EnemyThree : MonoBehaviour {
     //scriptPlayer speedLow HACER EN EL SCRIPT DEL PLAYER
 
     void moveToPoints()
-    { 
-        if (transform.position == targets[0].position)
-            SetDestination(targets[1]);
-
-        if (transform.position == targets[1].position)
-            SetDestination(targets[2]);
-
-        if (transform.position == targets[2].position)
-            SetDestination(targets[3]);
-
-        if (transform.position == targets[3].position)
+    {
+        if (transform.position == targets[targets.Count - 1].position)
             SetDestination(targets[0]);
 
+        else
+        {
+            for (int i = 0; i < targets.Count; i++)
+            {
+                if (transform.position == targets[i].position)
+                    SetDestination(targets[i + 1]);                
+            }           
+        }
+       
         CancelInvoke();
     }
     

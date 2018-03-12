@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class lifeScript : MonoBehaviour {
 
     public GameObject[] life = new GameObject[4];
@@ -80,6 +81,7 @@ public class lifeScript : MonoBehaviour {
                 lifeCount--;
                 StartCoroutine("InvulnerableColor");
                 cameraShake.Shake();
+                
             }
             invulnerable = true;
         }
