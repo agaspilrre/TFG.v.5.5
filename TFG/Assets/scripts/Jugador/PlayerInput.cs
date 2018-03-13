@@ -160,6 +160,8 @@ public class PlayerInput : MonoBehaviour
             basicAttack.Charge();
         }
 
+        basicAttack.direction = new Vector2(directionalInput.x, directionalInput.y);
+
         if (Input.GetKeyUp(KeyCode.L))
         {
             // Vector2 aux = Mathf.Abs(directionalInput.x) > Mathf.Abs(directionalInput.y) ? new Vector2(directionalInput.x, 0) : new Vector2(0, directionalInput.y);

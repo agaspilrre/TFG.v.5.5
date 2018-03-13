@@ -17,12 +17,6 @@ public class BasicAttack : MonoBehaviour {
     float timer;
 
     [SerializeField]
-    float maxTimer;
-
-    [SerializeField]
-    float minTimer;
-
-    [SerializeField]
     float cargaAtaque;
 
     [SerializeField]
@@ -35,6 +29,10 @@ public class BasicAttack : MonoBehaviour {
 
     Transform playerTransform;
     Player player;
+
+    [SerializeField]
+    GameObject directionObject;
+    public Vector3 direction { get; set; }
 
 	void Start ()
     {
@@ -49,21 +47,28 @@ public class BasicAttack : MonoBehaviour {
         if(isCharging)
         {
             timer += Time.deltaTime;
+
+            float rot_z = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            directionObject.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
         }
     }
 
     public void StopCharging(Vector3 direction)
     {
         isCharging = false;
-
+        directionObject.SetActive(false);
         player.decreeseSpeed = 1;
         Attack(direction);
     }
 
     public void Charge()
     {
-        isCharging = true;
-        player.decreeseSpeed = decreaseSpeed;
+        if (!isAttacking)
+        {
+            isCharging = true;
+            player.decreeseSpeed = decreaseSpeed;
+            directionObject.SetActive(true); 
+        }
     }
    
     public void Attack(Vector3 direction)

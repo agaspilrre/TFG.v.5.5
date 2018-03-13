@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scennes/Scene_03OrtograficaWallJump 1.unity
+- path: Assets/scennes/FreshStart.unity
   isLoaded: 1
   isActive: 1
