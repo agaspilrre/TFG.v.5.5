@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XInputDotNetPure;
 
 
 
@@ -17,7 +18,12 @@ public class lifeScript : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 
     GameManager gameManager;
-    
+
+    bool shake;
+    float timer;
+
+    [SerializeField]
+    float timeVibration;
 
     [SerializeField]
     float timeForEachColor;
@@ -39,6 +45,7 @@ public class lifeScript : MonoBehaviour {
 
         invulnerable = false;
         invulnerableCount = 0;
+        shake = false;
 
         if(GameObject.Find("GameManager") != null)
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -55,7 +62,19 @@ public class lifeScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        
+        if (shake)
+        {
+            timer++;
+            GamePad.SetVibration(0, 0.5f, 0.5f);            
+        }
 
+        if (timer >= timeVibration)
+        {
+            timer = 0;
+            shake = false;
+            GamePad.SetVibration(0, 0, 0);
+        }
         //cuando es dañado tenemos un tiempo de invulnerabilidad
         if (invulnerable)
         {
@@ -83,7 +102,7 @@ public class lifeScript : MonoBehaviour {
                 lifeCount--;
                 StartCoroutine("InvulnerableColor");
                 cameraShake.Shake();
-                
+                shake = true;
             }
             invulnerable = true;
         }
@@ -95,6 +114,8 @@ public class lifeScript : MonoBehaviour {
             
         }
     }
+
+   
 
     IEnumerator InvulnerableColor()
     {

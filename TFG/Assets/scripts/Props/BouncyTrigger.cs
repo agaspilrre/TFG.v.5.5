@@ -34,8 +34,8 @@ public class BouncyTrigger : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             if (north)
-            {                              
-                Invoke("ChangeGravity", 0.1f);
+            {                
+                ChangeGravity();
                 characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));                
             }
 
