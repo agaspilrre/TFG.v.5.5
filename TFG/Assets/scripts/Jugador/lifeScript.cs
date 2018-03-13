@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 public class lifeScript : MonoBehaviour {
 
     public GameObject[] life = new GameObject[4];
@@ -16,6 +17,7 @@ public class lifeScript : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 
     GameManager gameManager;
+    
 
     [SerializeField]
     float timeForEachColor;

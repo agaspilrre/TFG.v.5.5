@@ -13,16 +13,20 @@ public class BouncyTrigger : MonoBehaviour {
     public float speedImpulse;
 
     Rigidbody2D characterRB;
+    Player playerScript;
+    
 
 	void Start () {
 
         characterRB = GameObject.Find("Personaje").GetComponent<Rigidbody2D>();
+        playerScript = GameObject.Find("Personaje").GetComponent<Player>();
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        
+    }
 
 
     public void OnTriggerStay2D(Collider2D collision)
@@ -30,8 +34,9 @@ public class BouncyTrigger : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             if (north)
-            {
-                characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));
+            {                              
+                Invoke("ChangeGravity", 0.1f);
+                characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));                
             }
 
             else if (south)
@@ -50,4 +55,10 @@ public class BouncyTrigger : MonoBehaviour {
             }
         }
     }
+
+    void ChangeGravity()
+    {
+        playerScript.enabled = false;
+    }
 }
+

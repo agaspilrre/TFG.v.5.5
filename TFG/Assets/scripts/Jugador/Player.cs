@@ -4,7 +4,6 @@ using System.Collections;
 [RequireComponent(typeof(Controller2D))]
 public class Player : MonoBehaviour
 {
-
     public float maxJumpHeight = 4;
     public float minJumpHeight = 1;
     public float timeToJumpApex = .4f;
@@ -55,6 +54,7 @@ public class Player : MonoBehaviour
     private float slowSpeed;
     //variable para modular peso en la caida
     public float fallWeight;
+    
 
     public bool canSecondJump;
 
@@ -85,6 +85,7 @@ public class Player : MonoBehaviour
 
         decreeseSpeed = 1;
         rb = GetComponent<Rigidbody2D>();
+        
     }
 
     public void returnGravity()
@@ -102,7 +103,7 @@ public class Player : MonoBehaviour
     {
         CalculateVelocity();
 
-
+        
         //habilidad de correr
         /*
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("PS4_R3"))
@@ -383,6 +384,13 @@ public class Player : MonoBehaviour
             coll.transform.parent.GetComponent<PowerUp>().setBoxBroken(true);
             coll.transform.parent.GetComponent<PowerUp>().PowerUpInstantiate();
         }
+
+        if (coll.tag == "Gravity")
+        {            
+            permitido = false;
+            this.enabled = true;
+        }
+            
     }
 
    
@@ -425,8 +433,7 @@ public class Player : MonoBehaviour
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
-
-    
+  
     public void setMakeSlow(bool _makeS,float _timeSlow,float _speed)
     {
         
