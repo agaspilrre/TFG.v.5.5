@@ -103,8 +103,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateVelocity();
+        HandleWallSliding();
 
-        
         //habilidad de correr
         /*
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("PS4_R3"))
@@ -220,7 +220,7 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputDown()
     {
-        HandleWallSliding();
+     
         if (wallSliding) //&& staminaBar.slider.value > 0)
         {
             //staminaBar.isWallJumping = true;
@@ -351,8 +351,9 @@ public class Player : MonoBehaviour
         if (coll.collider.name == "Platform")
         {
             transform.parent = coll.transform;
-            //rb.AddForce(new Vector2(0, -400), ForceMode2D.Force);
+            rb.AddForce(new Vector2(0, -1000) , ForceMode2D.Force);
             //velocity.y = 0;
+            this.enabled = false;
         }        
 
         if (coll.gameObject.tag == "EnemyRotate")
@@ -365,15 +366,21 @@ public class Player : MonoBehaviour
     {
         if (coll.collider.name == "Platform")
         {
+            this.enabled = true;
             transform.parent = coll.transform;
             //rb.AddForce(new Vector2(0, -2), ForceMode2D.Force);
+           
         }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.collider.name == "Platform")
+        {
+            //this.enabled = false;
             transform.parent = null;
+        }
+            
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
@@ -421,7 +428,7 @@ public class Player : MonoBehaviour
 
 
     void HandleWallSliding()
-    {        
+    {
         wallDirX = (controller.collisions.left) ? -1 : 1;
         wallSliding = false;
         if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
@@ -434,7 +441,7 @@ public class Player : MonoBehaviour
 
             wallSliding = true;
             
-            if (velocity.y < -wallSlideSpeedMax)
+            if (velocity.y < wallSlideSpeedMax)
             {
                 velocity.y = -wallSlideSpeedMax;
             }

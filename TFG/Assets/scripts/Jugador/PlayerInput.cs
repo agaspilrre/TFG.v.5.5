@@ -155,14 +155,14 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("PS4_O"))
         {
             basicAttack.Charge();
         }
 
-        basicAttack.direction = new Vector2(directionalInput.x, directionalInput.y);
+        basicAttack.direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        if (Input.GetKeyUp(KeyCode.L))
+        if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("PS4_O"))
         {
             // Vector2 aux = Mathf.Abs(directionalInput.x) > Mathf.Abs(directionalInput.y) ? new Vector2(directionalInput.x, 0) : new Vector2(0, directionalInput.y);
             Vector2 aux = new Vector2(directionalInput.x,directionalInput.y);

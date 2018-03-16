@@ -13,6 +13,8 @@ public class BouncyTrigger : MonoBehaviour {
     public float speedImpulse;
     public float decrementImpulse;
     bool check;//para que haga la comprobacion justo despues de saltar en el trampolin
+    public bool disapearCharacter;
+    GameObject player;
 
     Rigidbody2D characterRB;
     Player playerScript;
@@ -35,6 +37,7 @@ public class BouncyTrigger : MonoBehaviour {
             if (characterRB.velocity.y <= decrementImpulse)
             {
                 activateScriptMovement();
+                player.GetComponent<SpriteRenderer>().enabled = true;
             }
         }
         
@@ -49,7 +52,11 @@ public class BouncyTrigger : MonoBehaviour {
             if (north)
             {                
                 ChangeGravity();
-                
+                if(disapearCharacter)
+                {
+                    player = collision.gameObject;
+                    player.GetComponent<SpriteRenderer>().enabled = false;
+                }
                 characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));
                 check = true;
             }
