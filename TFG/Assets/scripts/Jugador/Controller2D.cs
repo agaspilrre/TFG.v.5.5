@@ -153,7 +153,7 @@ public class Controller2D : RaycastController
                     }
                     if (collisions.fallingThroughPlatform)
                     {
-                        print("ss");
+                        //print("ss");
                         continue;
                     }
                     if (playerInput.y == -1 && playerInput.x == 0)

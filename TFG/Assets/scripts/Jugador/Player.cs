@@ -170,10 +170,32 @@ public class Player : MonoBehaviour
         //Debug.Log("la velocidad en y es:"+velocity.y);
         if (velocity.y <= 0 && velocity.y >= -100)
         {
-            velocity.y *= fallWeight;
+            //Debug.Log("la velocidad en y es:" + velocity.y);
+           
+            velocity.y *= fallWeight;//modula el peso de la caida
+           
         }
 
-    }  
+        
+
+    }
+    
+    //obtiene la velocidad en y
+    public float getVelocityY()
+    {
+        return velocity.y;
+    }
+
+    public void setVelocityY(float _value)
+    {
+        velocity.y = _value;
+    }
+
+    //public void activateScriptAndMovement()
+    //{
+    //    this.enabled = true;
+    //    permitido = true;
+    //}
 
     public void Shoot(float chargeTime)
     {
@@ -387,15 +409,15 @@ public class Player : MonoBehaviour
             coll.transform.parent.GetComponent<PowerUp>().PowerUpInstantiate();
         }
 
-        if (coll.tag == "Gravity")
-        {            
-            permitido = false;
-            this.enabled = true;
-        }
-            
+        //if (coll.tag == "Gravity")
+        //{
+        //    permitido = false;
+        //    this.enabled = true;
+        //}
+
     }
 
-   
+
 
 
     void HandleWallSliding()

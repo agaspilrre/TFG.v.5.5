@@ -11,6 +11,8 @@ public class BouncyTrigger : MonoBehaviour {
     public bool west;
     public float forceBouncy;
     public float speedImpulse;
+    public float decrementImpulse;
+    bool check;//para que haga la comprobacion justo despues de saltar en el trampolin
 
     Rigidbody2D characterRB;
     Player playerScript;
@@ -20,11 +22,22 @@ public class BouncyTrigger : MonoBehaviour {
 
         characterRB = GameObject.Find("Personaje").GetComponent<Rigidbody2D>();
         playerScript = GameObject.Find("Personaje").GetComponent<Player>();
+        check = false;
         
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        //Debug.Log( characterRB.velocity);
+        if (check)
+        {
+            if (characterRB.velocity.y <= decrementImpulse)
+            {
+                activateScriptMovement();
+            }
+        }
+        
         
     }
 
@@ -36,7 +49,9 @@ public class BouncyTrigger : MonoBehaviour {
             if (north)
             {                
                 ChangeGravity();
-                characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));                
+                
+                characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));
+                check = true;
             }
 
             else if (south)
@@ -59,6 +74,15 @@ public class BouncyTrigger : MonoBehaviour {
     void ChangeGravity()
     {
         playerScript.enabled = false;
+    }
+
+    void activateScriptMovement()
+    {
+        check = false;
+        playerScript.enabled = true;
+        playerScript.setVelocityY(0);
+        characterRB.velocity = Vector2.zero;
+        playerScript.setPermitido(true);
     }
 }
 
