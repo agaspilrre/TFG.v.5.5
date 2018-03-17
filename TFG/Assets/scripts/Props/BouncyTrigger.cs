@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XInputDotNetPure;
 
 public class BouncyTrigger : MonoBehaviour {
 
@@ -18,9 +19,18 @@ public class BouncyTrigger : MonoBehaviour {
 
     Rigidbody2D characterRB;
     Player playerScript;
-    
 
-	void Start () {
+    bool isJumping;
+    float timerJump;
+
+    [SerializeField]
+    [Header("Trigger Vibration Settings")]
+    [Space(10)]
+    float quantityVibrationTrigger;
+    [SerializeField]
+    float timeVibrationTrigger;
+
+    void Start () {
 
         characterRB = GameObject.Find("Personaje").GetComponent<Rigidbody2D>();
         playerScript = GameObject.Find("Personaje").GetComponent<Player>();
@@ -38,10 +48,23 @@ public class BouncyTrigger : MonoBehaviour {
             {
                 activateScriptMovement();
                 player.GetComponent<SpriteRenderer>().enabled = true;
+                isJumping = false;
+                GamePad.SetVibration(0, 0, 0);
             }
         }
-        
-        
+
+        if (isJumping)
+        {
+            //timerJump++;
+            GamePad.SetVibration(0, quantityVibrationTrigger, quantityVibrationTrigger);
+        }
+
+        //if (timerJump >= timeVibrationTrigger)
+        //{
+        //    timerJump = 0;
+        //    isJumping = false;
+        //    GamePad.SetVibration(0, 0, 0);
+        //}
     }
 
 
@@ -52,7 +75,8 @@ public class BouncyTrigger : MonoBehaviour {
             if (north)
             {                
                 ChangeGravity();
-                if(disapearCharacter)
+                isJumping = true;
+                if (disapearCharacter)
                 {
                     player = collision.gameObject;
                     player.GetComponent<SpriteRenderer>().enabled = false;

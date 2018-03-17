@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
 
 [RequireComponent(typeof(Player))]
 public class PlayerInput : MonoBehaviour
@@ -21,9 +22,41 @@ public class PlayerInput : MonoBehaviour
 
     enum PlayerMoving { yes,no}
     PlayerMoving moving;
-
+    
     float stopTime = 0;
-   // UnityEditor.AnimationClipSettings settings;
+    // UnityEditor.AnimationClipSettings settings;
+   
+    bool isJumping;
+    float timerJump;
+
+    [SerializeField]
+    [Header("Jump Vibration Settings")]
+    [Space(10)]
+    float quantityVibrationJump;    
+    [SerializeField]
+    float timeVibrationJump;
+    [Space(10)]
+
+    bool isDashing;
+    float timerDash;
+
+    [SerializeField]
+    [Header("Dash Vibration Settings")]
+    [Space(10)]
+    float quantityVibrationDash;
+    [SerializeField]
+    float timeVibrationDash;
+    [Space(10)]
+
+    bool isAttack;
+    float timerAttack;
+
+    [SerializeField]
+    [Header("Attack Vibration Settings")]
+    [Space(10)]
+    float quantityVibrationAttack;
+    [SerializeField]
+    float timeVibrationAttack;
 
     void Start()
     {
@@ -35,23 +68,69 @@ public class PlayerInput : MonoBehaviour
         moving = PlayerMoving.no;
         playerAnim = GetComponent<PlayerAnim>();
         basicAttack = GetComponent<BasicAttack>();
+        isJumping = false;
+        timerJump = 0;
     }
 
     void Update()
     {
+       //VIBRACION SALTO
 
-       /* //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
-        if (player.getNumSaltos() == 0)
-        {           
-            settings.loopTime = true;
-            UnityEditor.AnimationUtility.SetAnimationClipSettings(jump, settings);
+        if (isJumping)
+        {
+            timerJump++;
+            GamePad.SetVibration(0, quantityVibrationJump, quantityVibrationJump);
         }
 
-        if(player.getNumSaltos() == 1)
+        if (timerJump >= timeVibrationJump)
         {
-            settings.loopTime = false;
-            UnityEditor.AnimationUtility.SetAnimationClipSettings(jump, settings);
-        }*/
+            timerJump = 0;
+            isJumping = false;
+            GamePad.SetVibration(0, 0, 0);
+        }
+
+        //VIBRACION PARA EL DASH
+
+        if (isDashing)
+        {
+            timerDash++;
+            GamePad.SetVibration(0, quantityVibrationDash, quantityVibrationDash);
+        }
+
+        if (timerDash >= timeVibrationDash)
+        {
+            timerDash = 0;
+            isDashing = false;
+            GamePad.SetVibration(0, 0, 0);
+        }
+
+        //VIBRACION PARA EL ATAQUE
+
+        if (isAttack)
+        {
+            timerAttack++;
+            GamePad.SetVibration(0, quantityVibrationAttack, quantityVibrationAttack);
+        }
+
+        if (timerAttack >= timeVibrationAttack)
+        {
+            timerAttack = 0;
+            isAttack = false;
+            GamePad.SetVibration(0, 0, 0);
+        }
+
+        /* //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
+         if (player.getNumSaltos() == 0)
+         {           
+             settings.loopTime = true;
+             UnityEditor.AnimationUtility.SetAnimationClipSettings(jump, settings);
+         }
+
+         if(player.getNumSaltos() == 1)
+         {
+             settings.loopTime = false;
+             UnityEditor.AnimationUtility.SetAnimationClipSettings(jump, settings);
+         }*/
 
         Vector2 directionalInput = Vector2.zero;
         if (Input.GetAxis("Horizontal") > 0)
@@ -104,6 +183,8 @@ public class PlayerInput : MonoBehaviour
         //SALTO  
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
         {
+            isJumping = true;
+
             player.OnJumpInputDown();
             if (moving == PlayerMoving.no)
             {
@@ -136,6 +217,8 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1"))
         {
+            isDashing = true;
+
             poderes.checkDush();
             if (moving == PlayerMoving.no)
             {

@@ -26,6 +26,9 @@ public class lifeScript : MonoBehaviour {
     float timeVibration;
 
     [SerializeField]
+    float quantityVibration;
+
+    [SerializeField]
     float timeForEachColor;
     [SerializeField]
     float numberOfChanges;
@@ -66,7 +69,7 @@ public class lifeScript : MonoBehaviour {
         if (shake)
         {
             timer++;
-            GamePad.SetVibration(0, 0.5f, 0.5f);            
+            GamePad.SetVibration(0, quantityVibration, quantityVibration);            
         }
 
         if (timer >= timeVibration)
