@@ -43,6 +43,12 @@ public class lifeScript : MonoBehaviour {
 
     int invulnerableCount;
 
+    Rigidbody2D rb;
+    [SerializeField]
+    float damageDisForceX;
+    [SerializeField]
+    float damageDisForceY;
+
     // Use this for initialization
     void Start () {
 
@@ -61,6 +67,8 @@ public class lifeScript : MonoBehaviour {
 
         lifeCount = life.Length - 1;
         numberLifes = life.Length - 1;
+
+        rb = GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
@@ -99,6 +107,12 @@ public class lifeScript : MonoBehaviour {
         //solo hacemos daño si no estamos en estado invulnerable
         if (!invulnerable)
         {
+            if (Input.GetAxis("Horizontal") > 0)
+                rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
+
+            else if (Input.GetAxis("Horizontal") < 0)
+                rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
+
             for (int i = 0; i < damage && lifeCount >= 0; i++)
             {
                 life[lifeCount].SetActive(false);
