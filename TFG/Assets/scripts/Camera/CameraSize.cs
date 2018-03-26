@@ -10,6 +10,7 @@ public class CameraSize : MonoBehaviour {
     float resizeSpeed;
 
     Camera mainCamera;
+    [SerializeField] Camera secondCamera;
 
     public
     float savedSize;//saves the start size
@@ -44,6 +45,7 @@ public class CameraSize : MonoBehaviour {
             if (increasing)
             {
                 mainCamera.orthographicSize += Time.deltaTime * resizeSpeed;
+                secondCamera.orthographicSize += Time.deltaTime * resizeSpeed;
 
                 if (mainCamera.orthographicSize >= size && mainCamera.orthographicSize >= savedSize)
                     myState = State.waiting;
@@ -51,6 +53,7 @@ public class CameraSize : MonoBehaviour {
             else
             {
                 mainCamera.orthographicSize -= Time.deltaTime * resizeSpeed;
+                secondCamera.orthographicSize -= Time.deltaTime * resizeSpeed;
 
                 if (mainCamera.orthographicSize <= size && mainCamera.orthographicSize <= savedSize)
                     myState = State.waiting;

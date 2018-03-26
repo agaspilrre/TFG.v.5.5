@@ -12,6 +12,8 @@ public class PlayerInput : MonoBehaviour
   
     BasicAttack basicAttack;
 
+    lifeScript lifeScript;
+
     //variable para activar las animaciones
     private Animator anim;
 
@@ -62,6 +64,7 @@ public class PlayerInput : MonoBehaviour
     {
         //settings = UnityEditor.AnimationUtility.GetAnimationClipSettings(jump);
         player = GetComponent<Player>();
+        lifeScript = gameObject.GetComponent<lifeScript>();
         anim = GetComponent<Animator>();
         poderes = GetComponent<Poderes>();
         direccion = Direccion.derecha;
@@ -238,14 +241,20 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("PS4_O"))
+        if(Input.GetButtonDown("PS4_O") || Input.GetKeyDown(KeyCode.Y))
+        {
+            BlurController.instance.ResetBlur();
+            lifeScript.ResetBlur();
+        }
+
+        if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("PS4_Square"))
         {
             basicAttack.Charge();
         }
 
         basicAttack.direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("PS4_O"))
+        if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("PS4_Square"))
         {
             // Vector2 aux = Mathf.Abs(directionalInput.x) > Mathf.Abs(directionalInput.y) ? new Vector2(directionalInput.x, 0) : new Vector2(0, directionalInput.y);
             Vector2 aux = new Vector2(directionalInput.x,directionalInput.y);

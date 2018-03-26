@@ -5,7 +5,6 @@ public class Controller2D : RaycastController
 {
 
     public float maxSlopeAngle = 80;
-
     public CollisionInfo collisions;
     [HideInInspector]
     public Vector2 playerInput;
@@ -50,7 +49,10 @@ public class Controller2D : RaycastController
             VerticalCollisions(ref moveAmount);
         }
 
-        transform.Translate(moveAmount);
+        if(Mathf.Abs(moveAmount.y) >= 0.02 || Mathf.Abs(moveAmount.x) >= 0.002)
+        {
+            transform.Translate(moveAmount);
+        }
 
         if (standingOnPlatform)
         {

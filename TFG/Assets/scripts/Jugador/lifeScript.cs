@@ -19,6 +19,8 @@ public class lifeScript : MonoBehaviour {
 
     GameManager gameManager;
 
+    Player playerScript;
+
     bool shake;
     float timer;
 
@@ -49,6 +51,9 @@ public class lifeScript : MonoBehaviour {
     [SerializeField]
     float damageDisForceY;
 
+    [SerializeField]
+    float decrementImpulse;
+
     // Use this for initialization
     void Start () {
 
@@ -69,10 +74,17 @@ public class lifeScript : MonoBehaviour {
         numberLifes = life.Length - 1;
 
         rb = GetComponent<Rigidbody2D>();
+
+        playerScript = GetComponent<Player>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (rb.velocity.y <= decrementImpulse)
+        {
+            playerScript.enabled = true;
+        }
         
         if (shake)
         {
@@ -100,18 +112,33 @@ public class lifeScript : MonoBehaviour {
 	}
 
     /*
- *   Función que controla la cantidad de vida que queremos restar al jugador 
+    Función que controla la cantidad de vida que queremos restar al jugador 
  */
+
+
+    public void ResetBlur()
+    {
+        life[lifeCount].SetActive(false);
+        lifeCount--;
+    }
+    
     public void makeDamage(int damage)
     {
         //solo hacemos daño si no estamos en estado invulnerable
         if (!invulnerable)
         {
             if (Input.GetAxis("Horizontal") > 0)
+            {
+                playerScript.enabled = false;
                 rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
+            }
 
             else if (Input.GetAxis("Horizontal") < 0)
+            {
+                playerScript.enabled = false;
                 rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
+            }
+                
 
             for (int i = 0; i < damage && lifeCount >= 0; i++)
             {

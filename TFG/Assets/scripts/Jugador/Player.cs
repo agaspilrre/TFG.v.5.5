@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     public float runSpeed;
     public float decreeseSpeed;
 
+    Collider2D myCollider;
+    float timerForJump;
+
     float normalSpeed;
     public Vector2 wallJumpClimb;
     public Vector2 wallJumpOff;
@@ -64,6 +67,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        myCollider = gameObject.GetComponent<Collider2D>();
         controller = GetComponent<Controller2D>();
 
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -84,7 +88,6 @@ public class Player : MonoBehaviour
         normalSpeed = moveSpeed;
         savedMultiplicadorSaltos = multiplicadorSalto;
 
-        decreeseSpeed = 1;
         rb = GetComponent<Rigidbody2D>();
         
     }
@@ -138,7 +141,8 @@ public class Player : MonoBehaviour
 
         if (permitido)
         {
-            controller.Move(velocity * Time.deltaTime, directionalInput);            
+            controller.Move(velocity * Time.deltaTime, directionalInput);     
+            
 
             if (controller.collisions.above || controller.collisions.below)
             {
@@ -223,6 +227,7 @@ public class Player : MonoBehaviour
      
         if (wallSliding) //&& staminaBar.slider.value > 0)
         {
+            
             //staminaBar.isWallJumping = true;
             //para quitar el salto extra que hay al hacer walljumping
             numeroSaltos = 1;            
@@ -325,7 +330,7 @@ public class Player : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.collider.tag == "Suelo" )
+        if (coll.collider.tag == "Suelo")
         {
             poderesScript.SetDashUse(true);
             permitido = true;
@@ -380,7 +385,6 @@ public class Player : MonoBehaviour
             //this.enabled = false;
             transform.parent = null;
         }
-            
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
@@ -460,7 +464,10 @@ public class Player : MonoBehaviour
 
     void CalculateVelocity()
     {
-        float targetVelocityX = directionalInput.x * moveSpeed * decreeseSpeed;
+        float targetVelocityX = directionalInput.x * moveSpeed;
+
+        targetVelocityX = controller.collisions.below ? targetVelocityX : targetVelocityX * decreeseSpeed;
+
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
