@@ -19,9 +19,10 @@ public class BouncyTrigger : MonoBehaviour {
 
     Rigidbody2D characterRB;
     Player playerScript;
+    Poderes powerPlayer;
 
     bool isJumping;
-    float timerJump;
+    float increment;
 
     [SerializeField]
     [Header("Trigger Vibration Settings")]
@@ -34,6 +35,7 @@ public class BouncyTrigger : MonoBehaviour {
 
         characterRB = GameObject.Find("Personaje").GetComponent<Rigidbody2D>();
         playerScript = GameObject.Find("Personaje").GetComponent<Player>();
+        powerPlayer = GameObject.Find("Personaje").GetComponent<Poderes>();
         check = false;
         
 	}
@@ -79,9 +81,31 @@ public class BouncyTrigger : MonoBehaviour {
                 if (disapearCharacter)
                 {
                     player = collision.gameObject;
-                    player.GetComponent<SpriteRenderer>().enabled = false;
+                    player.GetComponent<SpriteRenderer>().enabled = false;                   
                 }
-                characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));
+                //characterRB.velocity = Vector2.zero;
+
+
+                //if (powerPlayer.getDashUse())
+                //characterRB.velocity = new Vector2(0, (forceBouncy * speedImpulse));
+                //else
+                //{
+                //    characterRB.velocity = Vector2.zero;
+                //    playerScript.setVelocityY(0);
+                //    characterRB.velocity = new Vector2(0, (forceBouncy * speedImpulse));
+                //}
+
+
+                if (powerPlayer.getDashUse())
+                    increment = 1f;
+                else
+                    increment = 3;
+
+                Vector2 upVector = new Vector2(0, (forceBouncy * speedImpulse * increment));
+                characterRB.velocity = Vector2.zero;
+                characterRB.AddForce(upVector, ForceMode2D.Impulse);
+
+
                 check = true;
             }
 
@@ -105,12 +129,14 @@ public class BouncyTrigger : MonoBehaviour {
     void ChangeGravity()
     {
         playerScript.enabled = false;
+        powerPlayer.enabled = false;
     }
 
     void activateScriptMovement()
     {
         check = false;
-        playerScript.enabled = true;
+        playerScript.enabled = true;   
+        powerPlayer.enabled = true;
         playerScript.setVelocityY(0);
         characterRB.velocity = Vector2.zero;
         playerScript.setPermitido(true);
