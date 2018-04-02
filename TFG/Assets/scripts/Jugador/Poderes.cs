@@ -182,7 +182,6 @@ public class Poderes : MonoBehaviour
         personajeMovimiento.setGravity0();
 
         personajeRB.velocity = new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 0);
-        //personajeRB.AddForce(new Vector2(personajeMovimiento.getDireccion() * velocidadDash, 0));
 
         dashUse = false;
         
