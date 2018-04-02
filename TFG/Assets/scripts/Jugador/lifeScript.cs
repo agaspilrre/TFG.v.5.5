@@ -127,13 +127,13 @@ public class lifeScript : MonoBehaviour {
         //solo hacemos daño si no estamos en estado invulnerable
         if (!invulnerable)
         {
-            if (Input.GetAxis("Horizontal") > 0)
+            if (Input.GetAxis("Horizontal") >= 0)
             {
                 playerScript.enabled = false;
                 rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
             }
 
-            else if (Input.GetAxis("Horizontal") < 0)
+            else if (Input.GetAxis("Horizontal") <= 0)
             {
                 playerScript.enabled = false;
                 rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
