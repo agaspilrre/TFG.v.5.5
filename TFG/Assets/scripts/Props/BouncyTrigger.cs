@@ -16,6 +16,7 @@ public class BouncyTrigger : MonoBehaviour {
     bool check;//para que haga la comprobacion justo despues de saltar en el trampolin
     public bool disapearCharacter;
     GameObject player;
+    Poderes poderes;
 
     Rigidbody2D characterRB;
     Player playerScript;
@@ -34,16 +35,21 @@ public class BouncyTrigger : MonoBehaviour {
 
         characterRB = GameObject.Find("Personaje").GetComponent<Rigidbody2D>();
         playerScript = GameObject.Find("Personaje").GetComponent<Player>();
+        poderes = GameObject.Find("Personaje").GetComponent<Poderes>();
         check = false;
-        
+     
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+        
         //Debug.Log( characterRB.velocity);
         if (check)
         {
+            if (characterRB.velocity.y < 0)
+            {
+                print("sdsdsdsdsdsd");
+            }
             if (characterRB.velocity.y <= decrementImpulse)
             {
                 activateScriptMovement();
@@ -103,16 +109,16 @@ public class BouncyTrigger : MonoBehaviour {
     }
 
     void ChangeGravity()
-    {
-        playerScript.enabled = false;
+    {       
+        playerScript.setGravity0();
+        poderes.CancelInvokes();
+        playerScript.setPermitido(false);
     }
 
     void activateScriptMovement()
     {
         check = false;
-        playerScript.enabled = true;
-        playerScript.setVelocityY(0);
-        characterRB.velocity = Vector2.zero;
+        playerScript.returnGravity();
         playerScript.setPermitido(true);
     }
 }

@@ -54,6 +54,16 @@ public class lifeScript : MonoBehaviour {
     [SerializeField]
     float decrementImpulse;
 
+    PlayerAnim playerAnim;
+
+    [SerializeField]
+    GameObject particles1;
+
+    [SerializeField]
+    GameObject particles2;
+
+    public float timeExpire;
+
     // Use this for initialization
     void Start () {
 
@@ -76,6 +86,8 @@ public class lifeScript : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
 
         playerScript = GetComponent<Player>();
+
+        playerAnim = GetComponent<PlayerAnim>();
     }
 	
 	// Update is called once per frame
@@ -84,7 +96,7 @@ public class lifeScript : MonoBehaviour {
         if (rb.velocity.y <= decrementImpulse)
         {
             playerScript.enabled = true;
-        }
+        }       
         
         if (shake)
         {
@@ -127,18 +139,27 @@ public class lifeScript : MonoBehaviour {
         //solo hacemos daño si no estamos en estado invulnerable
         if (!invulnerable)
         {
-            if (Input.GetAxis("Horizontal") >= 0)
+            if (playerScript.getDireccion() == 1)
             {
                 playerScript.enabled = false;
                 rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
+
+                if (lifeCount <= 0)
+                {
+                    Invoke("ExecuteDeath", timeExpire);
+                }               
             }
 
-            else if (Input.GetAxis("Horizontal") <= 0)
+            else if (playerScript.getDireccion() == -1)
             {
                 playerScript.enabled = false;
                 rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
+
+                if (lifeCount <= 0)
+                {
+                    Invoke("ExecuteDeath", timeExpire);
+                }
             }
-                
 
             for (int i = 0; i < damage && lifeCount >= 0; i++)
             {
@@ -153,12 +174,23 @@ public class lifeScript : MonoBehaviour {
        
         if (lifeCount < 0)
         {
-            //cargar gameover o lo que proceda
-            gameManager.loadGameOver();
-            
+            //cargar gameover o lo que proceda            
+            Invoke("DoGameOver", 3);        
         }
     }
 
+    void ExecuteDeath()
+    {
+        particles1.SetActive(false);
+        particles2.SetActive(false);
+        playerScript.setPermitido(false);
+        playerAnim.death();
+    }
+
+    void DoGameOver()
+    {
+        gameManager.loadGameOver();
+    }
    
 
     IEnumerator InvulnerableColor()

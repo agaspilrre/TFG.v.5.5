@@ -29,13 +29,7 @@ public class PlayerAnim : MonoBehaviour {
     public void IdlToRun()
     {
         animator.SetBool("idlToRun", true);        
-    }
-
-
-   
-   
-
-  
+    } 
 
     //si esta quieto y salta
     public void idlToJump()
@@ -98,6 +92,11 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("dashToRun", true);
     }
 
+    public void death()
+    {
+        setFalseAllAnimations();
+        animator.SetBool("death", true);
+    }
 
     //PASAR A FALSO
 
@@ -105,8 +104,6 @@ public class PlayerAnim : MonoBehaviour {
     public void RunToIdl()
     {
         animator.SetBool("idlToRun", false);
-
-
     }
 
     //pone todas las variables del animator a false para que no haya transiciones no deseadas

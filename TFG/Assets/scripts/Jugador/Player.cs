@@ -141,8 +141,7 @@ public class Player : MonoBehaviour
 
         if (permitido)
         {
-            controller.Move(velocity * Time.deltaTime, directionalInput);     
-            
+            controller.Move(velocity * Time.deltaTime, directionalInput);            
 
             if (controller.collisions.above || controller.collisions.below)
             {
@@ -172,15 +171,20 @@ public class Player : MonoBehaviour
 
         //modular peso en la caida
         //Debug.Log("la velocidad en y es:"+velocity.y);
+
+        if(velocity.y<-5 && !wallSliding && numeroSaltos==0)
+        {
+            numeroSaltos++;
+          
+            multiplicadorSalto = 1;
+        }
         if (velocity.y <= 0 && velocity.y >= -100)
         {
             //Debug.Log("la velocidad en y es:" + velocity.y);
            
             velocity.y *= fallWeight;//modula el peso de la caida
            
-        }
-
-        
+        }      
 
     }
     
@@ -222,12 +226,15 @@ public class Player : MonoBehaviour
         directionalInput = input;
     }
 
-    public void OnJumpInputDown()
+    public bool getWallSliding()
     {
-     
+        return wallSliding;
+    }
+
+    public void OnJumpInputDown()
+    {     
         if (wallSliding) //&& staminaBar.slider.value > 0)
-        {
-            
+        {       
             //staminaBar.isWallJumping = true;
             //para quitar el salto extra que hay al hacer walljumping
             numeroSaltos = 1;            
@@ -240,8 +247,8 @@ public class Player : MonoBehaviour
                 }
                 else if (directionalInput.x == 0)
                 {
-                    velocity.x = -wallDirX * wallJumpOff.x;
-                    velocity.y = wallJumpOff.y;
+                    velocity.x = -wallDirX * wallJumpClimb.x;
+                    velocity.y = wallJumpClimb.y;
                 }
                 else
                 {
@@ -450,14 +457,14 @@ public class Player : MonoBehaviour
                 velocity.y = -wallSlideSpeedMax;
             }
 
-            if (timeToWallUnstick > 0)
-            {                
-                velocityXSmoothing = 0;
-                velocity.x = 0;
-                velocity.y = 0;                
-                timeToWallUnstick -= Time.deltaTime;
+            //if (timeToWallUnstick > 0)
+            //{                
+            //    velocityXSmoothing = 0;
+            //    velocity.x = 0;
+            //    velocity.y = 0;                
+            //    timeToWallUnstick -= Time.deltaTime;
 
-            }
+            //}
         }
 
     }

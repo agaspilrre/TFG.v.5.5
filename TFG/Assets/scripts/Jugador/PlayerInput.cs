@@ -60,6 +60,8 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     float timeVibrationAttack;
 
+    HabilityBar staminaBar;
+
     void Start()
     {
         //settings = UnityEditor.AnimationUtility.GetAnimationClipSettings(jump);
@@ -71,6 +73,7 @@ public class PlayerInput : MonoBehaviour
         moving = PlayerMoving.no;
         playerAnim = GetComponent<PlayerAnim>();
         basicAttack = GetComponent<BasicAttack>();
+        staminaBar = GetComponent<HabilityBar>();
         isJumping = false;
         timerJump = 0;
     }
@@ -155,9 +158,6 @@ public class PlayerInput : MonoBehaviour
             moving = PlayerMoving.yes;
             //si nos movemos se activan las animaciones 
             playerAnim.IdlToRun();
-            
-               
-
         }
 
         else if (Input.GetAxis("Horizontal") == 0 )
@@ -223,22 +223,30 @@ public class PlayerInput : MonoBehaviour
             isDashing = true;
 
             poderes.checkDush();
-            if (moving == PlayerMoving.no)
+            if (!staminaBar.isBarEmpty())
             {
-                //de idl a dash
-                playerAnim.idlToDash();
+                if (moving == PlayerMoving.no)
+                {
+                    //de idl a dash
+                    playerAnim.idlToDash();
+                }
+                else
+                {
+                    //de correr a dash
+                    playerAnim.runToDash();
+                }
+                if (player.getIsJumping())
+                    playerAnim.jumpToDash();
             }
             else
             {
-                //de correr a dash
-                playerAnim.runToDash();
+                playerAnim.jumpToRun();
             }
-            if (player.getIsJumping())
-                playerAnim.jumpToDash();
-            else
-            {
-                playerAnim.dashToRun();
-            }
+           
+            //else
+            //{
+            //    playerAnim.dashToRun();
+            //}
         }
 
         if(Input.GetButtonDown("PS4_O") || Input.GetKeyDown(KeyCode.Y))

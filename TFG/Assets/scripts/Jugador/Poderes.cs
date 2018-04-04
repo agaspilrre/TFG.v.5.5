@@ -65,7 +65,7 @@ public class Poderes : MonoBehaviour
     public bool infinityDush;
     bool verticalDush;
 
-    private HabilityBar staminaBar;
+    HabilityBar staminaBar;
     BasicAttack basicAttack;
 
     // Use this for initialization
@@ -166,7 +166,7 @@ public class Poderes : MonoBehaviour
             }
 
             cargaDash = 0;
-        }
+        }        
     }
 
     public bool getStatePartition()
@@ -191,6 +191,11 @@ public class Poderes : MonoBehaviour
         basicAttack.CancelAttack();
     }
 
+    public void CancelInvokes()
+    {
+        CancelInvoke();
+    }
+
     void dashPermitido()
     {
         personajeMovimiento.returnGravity();
@@ -199,12 +204,13 @@ public class Poderes : MonoBehaviour
         personajeRB.velocity = new Vector2(0, 0);
         personajeRB.gravityScale = initGravity;
 
-        //quitar las animaciones del dush
+        //quitar las animaciones del dush        
         if (Input.GetAxisRaw("Horizontal") != 0)
-            playerAnim.dashToRun();
+            playerAnim.jumpToRun();
+
         else
-            playerAnim.DashToIdl();
-        
+            playerAnim.JumpToIdl();
+
 
         //condicion para testear con dush infinito y sin dush infinito
         if (infinityDush)
