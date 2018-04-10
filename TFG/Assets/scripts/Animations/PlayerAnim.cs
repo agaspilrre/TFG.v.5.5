@@ -106,6 +106,11 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("idlToRun", false);
     }
 
+    public void WallJump(bool boolean)
+    {
+        animator.SetBool("wallJump", boolean);
+    }
+
     //pone todas las variables del animator a false para que no haya transiciones no deseadas
     public void  setFalseAllAnimations()
     {
@@ -117,6 +122,7 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("jumpToRun", false);
         animator.SetBool("runToDash", false);
         animator.SetBool("dashToRun", false);
+        //animator.SetBool("wallJump", false);
 
     }
 

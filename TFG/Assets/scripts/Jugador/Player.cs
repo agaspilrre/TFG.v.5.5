@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     Vector3 velocity;
     float velocityXSmoothing;
 
+    float chekcTimeWall;
     public bool permitido;
     bool entraColisionPared = false;
     Poderes poderesScript;
@@ -171,10 +172,25 @@ public class Player : MonoBehaviour
 
         }
 
+
+        //if (!wallSliding)
+        //{
+        //    chekcTimeWall += Time.deltaTime;
+
+        //    if(chekcTimeWall<=0.5)
+        //    {
+        //        playerAnim.WallJump(false);
+        //        chekcTimeWall = 0;
+        //    }
+
+
+        //}
+
         //modular peso en la caida
         //Debug.Log("la velocidad en y es:"+velocity.y);
 
-        if(velocity.y<-5 && !wallSliding && numeroSaltos==0)
+
+        if (velocity.y<-5 && !wallSliding && numeroSaltos==0)
         {
             numeroSaltos++;
           
@@ -224,10 +240,12 @@ public class Player : MonoBehaviour
         {       
             //staminaBar.isWallJumping = true;
             //para quitar el salto extra que hay al hacer walljumping
-            numeroSaltos = 1;            
+            numeroSaltos = 1;
             //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKeyDown(KeyCode.Space))
             //{
-                if (wallDirX == directionalInput.x)
+            playerAnim.WallJump(true);
+
+            if (wallDirX == directionalInput.x)
                 {
                     velocity.x = -wallDirX * wallJumpClimb.x;
                     velocity.y = wallJumpClimb.y;
@@ -423,10 +441,12 @@ public class Player : MonoBehaviour
 
     void HandleWallSliding()
     {
+        
         wallDirX = (controller.collisions.left) ? -1 : 1;
         wallSliding = false;
         if (( controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
-        {            
+        {
+            playerAnim.WallJump(true);
             if (entraColisionPared)
             {               
                 timeToWallUnstick = wallStickTime;
@@ -434,7 +454,9 @@ public class Player : MonoBehaviour
             }
 
             wallSliding = true;
+
             
+
             if (velocity.y < wallSlideSpeedMax)
             {
                 velocity.y = -wallSlideSpeedMax;

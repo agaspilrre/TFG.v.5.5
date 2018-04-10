@@ -49,7 +49,7 @@ public class SmallEnemy2 : MonoBehaviour {
             {
                 timer += Time.deltaTime;
                 //ponemos la animacion de atacar
-                if (timer >= timeBetwenShoot - 1.6f)
+                if (timer >= timeBetwenShoot - 1.8f)
                 {
                     animator.SetBool("attack", true);
                 }
@@ -65,12 +65,12 @@ public class SmallEnemy2 : MonoBehaviour {
         else
         {
             timer += Time.deltaTime;
-            if(timer<=timeStun)
+            if(timer>=timeStun)
             {
                 timer = 0;
                 stuned = false;
                 animator.SetBool("stun", false);
-                animator.SetBool("idle", true);
+                animator.SetBool("attack", true);
             }
         }
 		
@@ -136,8 +136,9 @@ public class SmallEnemy2 : MonoBehaviour {
     
 
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnParticleCollision(GameObject collision)
     {
+<<<<<<< HEAD
         if(collision.gameObject.tag=="Attack")
         {
             animator.SetBool("stun", true);
@@ -148,5 +149,15 @@ public class SmallEnemy2 : MonoBehaviour {
         {
             collision.gameObject.GetComponent<lifeScript>().makeDamage(Damage);
         }
+=======
+
+        
+        animator.SetBool("idle", false);
+        animator.SetBool("attack", false);
+        animator.SetBool("stun", true);
+        stuned = true;
+            
+        
+>>>>>>> rama2
     }
 }
