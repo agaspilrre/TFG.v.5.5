@@ -62,6 +62,14 @@ public class PlayerInput : MonoBehaviour
 
     HabilityBar staminaBar;
 
+    [SerializeField]
+    float totalTimeSacrifice;
+
+    [SerializeField]
+    float startToSacrifice;
+
+    bool pressed;
+
     void Start()
     {
         //settings = UnityEditor.AnimationUtility.GetAnimationClipSettings(jump);
@@ -76,6 +84,7 @@ public class PlayerInput : MonoBehaviour
         staminaBar = GetComponent<HabilityBar>();
         isJumping = false;
         timerJump = 0;
+        pressed = false;
     }
 
     void Update()
@@ -123,6 +132,12 @@ public class PlayerInput : MonoBehaviour
             timerAttack = 0;
             isAttack = false;
             GamePad.SetVibration(0, 0, 0);
+        }
+
+        if (pressed)
+        {
+            totalTimeSacrifice += Time.deltaTime;
+            print(totalTimeSacrifice);
         }
 
         /* //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
@@ -175,10 +190,7 @@ public class PlayerInput : MonoBehaviour
            
             //playerAnim.RunToIdl();
             //playerAnim.IdlToRunFalse();
-            
-
-            
-                
+                         
         }
 
         player.SetDirectionalInput(directionalInput);
@@ -186,20 +198,24 @@ public class PlayerInput : MonoBehaviour
         //SALTO  
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
         {
-            isJumping = true;
+            if (!basicAttack.isCharging)
+            {
+                isJumping = true;
 
-            player.OnJumpInputDown();
-            if (moving == PlayerMoving.no)
-            {
-                //de idl a salto
-                playerAnim.idlToJump();
+                player.OnJumpInputDown();
+                if (moving == PlayerMoving.no)
+                {
+                    //de idl a salto
+                    playerAnim.idlToJump();
+                }
+                else
+                {
+                    //de correr a salto
+                    playerAnim.runToJump();
+                }
+                //playerAnim.idlToJump();
             }
-            else
-            {
-                //de correr a salto
-                playerAnim.runToJump();
-            }
-            //playerAnim.idlToJump();
+
         }
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("PS4_X"))
         {
@@ -235,8 +251,8 @@ public class PlayerInput : MonoBehaviour
                     //de correr a dash
                     playerAnim.runToDash();
                 }
-                if (player.getIsJumping())
-                    playerAnim.jumpToDash();
+                //if (player.getIsJumping())
+                //    playerAnim.jumpToDash();
             }
             else
             {
@@ -251,16 +267,30 @@ public class PlayerInput : MonoBehaviour
 
         if(Input.GetButtonDown("PS4_O") || Input.GetKeyDown(KeyCode.Y))
         {
-            BlurController.instance.ResetBlur();
-            lifeScript.ResetBlur();
+            pressed = true;
+
+            if (pressed)
+            {
+                if (totalTimeSacrifice >= startToSacrifice)
+                {
+                    BlurController.instance.ResetBlur();
+                    lifeScript.ResetBlur();
+                }
+            }
+
+          
         }
 
         if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("PS4_Square"))
-        {
-            basicAttack.Charge();
+        {           
+           basicAttack.Charge();
         }
 
         basicAttack.direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (Input.GetAxis("Vertical") < 0)
+        {
+            basicAttack.direction =  new Vector2(basicAttack.direction.x, 0);
+        }
 
         if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("PS4_Square"))
         {
@@ -297,7 +327,10 @@ public class PlayerInput : MonoBehaviour
         return stopTime;
     }
 
-
+    public bool getIsJumping()
+    {
+        return isJumping;
+    }
 
 }
 

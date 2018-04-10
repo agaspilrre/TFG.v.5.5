@@ -29,6 +29,8 @@ public class BasicAttack : MonoBehaviour {
 
     Transform playerTransform;
     Player player;
+    PlayerInput playerInput;
+    Poderes poderes;
 
     [SerializeField]
     GameObject directionObject;
@@ -37,6 +39,8 @@ public class BasicAttack : MonoBehaviour {
 	void Start ()
     {
         playerTransform = GameObject.Find("Personaje").transform;
+        playerInput = GameObject.Find("Personaje").GetComponent<PlayerInput>();
+        poderes = GameObject.Find("Personaje").GetComponent<Poderes>();
         player = playerTransform.gameObject.GetComponent<Player>();
 
         timer = 0;
@@ -55,18 +59,23 @@ public class BasicAttack : MonoBehaviour {
 
     public void StopCharging(Vector3 direction)
     {
-        isCharging = false;
-        directionObject.SetActive(false);
-        player.decreeseSpeed = 1;
-        Attack(direction);
+        if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse)
+        {
+
+            isCharging = false;
+            directionObject.SetActive(false);
+            player.speedAttacking = 1;
+            Attack(direction);
+        }
     }
 
     public void Charge()
     {
-        if (!isAttacking)
+        if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse)
         {
             isCharging = true;
-            player.decreeseSpeed = decreaseSpeed;
+            player.speedAttacking = decreaseSpeed;
+            //player.decreeseSpeed = 0.75f;
             directionObject.SetActive(true); 
         }
     }
@@ -78,7 +87,6 @@ public class BasicAttack : MonoBehaviour {
             prueba = Instantiate(basicAttack, playerTransform.position, Quaternion.identity);
             prueba.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
             Invoke("StopAttack", lifeSeconds);
-            player.Shoot(cargaAtaque);
             isAttacking = true;
         }
     }

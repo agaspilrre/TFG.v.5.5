@@ -19,6 +19,7 @@ public class BouncyTrigger : MonoBehaviour {
     Poderes poderes;
 
     Rigidbody2D characterRB;
+    BoxCollider2D characterCollider;
     Player playerScript;
 
     bool isJumping;
@@ -34,6 +35,7 @@ public class BouncyTrigger : MonoBehaviour {
     void Start () {
 
         characterRB = GameObject.Find("Personaje").GetComponent<Rigidbody2D>();
+        characterCollider = GameObject.Find("Personaje").GetComponent<BoxCollider2D>();
         playerScript = GameObject.Find("Personaje").GetComponent<Player>();
         poderes = GameObject.Find("Personaje").GetComponent<Poderes>();
         check = false;
@@ -56,6 +58,7 @@ public class BouncyTrigger : MonoBehaviour {
                 player.GetComponent<SpriteRenderer>().enabled = true;
                 isJumping = false;
                 GamePad.SetVibration(0, 0, 0);
+                characterCollider.enabled = true;
             }
         }
 
@@ -89,6 +92,7 @@ public class BouncyTrigger : MonoBehaviour {
                 }
                 characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));
                 check = true;
+                characterCollider.enabled = false;
             }
 
             /*else if (south)

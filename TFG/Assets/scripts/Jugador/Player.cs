@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public float timeToWallUnstick;
     public float multiplicadorSalto;
     float savedMultiplicadorSaltos;
+    public float speedAttacking;
 
     float gravity;
     float maxJumpVelocity;
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
     bool entraColisionPared = false;
     Poderes poderesScript;
     int direccion;
-    bool isJumping;
+    //bool isJumping;
     int numeroSaltos;
 
     Controller2D controller;
@@ -81,7 +82,8 @@ public class Player : MonoBehaviour
         controlPU = GameObject.FindGameObjectWithTag("ControlPowerUp").GetComponent<PowerUp>();
         input = GetComponent<PlayerInput>();
         staminaBar = GetComponent<HabilityBar>();
-        isJumping = false;
+        //isJumping = false;
+        speedAttacking = 1;
        
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable
@@ -205,21 +207,6 @@ public class Player : MonoBehaviour
     //    permitido = true;
     //}
 
-    public void Shoot(float chargeTime)
-    {
-        if(!controller.collisions.below)
-        {
-            IEnumerator coroutine = Charge(chargeTime);
-            StartCoroutine(coroutine);
-        }
-    }
-
-    private IEnumerator Charge(float waitTime)
-    {
-        setGravity0();
-        yield return new WaitForSeconds(waitTime);
-        returnGravity();
-    }
 
     public void SetDirectionalInput(Vector2 input)
     {
@@ -232,7 +219,7 @@ public class Player : MonoBehaviour
     }
 
     public void OnJumpInputDown()
-    {     
+    {
         if (wallSliding) //&& staminaBar.slider.value > 0)
         {       
             //staminaBar.isWallJumping = true;
@@ -312,11 +299,7 @@ public class Player : MonoBehaviour
         }
 
     }
-
-    public bool getIsJumping()
-    {
-        return isJumping;
-    }
+    
 
     public int getDireccion()
     {
@@ -341,7 +324,7 @@ public class Player : MonoBehaviour
         {
             poderesScript.SetDashUse(true);
             permitido = true;
-            isJumping = false;
+            //isJumping = false;
             velocity = new Vector3(0, 0, 0);
 
             if (Input.GetAxisRaw("Horizontal") != 0)
@@ -400,7 +383,7 @@ public class Player : MonoBehaviour
         {
             poderesScript.SetDashUse(true);
             permitido = true;
-            isJumping = false;
+            //isJumping = false;
             //playerAnim.idlToJumpFalse(); 
 
             //PARA CRTAR LA ANIMACION DE SALTO CUANDO CAE AL SUELO
@@ -442,7 +425,7 @@ public class Player : MonoBehaviour
     {
         wallDirX = (controller.collisions.left) ? -1 : 1;
         wallSliding = false;
-        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
+        if (( controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
         {            
             if (entraColisionPared)
             {               
@@ -469,13 +452,27 @@ public class Player : MonoBehaviour
 
     }
 
+    public bool GetIsInAir()
+    {
+        return controller.collisions.below ? true : false;
+    }
+
     void CalculateVelocity()
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
 
         targetVelocityX = controller.collisions.below ? targetVelocityX : targetVelocityX * decreeseSpeed;
 
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        if (speedAttacking == 0)
+        {
+            velocity.x = 0;
+        }
+        else
+        {
+            velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        }
+
+        
         velocity.y += gravity * Time.deltaTime;
     }
   

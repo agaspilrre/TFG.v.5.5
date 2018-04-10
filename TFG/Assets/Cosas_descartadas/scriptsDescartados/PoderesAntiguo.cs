@@ -198,7 +198,7 @@ public class PoderesAntiguo : MonoBehaviour
             {
                 //staminaBar.LoseStamina();
 
-                if (state == Partition.NORMAL && personajeMovimiento.getIsJumping() == false)
+                if (state == Partition.NORMAL) //&& personajeMovimiento.getIsJumping() == false)
                 {
                     //cambio de estado
                     state = Partition.PARTITION;
