@@ -7,6 +7,8 @@ public class CameraTarget : MonoBehaviour {
     Transform player;
     Transform target;
 
+    public int numberOfTriggers { get; set; }
+
     [SerializeField]
     float speed = 10;
 
@@ -23,6 +25,8 @@ public class CameraTarget : MonoBehaviour {
     void Start()
     {
         state = State.noTriggered;
+
+        numberOfTriggers = 0;
 
         player = GameObject.Find("Personaje").GetComponent<Transform>();
         target =this.GetComponent<Transform>();
@@ -49,7 +53,7 @@ public class CameraTarget : MonoBehaviour {
     public void SetFocusPosition(Vector3 focus)
     {
         focusPosition = focus;
-    }
+    }  
 
     public void SetIsTrigger(bool aux)
     {

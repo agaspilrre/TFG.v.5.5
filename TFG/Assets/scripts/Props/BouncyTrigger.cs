@@ -32,12 +32,15 @@ public class BouncyTrigger : MonoBehaviour {
     [SerializeField]
     float timeVibrationTrigger;
 
+    Animator anim;
+
     void Start () {
 
         characterRB = GameObject.Find("Personaje").GetComponent<Rigidbody2D>();
         characterCollider = GameObject.Find("Personaje").GetComponent<BoxCollider2D>();
         playerScript = GameObject.Find("Personaje").GetComponent<Player>();
         poderes = GameObject.Find("Personaje").GetComponent<Poderes>();
+        anim = GetComponent<Animator>();
         check = false;
      
 	}
@@ -109,7 +112,14 @@ public class BouncyTrigger : MonoBehaviour {
             {
                 characterRB.velocity = new Vector2((forceBouncy * -speedImpulse), 0);
             }*/
-        }
+        }       
+    }
+
+
+    private void OnParticleTrigger()
+    {
+        print("entra");
+        anim.SetBool("Awake", true);
     }
 
     void ChangeGravity()

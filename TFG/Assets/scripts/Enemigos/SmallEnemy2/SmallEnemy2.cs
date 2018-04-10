@@ -31,6 +31,8 @@ public class SmallEnemy2 : MonoBehaviour {
     public float TimeToStart;
     Animator animator;
 
+    public int Damage;
+
     // Use this for initialization
     void Start () {
 
@@ -131,6 +133,8 @@ public class SmallEnemy2 : MonoBehaviour {
 
     }
 
+    
+
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
@@ -138,6 +142,11 @@ public class SmallEnemy2 : MonoBehaviour {
         {
             animator.SetBool("stun", true);
             stuned = true;
+        }
+
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<lifeScript>().makeDamage(Damage);
         }
     }
 }

@@ -24,4 +24,9 @@ public class CameraShake : MonoBehaviour {
     {
         shakeAux = shakeIntensity;
     }
+
+    public void Shake(float intensity)
+    {
+        shakeAux = intensity;
+    }
 }

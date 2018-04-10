@@ -29,7 +29,12 @@ public class CameraTrigger : MonoBehaviour {
     {
         if (other.name == "Personaje")
         {
-            target.SetIsTrigger(false);
+            target.numberOfTriggers--;
+
+            if (target.numberOfTriggers == 0)
+            {
+                target.SetIsTrigger(false);
+            }
         }
     }
 
@@ -38,5 +43,6 @@ public class CameraTrigger : MonoBehaviour {
         target.SetPercent(percent);
         target.SetFocusPosition(child.position);
         target.SetIsTrigger(true);
+        target.numberOfTriggers++;
     }
 }

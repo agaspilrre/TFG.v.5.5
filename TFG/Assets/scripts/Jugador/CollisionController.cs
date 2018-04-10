@@ -6,14 +6,19 @@ using UnityEngine.SceneManagement;
 public class CollisionController : MonoBehaviour {
     CameraController mainCamera;
 
+    int numberOfBlok;
+
     void Start()
     {
         mainCamera = Camera.main.GetComponent<CameraController>();
+        numberOfBlok = 0;
     }
 
     #region triggers
     void OnTriggerEnter2D(Collider2D other)
     {
+        numberOfBlok++;
+
         if (other.name == "CameraEndPoint")
             mainCamera.SetCameraState("inactive");
         else if (other.name == "CameraStartPoint")
@@ -30,7 +35,8 @@ public class CollisionController : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.name == "CameraBlockPoint" || other.name == "PrefabPantalla")
+        numberOfBlok--;
+        if ((other.name == "CameraBlockPoint" || other.name == "PrefabPantalla") && numberOfBlok == 0)
             mainCamera.SetCameraState("active");
     }
     #endregion

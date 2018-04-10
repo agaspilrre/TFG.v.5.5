@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour
     Player player;
     private PlayerAnim playerAnim;
     Poderes poderes;
-  
+
     BasicAttack basicAttack;
 
     lifeScript lifeScript;
@@ -22,19 +22,19 @@ public class PlayerInput : MonoBehaviour
     enum Direccion { izquierda, derecha }
     Direccion direccion;
 
-    enum PlayerMoving { yes,no}
+    enum PlayerMoving { yes, no }
     PlayerMoving moving;
-    
+
     float stopTime = 0;
     // UnityEditor.AnimationClipSettings settings;
-   
+
     bool isJumping;
     float timerJump;
 
     [SerializeField]
     [Header("Jump Vibration Settings")]
     [Space(10)]
-    float quantityVibrationJump;    
+    float quantityVibrationJump;
     [SerializeField]
     float timeVibrationJump;
     [Space(10)]
@@ -68,7 +68,17 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     float startToSacrifice;
 
+    float timer;
     bool pressed;
+
+    CameraShake shake;
+
+    [SerializeField]
+    float shakeForce;
+
+    [SerializeField]
+    float vibrationForce;
+
 
     void Start()
     {
@@ -82,6 +92,7 @@ public class PlayerInput : MonoBehaviour
         playerAnim = GetComponent<PlayerAnim>();
         basicAttack = GetComponent<BasicAttack>();
         staminaBar = GetComponent<HabilityBar>();
+        shake = Camera.main.GetComponent<CameraShake>();        
         isJumping = false;
         timerJump = 0;
         pressed = false;
@@ -89,7 +100,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-       //VIBRACION SALTO
+        //VIBRACION SALTO
 
         if (isJumping)
         {
@@ -134,11 +145,28 @@ public class PlayerInput : MonoBehaviour
             GamePad.SetVibration(0, 0, 0);
         }
 
+        if (timer >= startToSacrifice)
+        {
+            pressed = true;
+        }
+
         if (pressed)
         {
-            totalTimeSacrifice += Time.deltaTime;
-            print(totalTimeSacrifice);
+            shake.Shake(shakeForce);
+            timer += Time.deltaTime;
+            GamePad.SetVibration(0, vibrationForce, vibrationForce);
+
+            if (timer >= totalTimeSacrifice)
+            {
+                pressed = false;
+                BlurController.instance.ResetBlur();
+                lifeScript.ResetBlur();               
+                timer = 0;
+                GamePad.SetVibration(0, 0, 0);
+            }
         }
+
+
 
         /* //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
          if (player.getNumSaltos() == 0)
@@ -175,9 +203,9 @@ public class PlayerInput : MonoBehaviour
             playerAnim.IdlToRun();
         }
 
-        else if (Input.GetAxis("Horizontal") == 0 )
-        {    
-            
+        else if (Input.GetAxis("Horizontal") == 0)
+        {
+
             //comprobar cuanto tiempo permanece parado para el sistema de emojis
             stopTime += Time.deltaTime;
 
@@ -187,10 +215,10 @@ public class PlayerInput : MonoBehaviour
 
                 playerAnim.RunToIdl();
             }
-           
+
             //playerAnim.RunToIdl();
             //playerAnim.IdlToRunFalse();
-                         
+
         }
 
         player.SetDirectionalInput(directionalInput);
@@ -223,7 +251,7 @@ public class PlayerInput : MonoBehaviour
             //playerAnim.idlToJump();
         }
 
-       
+
 
         //CAMBIO PERSONALIDAD
         /*
@@ -258,44 +286,36 @@ public class PlayerInput : MonoBehaviour
             {
                 playerAnim.jumpToRun();
             }
-           
+
             //else
             //{
             //    playerAnim.dashToRun();
             //}
         }
 
-        if(Input.GetButtonDown("PS4_O") || Input.GetKeyDown(KeyCode.Y))
+        if ((Input.GetButton("PS4_O") || Input.GetKey(KeyCode.Y)) && pressed == false)
         {
-            pressed = true;
-
-            if (pressed)
-            {
-                if (totalTimeSacrifice >= startToSacrifice)
-                {
-                    BlurController.instance.ResetBlur();
-                    lifeScript.ResetBlur();
-                }
-            }
-
-          
+            timer += Time.deltaTime;            
         }
 
+        if ((Input.GetButtonUp("PS4_O") || Input.GetKeyUp(KeyCode.Y)) && pressed == false)
+            timer = 0;
+
         if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("PS4_Square"))
-        {           
-           basicAttack.Charge();
+        {
+            basicAttack.Charge();
         }
 
         basicAttack.direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (Input.GetAxis("Vertical") < 0)
         {
-            basicAttack.direction =  new Vector2(basicAttack.direction.x, 0);
+            basicAttack.direction = new Vector2(basicAttack.direction.x, 0);
         }
 
         if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("PS4_Square"))
         {
             // Vector2 aux = Mathf.Abs(directionalInput.x) > Mathf.Abs(directionalInput.y) ? new Vector2(directionalInput.x, 0) : new Vector2(0, directionalInput.y);
-            Vector2 aux = new Vector2(directionalInput.x,directionalInput.y);
+            Vector2 aux = new Vector2(directionalInput.x, directionalInput.y);
             if (aux == Vector2.zero)
                 basicAttack.StopCharging(new Vector2(player.getDireccion(), 0));
             else
@@ -333,5 +353,3 @@ public class PlayerInput : MonoBehaviour
     }
 
 }
-
-

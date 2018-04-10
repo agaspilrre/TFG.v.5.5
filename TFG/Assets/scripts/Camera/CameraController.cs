@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour {
     Transform target;
     Transform player;
 
+
+
     [SerializeField]
     bool isActive = true;
 
