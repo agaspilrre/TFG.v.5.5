@@ -15,6 +15,8 @@ public class SmallEnemy2 : MonoBehaviour {
     public int damage;
     public float speedSlow;
     public float timeSlow;
+    public float timeStun;
+    bool stuned;
     public Transform spawnBulletPointD;
     public Transform spawnBulletPointU;
     public Transform spawnBulletPointL;
@@ -27,26 +29,48 @@ public class SmallEnemy2 : MonoBehaviour {
 
     bool startCountTime;
     public float TimeToStart;
+    Animator animator;
 
     // Use this for initialization
     void Start () {
 
         StartCoroutine(StartCount());
+        animator = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (startCountTime)
+        if(!stuned)
         {
-            timer += Time.deltaTime;
-            if (timer >= timeBetwenShoot)
+            if (startCountTime)
             {
-                InstantiateBullet();
-                timer = 0;
+                timer += Time.deltaTime;
+                //ponemos la animacion de atacar
+                if (timer >= timeBetwenShoot - 1.6f)
+                {
+                    animator.SetBool("attack", true);
+                }
+
+                if (timer >= timeBetwenShoot)
+                {
+                    InstantiateBullet();
+                    timer = 0;
+                }
             }
         }
-       
+
+        else
+        {
+            timer += Time.deltaTime;
+            if(timer<=timeStun)
+            {
+                timer = 0;
+                stuned = false;
+                animator.SetBool("stun", false);
+                animator.SetBool("idle", true);
+            }
+        }
 		
 	}
 
@@ -91,7 +115,8 @@ public class SmallEnemy2 : MonoBehaviour {
             bullet = (GameObject)Instantiate(bulletSmallEnemy2, spawnBulletPointL.position, spawnBulletPointL.rotation);
         }
 
-        
+        animator.SetBool("idle", true);
+        animator.SetBool("attack", false);
 
        
     }
@@ -104,5 +129,15 @@ public class SmallEnemy2 : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
+    }
+
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag=="Attack")
+        {
+            animator.SetBool("stun", true);
+            stuned = true;
+        }
     }
 }
