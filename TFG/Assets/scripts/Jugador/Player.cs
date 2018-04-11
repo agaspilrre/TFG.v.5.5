@@ -203,7 +203,7 @@ public class Player : MonoBehaviour
             playerAnim.Fall(true);
         }
 
-        if(velocity.y==0 )
+        
 
         //modular peso en la caida
         //Debug.Log("la velocidad en y es:"+velocity.y);

@@ -139,7 +139,7 @@ public class SmallEnemy2 : MonoBehaviour {
     public void OnParticleCollision(GameObject collision)
     {
 
-        print("JODER");
+        
         animator.SetBool("idle", false);
         animator.SetBool("attack", false);
         animator.SetBool("stun", true);

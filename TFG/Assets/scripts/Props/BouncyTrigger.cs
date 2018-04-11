@@ -32,6 +32,8 @@ public class BouncyTrigger : MonoBehaviour {
     [SerializeField]
     float timeVibrationTrigger;
 
+    Collider2D colliderBouncy;
+
     Animator anim;
 
     void Start () {
@@ -42,6 +44,7 @@ public class BouncyTrigger : MonoBehaviour {
         poderes = GameObject.Find("Personaje").GetComponent<Poderes>();
         anim = GetComponent<Animator>();
         check = false;
+        colliderBouncy = GetComponent<Collider2D>();
      
 	}
 	
@@ -71,6 +74,12 @@ public class BouncyTrigger : MonoBehaviour {
             GamePad.SetVibration(0, quantityVibrationTrigger, quantityVibrationTrigger);
         }
 
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Impulsar") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            anim.SetBool("Impulse", false);
+            anim.SetBool("Idle", true);
+        }
+
         //if (timerJump >= timeVibrationTrigger)
         //{
         //    timerJump = 0;
@@ -85,7 +94,9 @@ public class BouncyTrigger : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             if (north)
-            {                
+            {
+                anim.SetBool("Impulse", true);
+                anim.SetBool("Idle", false);
                 ChangeGravity();
                 isJumping = true;
                 if (disapearCharacter)
@@ -96,6 +107,7 @@ public class BouncyTrigger : MonoBehaviour {
                 characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));
                 check = true;
                 characterCollider.enabled = false;
+                //anim.SetBool("Impulse", false);
             }
 
             /*else if (south)
@@ -116,10 +128,23 @@ public class BouncyTrigger : MonoBehaviour {
     }
 
 
-    private void OnParticleTrigger()
+    //private void OnParticleTrigger()
+    //{
+    //    print("entra");
+    //    anim.SetBool("Awake", true);
+    //}
+
+    public void OnParticleCollision(GameObject collision)
     {
         print("entra");
         anim.SetBool("Awake", true);
+        colliderBouncy.isTrigger = true;
+        Invoke("startIdle", 1);
+    }
+
+    void startIdle()
+    {
+        anim.SetBool("Idle", true);
     }
 
     void ChangeGravity()

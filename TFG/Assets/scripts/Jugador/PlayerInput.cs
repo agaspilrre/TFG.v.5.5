@@ -269,7 +269,7 @@ public class PlayerInput : MonoBehaviour
 
         //DUSH
 
-        if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1"))
+        if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1") && !player.getWallSliding())
         {
             isDashing = true;
 
