@@ -74,11 +74,11 @@ public class BouncyTrigger : MonoBehaviour {
             GamePad.SetVibration(0, quantityVibrationTrigger, quantityVibrationTrigger);
         }
 
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Impulsar") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-        {
-            anim.SetBool("Impulse", false);
-            anim.SetBool("Idle", true);
-        }
+        //if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Impulsar") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        //{
+        //    anim.SetBool("Impulse", false);
+        //    anim.SetBool("Idle", true);
+        //}
 
         //if (timerJump >= timeVibrationTrigger)
         //{
@@ -86,6 +86,18 @@ public class BouncyTrigger : MonoBehaviour {
         //    isJumping = false;
         //    GamePad.SetVibration(0, 0, 0);
         //}
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        anim.SetBool("Impulse", true);
+        anim.SetBool("Idle", false);
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        anim.SetBool("Impulse", false);
+        anim.SetBool("Idle", true);
     }
 
 
@@ -145,6 +157,7 @@ public class BouncyTrigger : MonoBehaviour {
     void startIdle()
     {
         anim.SetBool("Idle", true);
+        anim.SetBool("Awake", false);
     }
 
     void ChangeGravity()
