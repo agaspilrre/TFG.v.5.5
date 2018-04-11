@@ -138,26 +138,14 @@ public class SmallEnemy2 : MonoBehaviour {
 
     public void OnParticleCollision(GameObject collision)
     {
-<<<<<<< HEAD
-        if(collision.gameObject.tag=="Attack")
-        {
-            animator.SetBool("stun", true);
-            stuned = true;
-        }
 
-        if (collision.gameObject.tag == "Player")
-        {
-            collision.gameObject.GetComponent<lifeScript>().makeDamage(Damage);
-        }
-=======
-
-        
+        print("JODER");
         animator.SetBool("idle", false);
         animator.SetBool("attack", false);
         animator.SetBool("stun", true);
         stuned = true;
             
         
->>>>>>> rama2
+
     }
 }

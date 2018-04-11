@@ -243,7 +243,7 @@ public class Player : MonoBehaviour
             numeroSaltos = 1;
             //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKeyDown(KeyCode.Space))
             //{
-            playerAnim.WallJump(true);
+            //playerAnim.WallJump(true);
 
             if (wallDirX == directionalInput.x)
                 {
@@ -446,7 +446,7 @@ public class Player : MonoBehaviour
         wallSliding = false;
         if (( controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
         {
-            playerAnim.WallJump(true);
+            //playerAnim.WallJump(true);
             if (entraColisionPared)
             {               
                 timeToWallUnstick = wallStickTime;

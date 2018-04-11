@@ -129,9 +129,10 @@ public class lifeScript : MonoBehaviour {
 
 
     public void ResetBlur()
-    {        
-        life[lifeCount].SetActive(false);
-        lifeCount--;
+    {
+        //life[lifeCount].SetActive(false);
+        //lifeCount--;
+        makeDamage(1);
     }
     
     public void makeDamage(int damage)
