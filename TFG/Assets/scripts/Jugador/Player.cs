@@ -186,16 +186,27 @@ public class Player : MonoBehaviour
 
         //}
 
-        //modular peso en la caida
-        //Debug.Log("la velocidad en y es:"+velocity.y);
+        
 
-
+        //anular un salto si salimos de walljump o caemos
         if (velocity.y<-5 && !wallSliding && numeroSaltos==0)
         {
             numeroSaltos++;
           
             multiplicadorSalto = 1;
         }
+
+        //activa la animacion de caer cuando no tenemos saltos y caemos
+        //la animacion se desactiva en el metodo donde se desactivan todas las animaciones playeranim
+        if (velocity.y < -5 && !wallSliding && numeroSaltos >= 1)
+        {
+            playerAnim.Fall(true);
+        }
+
+        if(velocity.y==0 )
+
+        //modular peso en la caida
+        //Debug.Log("la velocidad en y es:"+velocity.y);
         if (velocity.y <= 0 && velocity.y >= -100)
         {
             //Debug.Log("la velocidad en y es:" + velocity.y);

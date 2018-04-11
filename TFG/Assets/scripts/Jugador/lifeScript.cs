@@ -162,6 +162,7 @@ public class lifeScript : MonoBehaviour {
                 }
             }
 
+            playerAnim.Hurt(true);
             for (int i = 0; i < damage && lifeCount >= 0; i++)
             {
                 life[lifeCount].SetActive(false);

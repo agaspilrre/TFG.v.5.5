@@ -200,8 +200,11 @@ public class PlayerInput : MonoBehaviour
             stopTime = 0;
             moving = PlayerMoving.yes;
             //si nos movemos se activan las animaciones 
-            playerAnim.WallJump(false);
+            if(!player.getWallSliding())
+                playerAnim.WallJump(false);
             playerAnim.IdlToRun();
+
+            
             
         }
 
@@ -214,7 +217,8 @@ public class PlayerInput : MonoBehaviour
             if (stopTime >= 0.1f)
             {
                 moving = PlayerMoving.no;
-                playerAnim.WallJump(false);
+                if (!player.getWallSliding())
+                    playerAnim.WallJump(false);
                 playerAnim.RunToIdl();
                 
             }
