@@ -28,6 +28,8 @@ public class PlayerInput : MonoBehaviour
     float stopTime = 0;
     // UnityEditor.AnimationClipSettings settings;
 
+    bool isJumpingVibr;
+
     bool isJumping;
     float timerJump;
 
@@ -102,7 +104,7 @@ public class PlayerInput : MonoBehaviour
     {
         //VIBRACION SALTO
 
-        if (isJumping)
+        if (isJumpingVibr)
         {
             timerJump++;
             GamePad.SetVibration(0, quantityVibrationJump, quantityVibrationJump);
@@ -111,7 +113,7 @@ public class PlayerInput : MonoBehaviour
         if (timerJump >= timeVibrationJump)
         {
             timerJump = 0;
-            isJumping = false;
+            isJumpingVibr = false;
             GamePad.SetVibration(0, 0, 0);
         }
 
@@ -286,12 +288,12 @@ public class PlayerInput : MonoBehaviour
                     //de correr a dash
                     playerAnim.runToDash();
                 }
-                //if (player.getIsJumping())
-                //    playerAnim.jumpToDash();
+                if (isJumping)
+                    playerAnim.jumpToDash();
             }
             else
             {
-                playerAnim.jumpToRun();
+                playerAnim.jumpToRun();                
             }
 
             //else
@@ -357,6 +359,11 @@ public class PlayerInput : MonoBehaviour
     public bool getIsJumping()
     {
         return isJumping;
+    }
+
+    public void setIsJumping(bool value)
+    {
+        isJumping = value;
     }
 
 }

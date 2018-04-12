@@ -21,6 +21,8 @@ public class lifeScript : MonoBehaviour {
 
     Player playerScript;
 
+    PlayerInput inputScript;
+
     bool shake;
     float timer;
 
@@ -64,6 +66,10 @@ public class lifeScript : MonoBehaviour {
 
     public float timeExpire;
 
+    public float timeToGameOver;
+
+    public float timeToStopMovement;
+
     // Use this for initialization
     void Start () {
 
@@ -86,6 +92,7 @@ public class lifeScript : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
 
         playerScript = GetComponent<Player>();
+        inputScript = GetComponent<PlayerInput>();
 
         playerAnim = GetComponent<PlayerAnim>();
     }
@@ -143,23 +150,13 @@ public class lifeScript : MonoBehaviour {
             if (playerScript.getDireccion() == 1)
             {
                 playerScript.enabled = false;
-                rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
-
-                if (lifeCount <= 0)
-                {
-                    Invoke("ExecuteDeath", timeExpire);
-                }               
+                rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);       
             }
 
             else if (playerScript.getDireccion() == -1)
             {
                 playerScript.enabled = false;
-                rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
-
-                if (lifeCount <= 0)
-                {
-                    Invoke("ExecuteDeath", timeExpire);
-                }
+                rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);                
             }
 
             playerAnim.Hurt(true);
@@ -176,8 +173,11 @@ public class lifeScript : MonoBehaviour {
        
         if (lifeCount < 0)
         {
-            //cargar gameover o lo que proceda            
-            Invoke("DoGameOver", 3);        
+
+            //cargar gameover o lo que proceda 
+            Invoke("StopMovement", timeToStopMovement);
+            Invoke("ExecuteDeath", timeExpire);
+            Invoke("DoGameOver", timeToGameOver);        
         }
     }
 
@@ -185,8 +185,13 @@ public class lifeScript : MonoBehaviour {
     {
         particles1.SetActive(false);
         particles2.SetActive(false);
-        playerScript.setPermitido(false);
+        
         playerAnim.death();
+    }
+
+    void StopMovement()
+    {
+        inputScript.enabled = false;
     }
 
     void DoGameOver()

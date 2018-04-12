@@ -424,6 +424,7 @@ public class Player : MonoBehaviour
             else
             {
                 playerAnim.JumpToIdl();
+                input.setIsJumping(false);
                 //playerAnim.DashToIdl();
             }
 

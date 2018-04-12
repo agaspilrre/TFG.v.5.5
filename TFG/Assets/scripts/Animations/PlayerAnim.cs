@@ -133,6 +133,7 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("dashToIdl", false);
         animator.SetBool("idlToJump", false);
         animator.SetBool("jumpToIdl", false);
+        animator.SetBool("jumpToDash", false);
         animator.SetBool("runToJump", false);
         animator.SetBool("jumpToRun", false);
         animator.SetBool("runToDash", false);
