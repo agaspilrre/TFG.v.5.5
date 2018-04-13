@@ -233,7 +233,7 @@ public class PlayerInput : MonoBehaviour
         player.SetDirectionalInput(directionalInput);
 
         //SALTO  
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("AButton"))
         {
             if (!basicAttack.isCharging)
             {
@@ -254,7 +254,7 @@ public class PlayerInput : MonoBehaviour
             }
 
         }
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("PS4_X"))
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("AButton"))
         {
             player.OnJumpInputUp();
             //playerAnim.idlToJump();
@@ -271,7 +271,7 @@ public class PlayerInput : MonoBehaviour
 
         //DUSH
 
-        if (Input.GetButtonUp("Dash") || Input.GetButtonDown("PS4_L1") && !player.getWallSliding())
+        if (Input.GetButtonUp("Dash") || Input.GetButtonDown("LBButton") && !player.getWallSliding())
         {
             isDashing = true;
 
@@ -302,15 +302,15 @@ public class PlayerInput : MonoBehaviour
             //}
         }
 
-        if ((Input.GetButton("PS4_O") || Input.GetKey(KeyCode.Y)) && pressed == false)
+        if ((Input.GetButton("BButton") || Input.GetKey(KeyCode.Y)) && pressed == false)
         {
             timer += Time.deltaTime;            
         }
 
-        if ((Input.GetButtonUp("PS4_O") || Input.GetKeyUp(KeyCode.Y)) && pressed == false)
+        if ((Input.GetButtonUp("BButton") || Input.GetKeyUp(KeyCode.Y)) && pressed == false)
             timer = 0;
 
-        if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("PS4_Square"))
+        if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("XButton"))
         {
             basicAttack.Charge();
         }
@@ -321,7 +321,7 @@ public class PlayerInput : MonoBehaviour
             basicAttack.direction = new Vector2(basicAttack.direction.x, 0);
         }
 
-        if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("PS4_Square"))
+        if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("XButton"))
         {
             // Vector2 aux = Mathf.Abs(directionalInput.x) > Mathf.Abs(directionalInput.y) ? new Vector2(directionalInput.x, 0) : new Vector2(0, directionalInput.y);
             Vector2 aux = new Vector2(directionalInput.x, directionalInput.y);

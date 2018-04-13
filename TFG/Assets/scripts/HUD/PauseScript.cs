@@ -33,7 +33,7 @@ public class PauseScript : MonoBehaviour {
 
         if (!gameManager.getGameOverState())
         {
-            if (Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4_Options"))
+            if (Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("StartButton"))
             {
                 pausa = !pausa;
             }
