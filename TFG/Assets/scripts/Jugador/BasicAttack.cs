@@ -58,10 +58,9 @@ public class BasicAttack : MonoBehaviour {
     }
 
     public void StopCharging(Vector3 direction)
-    {
-        if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse)
+    {       
+        if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse && isCharging)
         {
-
             isCharging = false;
             directionObject.SetActive(false);
             player.speedAttacking = 1;
@@ -71,11 +70,12 @@ public class BasicAttack : MonoBehaviour {
 
     public void Charge()
     {
+        print(isAttacking);print(playerInput.getIsJumping());print(poderes.dashUse);
         if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse)
         {
+            print("ssssss");
             isCharging = true;
             player.speedAttacking = decreaseSpeed;
-            //player.decreeseSpeed = 0.75f;
             directionObject.SetActive(true); 
         }
     }

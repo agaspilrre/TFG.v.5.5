@@ -15,6 +15,8 @@ public class lifeScript : MonoBehaviour {
 
     CameraShake cameraShake;
 
+    CameraController cameraController;
+
     SpriteRenderer spriteRenderer;
 
     GameManager gameManager;
@@ -81,6 +83,7 @@ public class lifeScript : MonoBehaviour {
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         cameraShake = Camera.main.GetComponent<CameraShake>();
+        cameraController = Camera.main.GetComponent<CameraController>();
 
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
@@ -173,6 +176,9 @@ public class lifeScript : MonoBehaviour {
        
         if (lifeCount < 0)
         {
+
+            //congelar camara
+            cameraController.SetCameraState("Camera/BlockBoth");
 
             //cargar gameover o lo que proceda 
             Invoke("StopMovement", timeToStopMovement);

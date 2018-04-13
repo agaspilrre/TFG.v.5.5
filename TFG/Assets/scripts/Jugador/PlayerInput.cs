@@ -30,7 +30,7 @@ public class PlayerInput : MonoBehaviour
 
     bool isJumpingVibr;
 
-    bool isJumping;
+    public bool isJumping;
     float timerJump;
 
     [SerializeField]
@@ -315,10 +315,19 @@ public class PlayerInput : MonoBehaviour
             basicAttack.Charge();
         }
 
-        basicAttack.direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector2 basicAttackDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        
         if (Input.GetAxis("Vertical") < 0)
         {
             basicAttack.direction = new Vector2(basicAttack.direction.x, 0);
+        }
+        else if(basicAttackDirection == Vector2.zero)
+        {
+            //basicAttack.direction = 
+        }
+        else
+        {
+            basicAttack.direction = basicAttackDirection;
         }
 
         if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("XButton"))

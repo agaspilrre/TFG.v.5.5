@@ -40,8 +40,12 @@ public class Poderes : MonoBehaviour
     enum Shades { ELECTRIC, SHADOW }
     Shades playerState;
 
-    //para cargar los sprites dependiendo en que estado estemos
+    /// <summary>
+    /// Almacena los sprites dependiendo en que estado estemos
+    /// </summary>
     public Sprite ElectricShade;
+
+
     public Sprite ShadowShade;
 
     SpriteRenderer sr;
@@ -269,7 +273,11 @@ public class Poderes : MonoBehaviour
         return cambioPersonalidad;
     }
 
-    //funcion para cambiar de personalidad. se hace funcion porque no solo se activa con el boton R si no que hay trigger que lo cambian automaticamente
+    
+    /// <summary>
+    /// Método para cambiar de personalidad. 
+    /// Se hace funcion porque no solo se activa con el boton R si no que hay trigger que lo cambian automaticamente
+    /// </summary>
     public void personalityChange()
     {
 

@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public float minJumpHeight = 1;
     public float timeToJumpApex = .4f;
     float accelerationTimeAirborne = .2f;
-    float accelerationTimeGrounded = .1f;
+    public float accelerationTimeGrounded = .1f;
     public float moveSpeed = 6;
     public float runSpeed;
     public float decreeseSpeed;
@@ -354,6 +354,7 @@ public class Player : MonoBehaviour
             poderesScript.SetDashUse(true);
             permitido = true;
             //isJumping = false;
+            input.isJumping = false;
             velocity = new Vector3(0, 0, 0);
 
             if (Input.GetAxisRaw("Horizontal") != 0)
@@ -504,6 +505,7 @@ public class Player : MonoBehaviour
         else
         {
             velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+            //velocity.x = targetVelocityX;
         }
 
         
