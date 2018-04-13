@@ -70,7 +70,6 @@ public class BasicAttack : MonoBehaviour {
 
     public void Charge()
     {
-        print(isAttacking);print(playerInput.getIsJumping());print(poderes.dashUse);
         if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse)
         {
             print("ssssss");

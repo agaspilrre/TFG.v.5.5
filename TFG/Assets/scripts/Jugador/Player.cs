@@ -59,7 +59,8 @@ public class Player : MonoBehaviour
     private float slowSpeed;
     //variable para modular peso en la caida
     public float fallWeight;
-    
+
+    bool wallJump;
 
     bool canSecondJump;
     public bool enableDoubleJump;
@@ -247,30 +248,27 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputDown()
     {
-        if (wallSliding) //&& staminaBar.slider.value > 0)
+        if (wallSliding || wallJump)
         {       
-            //staminaBar.isWallJumping = true;
-            //para quitar el salto extra que hay al hacer walljumping
             numeroSaltos = 1;
-            //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKeyDown(KeyCode.Space))
-            //{
+
             playerAnim.WallJump(true);
 
             if (wallDirX == directionalInput.x)
-                {
-                    velocity.x = -wallDirX * wallJumpClimb.x;
-                    velocity.y = wallJumpClimb.y;
-                }
-                else if (directionalInput.x == 0)
-                {
-                    velocity.x = -wallDirX * wallJumpClimb.x;
-                    velocity.y = wallJumpClimb.y;
-                }
-                else
-                {
-                    velocity.x = -wallDirX * wallLeap.x;
-                    velocity.y = wallLeap.y;
-                }
+            {
+                velocity.x = -wallDirX * wallJumpClimb.x;
+                velocity.y = wallJumpClimb.y;
+            }
+            else if (directionalInput.x == 0)
+            {
+                velocity.x = -wallDirX * wallJumpClimb.x;
+                velocity.y = wallJumpClimb.y;
+            }
+            else
+            {
+                velocity.x = -wallDirX * wallLeap.x;
+                velocity.y = wallLeap.y;
+            }
             //}
             
         }
@@ -433,7 +431,11 @@ public class Player : MonoBehaviour
             canSecondJump = false;
             entraColisionPared = true;
         }
-
+        else if(coll.tag == "WallJump")
+        {
+            wallJump = true;
+        }
+        else 
         if (coll.tag == "PowerUp")
         {
             Destroy(coll.gameObject);
@@ -449,8 +451,13 @@ public class Player : MonoBehaviour
 
     }
 
-
-
+    private void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.tag == "WallJump")
+        {
+            wallJump = false;
+        }
+    }
 
     void HandleWallSliding()
     {
