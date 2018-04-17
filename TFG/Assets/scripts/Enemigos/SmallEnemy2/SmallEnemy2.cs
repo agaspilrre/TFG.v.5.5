@@ -38,21 +38,22 @@ public class SmallEnemy2 : MonoBehaviour {
 
         StartCoroutine(StartCount());
         animator = GetComponent<Animator>();
+        animator.SetBool("idle", true);
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if(!stuned)
+        if (!stuned && animator.GetBool("attack"))
         {
             if (startCountTime)
             {
                 timer += Time.deltaTime;
-                //ponemos la animacion de atacar
-                if (timer >= timeBetwenShoot - 1.8f)
-                {
-                    animator.SetBool("attack", true);
-                }
+                ////ponemos la animacion de atacar
+                //if (timer >= timeBetwenShoot - 1.8f)
+                //{
+                //    animator.SetBool("attack", true);
+                //}
 
                 if (timer >= timeBetwenShoot)
                 {
@@ -65,16 +66,24 @@ public class SmallEnemy2 : MonoBehaviour {
         else
         {
             timer += Time.deltaTime;
-            if(timer>=timeStun)
+            if (timer >= timeStun)
             {
                 timer = 0;
                 stuned = false;
                 animator.SetBool("stun", false);
-                animator.SetBool("attack", true);
+                if (TriggerRecon.instance.isIn)
+                {
+                    animator.SetBool("attack", true);
+                }
+                else
+                {
+                    animator.SetBool("idle", true);
+                }
+                
             }
         }
-		
-	}
+
+    }
 
     IEnumerator StartCount()
     {
@@ -115,12 +124,7 @@ public class SmallEnemy2 : MonoBehaviour {
         {
             bulletSmallEnemy2.GetComponent<bulletSE2>().setLeftShoot(true);
             bullet = (GameObject)Instantiate(bulletSmallEnemy2, spawnBulletPointL.position, spawnBulletPointL.rotation);
-        }
-
-        animator.SetBool("idle", true);
-        animator.SetBool("attack", false);
-
-       
+        }        
     }
 
     public void EnemyMakeDamage(int _damage)
@@ -133,19 +137,11 @@ public class SmallEnemy2 : MonoBehaviour {
 
     }
 
-    
-
-
     public void OnParticleCollision(GameObject collision)
-    {
-
-        
+    {        
         animator.SetBool("idle", false);
         animator.SetBool("attack", false);
         animator.SetBool("stun", true);
         stuned = true;
-            
-        
-
     }
 }
