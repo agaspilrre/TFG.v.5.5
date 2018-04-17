@@ -367,7 +367,7 @@ public class Player : MonoBehaviour
                
             numeroSaltos = 0;
             canSecondJump = false;
-            entraColisionPared = true;
+            entraColisionPared = true;           
         }        
 
         if (coll.collider.name == "Platform")
