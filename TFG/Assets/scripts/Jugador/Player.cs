@@ -269,8 +269,7 @@ public class Player : MonoBehaviour
                 velocity.x = -wallDirX * wallLeap.x;
                 velocity.y = wallLeap.y;
             }
-            //}
-            
+            //}           
         }
         else
         {
@@ -278,10 +277,10 @@ public class Player : MonoBehaviour
             {
                 numeroSaltos++;
                 multiplicadorSalto = 1;
-                velocity.y = maxJumpVelocity * multiplicadorSalto;
+                velocity.y = maxJumpVelocity * multiplicadorSalto;               
             }
             else if (2 > numeroSaltos && enableDoubleJump) // && staminaBar.slider.value > 0)
-            {
+            {               
                 numeroSaltos++;
                 multiplicadorSalto = savedMultiplicadorSaltos;
                 velocity.y = maxJumpVelocity * multiplicadorSalto;

@@ -98,6 +98,12 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("death", true);
     }
 
+    public void DoubleJump()
+    {
+        setFalseAllAnimations();
+        animator.SetBool("doubleJump", true);
+    }
+
     //PASAR A FALSO
 
 
@@ -138,6 +144,7 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("jumpToRun", false);
         animator.SetBool("runToDash", false);
         animator.SetBool("dashToRun", false);
+        animator.SetBool("doubleJump", false);
         //animator.SetBool("wallJump", false);
         Fall(false);
         Hurt(false);

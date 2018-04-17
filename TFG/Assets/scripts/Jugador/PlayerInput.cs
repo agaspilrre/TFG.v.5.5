@@ -253,10 +253,17 @@ public class PlayerInput : MonoBehaviour
                 //playerAnim.idlToJump();
             }
 
+            
+
         }
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("AButton"))
         {
             player.OnJumpInputUp();
+            if (player.getNumSaltos() == 2  && anim.GetCurrentAnimatorStateInfo(0).IsName("jump"))
+            {
+                playerAnim.DoubleJump();
+            }
+
             //playerAnim.idlToJump();
         }
 
