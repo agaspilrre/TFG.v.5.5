@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scennes/TheDoubt 1.unity
+- path: Assets/Ferr/2DTerrain/Examples/5 - ExampleRuntimeEdit.unity
   isLoaded: 1
   isActive: 1
