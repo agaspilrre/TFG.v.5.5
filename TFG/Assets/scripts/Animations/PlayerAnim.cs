@@ -17,7 +17,11 @@ public class PlayerAnim : MonoBehaviour {
         initialSpeedAnimator = animator.speed;
     }
 	
-	
+	public Animator GetAnimator()
+    {
+        return animator;
+    }
+
     public void setAnimatorSpeed(float _speed)
     {
         animator.speed = _speed;

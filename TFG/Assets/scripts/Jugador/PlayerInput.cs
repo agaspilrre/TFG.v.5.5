@@ -382,4 +382,9 @@ public class PlayerInput : MonoBehaviour
         isJumping = value;
     }
 
+    public void setVibrationJump(bool value)
+    {
+        isJumpingVibr = value;
+    }
+
 }

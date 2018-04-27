@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
     public bool enableDoubleJump;
 
     Rigidbody2D rb;
-    
+    CameraShake shake;
 
     void Start()
     {
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
         staminaBar = GetComponent<HabilityBar>();
         //isJumping = false;
         speedAttacking = 1;
-       
+        shake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShake>();
         numeroSaltos = 0;
         //guardamos la velocidad normal del player en una variable
         normalSpeed = moveSpeed;
@@ -111,6 +111,8 @@ public class Player : MonoBehaviour
     {
         CalculateVelocity();
         HandleWallSliding();
+
+        
 
         //habilidad de correr
         /*
@@ -363,6 +365,13 @@ public class Player : MonoBehaviour
             {
                 playerAnim.JumpToIdl();
                 //playerAnim.DashToIdl();
+            }
+
+            if(numeroSaltos == 1 || numeroSaltos == 2 && !wallJump && !wallSliding)
+            {
+                print("hola");
+                shake.Shake(0.2f);
+                input.setVibrationJump(true);
             }
                
             numeroSaltos = 0;
