@@ -370,7 +370,7 @@ public class Player : MonoBehaviour
             if(numeroSaltos == 1 || numeroSaltos == 2 && !wallJump && !wallSliding)
             {
                 print("hola");
-                shake.Shake(0.2f);
+                //shake.Shake(0.2f);
                 input.setVibrationJump(true);
             }
                
