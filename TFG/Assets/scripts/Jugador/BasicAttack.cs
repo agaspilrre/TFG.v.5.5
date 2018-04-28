@@ -57,14 +57,14 @@ public class BasicAttack : MonoBehaviour {
         }
     }
 
-    public void StopCharging(Vector3 direction)
+    public void StopCharging()
     {       
         if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse && isCharging)
         {
             isCharging = false;
             directionObject.SetActive(false);
             player.speedAttacking = 1;
-            Attack(direction);
+            Attack();
         }
     }
 
@@ -72,17 +72,17 @@ public class BasicAttack : MonoBehaviour {
     {
         if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse)
         {
-            print("ssssss");
             isCharging = true;
             player.speedAttacking = decreaseSpeed;
             directionObject.SetActive(true); 
         }
     }
    
-    public void Attack(Vector3 direction)
+    public void Attack()
     {
         if(!isAttacking)
         {
+            print(direction);
             prueba = Instantiate(basicAttack, playerTransform.position, Quaternion.identity);
             prueba.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
             Invoke("StopAttack", lifeSeconds);
