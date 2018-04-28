@@ -367,9 +367,9 @@ public class Player : MonoBehaviour
                 //playerAnim.DashToIdl();
             }
 
-            if(numeroSaltos == 1 || numeroSaltos == 2 && !wallJump && !wallSliding)
+            if(numeroSaltos == 1 || numeroSaltos == 2)
             {
-                print("hola");
+
                 //shake.Shake(0.2f);
                 input.setVibrationJump(true);
             }

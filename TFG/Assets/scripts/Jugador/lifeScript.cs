@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
-
-
 public class lifeScript : MonoBehaviour {
 
     public GameObject[] life = new GameObject[4];
@@ -27,6 +25,7 @@ public class lifeScript : MonoBehaviour {
 
     bool shake;
     float timer;
+    float timerStop;
 
     [SerializeField]
     float timeVibration;
@@ -72,12 +71,17 @@ public class lifeScript : MonoBehaviour {
 
     public float timeToStopMovement;
 
+    public float timeStopAllActions;
+
+    bool hurting;
+
     // Use this for initialization
     void Start () {
 
         invulnerable = false;
         invulnerableCount = 0;
         shake = false;
+        hurting = false;
 
         if(GameObject.Find("GameManager") != null)
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -106,12 +110,28 @@ public class lifeScript : MonoBehaviour {
         if (rb.velocity.y <= decrementImpulse)
         {
             playerScript.enabled = true;
+            inputScript.enabled = true;
         }       
         
         if (shake)
         {
-            timer++;
+            timer += Time.deltaTime;
             GamePad.SetVibration(0, quantityVibration, quantityVibration);            
+        }
+
+        if (hurting)
+        {
+            timerStop += Time.deltaTime;
+            //playerScript.enabled = false;
+            inputScript.enabled = false;
+        }
+
+        if(timerStop >= timeStopAllActions)
+        {
+            timerStop = 0;
+            hurting = false;
+            //playerScript.enabled = true;
+            inputScript.enabled = true;
         }
 
         if (timer >= timeVibration)
@@ -150,15 +170,20 @@ public class lifeScript : MonoBehaviour {
         //solo hacemos daño si no estamos en estado invulnerable
         if (!invulnerable)
         {
+            hurting = true;
+            shake = true;
+
             if (playerScript.getDireccion() == 1)
             {
                 playerScript.enabled = false;
+                inputScript.enabled = false;
                 rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);       
             }
 
             else if (playerScript.getDireccion() == -1)
             {
                 playerScript.enabled = false;
+                inputScript.enabled = false;
                 rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);                
             }
 
@@ -169,7 +194,7 @@ public class lifeScript : MonoBehaviour {
                 lifeCount--;
                 StartCoroutine("InvulnerableColor");
                 cameraShake.Shake();
-                shake = true;
+                
             }
             invulnerable = true;
         }

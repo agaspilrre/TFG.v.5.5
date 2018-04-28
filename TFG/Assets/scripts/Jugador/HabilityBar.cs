@@ -26,8 +26,8 @@ public class HabilityBar : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-            loseSquare();
+        //if (Input.GetMouseButtonDown(0))
+        //    loseSquare();
 
 
         if (!energySquares[0].activeSelf && !energySquares[1].activeSelf && !energySquares[2].activeSelf && !energySquares[3].activeSelf)

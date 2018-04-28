@@ -71,6 +71,7 @@ public class Poderes : MonoBehaviour
 
     HabilityBar staminaBar;
     BasicAttack basicAttack;
+    PlayerInput input;
 
     // Use this for initialization
     void Start()
@@ -81,6 +82,7 @@ public class Poderes : MonoBehaviour
         velocidadElectroDash = distanciaElectroDash / duracionElectroDash;
         //referencia al protagonista
         personajeMovimiento = GetComponent<Player>();
+        input = GetComponent<PlayerInput>();
         //referencia al personaje
         personajeRB = GetComponent<Rigidbody2D>();
         //guarda la escala 
@@ -193,6 +195,8 @@ public class Poderes : MonoBehaviour
         Invoke("dashPermitido", duracionDash);
 
         basicAttack.CancelAttack();
+
+        input.setVibrationDash(true);
     }
 
     public void CancelInvokes()

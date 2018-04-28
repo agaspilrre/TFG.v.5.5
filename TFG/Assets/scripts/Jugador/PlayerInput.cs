@@ -280,8 +280,6 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetButtonUp("Dash") || Input.GetButtonDown("LBButton") && !player.getWallSliding())
         {
-            isDashing = true;
-
             poderes.checkDush();
             if (!staminaBar.isBarEmpty())
             {
@@ -385,6 +383,11 @@ public class PlayerInput : MonoBehaviour
     public void setVibrationJump(bool value)
     {
         isJumpingVibr = value;
+    }
+
+    public void setVibrationDash(bool value)
+    {
+        isDashing = value;
     }
 
 }
