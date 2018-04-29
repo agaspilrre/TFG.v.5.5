@@ -69,7 +69,7 @@ public class lifeScript : MonoBehaviour {
 
     public float timeToGameOver;
 
-    public float timeToStopMovement;
+    public float timeToStopGravity;
 
     public float timeStopAllActions;
 
@@ -107,7 +107,7 @@ public class lifeScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (rb.velocity.y <= decrementImpulse)
+        if (rb.velocity.y <= decrementImpulse && lifeCount >= 0)
         {
             playerScript.enabled = true;
             inputScript.enabled = true;
@@ -119,14 +119,14 @@ public class lifeScript : MonoBehaviour {
             GamePad.SetVibration(0, quantityVibration, quantityVibration);            
         }
 
-        if (hurting)
+        if (hurting && lifeCount >= 0)
         {
             timerStop += Time.deltaTime;
             //playerScript.enabled = false;
             inputScript.enabled = false;
         }
 
-        if(timerStop >= timeStopAllActions)
+        if(timerStop >= timeStopAllActions && lifeCount >= 0)
         {
             timerStop = 0;
             hurting = false;
@@ -206,7 +206,7 @@ public class lifeScript : MonoBehaviour {
             cameraController.SetCameraState("Camera/BlockBoth");
 
             //cargar gameover o lo que proceda 
-            Invoke("StopMovement", timeToStopMovement);
+            Invoke("StopMovement", timeToStopGravity);
             Invoke("ExecuteDeath", timeExpire);
             Invoke("DoGameOver", timeToGameOver);        
         }
@@ -221,7 +221,8 @@ public class lifeScript : MonoBehaviour {
     }
 
     void StopMovement()
-    {
+    {        
+        playerScript.enabled = false;
         inputScript.enabled = false;
     }
 
