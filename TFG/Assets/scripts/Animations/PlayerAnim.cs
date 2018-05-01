@@ -121,6 +121,11 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("wallJump", boolean);
     }
 
+    public void Attack(bool boolean)
+    {
+        animator.SetBool("Attacking", boolean);
+    }
+
     public void WallToRun(bool boolean)
     {
         animator.SetBool("walToRun", boolean);

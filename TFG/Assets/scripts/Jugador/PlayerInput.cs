@@ -73,6 +73,9 @@ public class PlayerInput : MonoBehaviour
     float timer;
     bool pressed;
 
+    public GameObject brazo1;
+    public GameObject brazo2;
+
     CameraShake shake;
 
     [SerializeField]
@@ -317,6 +320,9 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("XButton"))
         {
+            brazo1.SetActive(true);
+            brazo2.SetActive(true);
+            playerAnim.Attack(true);
             basicAttack.Charge();
         }
 
@@ -334,10 +340,12 @@ public class PlayerInput : MonoBehaviour
         {
             basicAttack.direction = basicAttackDirection.normalized;
         }
-        print(basicAttack.direction.normalized);
         if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("XButton"))
         {
             basicAttack.StopCharging();
+            brazo1.SetActive(false);
+            brazo2.SetActive(false);
+            playerAnim.Attack(false);
         }
 
         //Voltear personaje.

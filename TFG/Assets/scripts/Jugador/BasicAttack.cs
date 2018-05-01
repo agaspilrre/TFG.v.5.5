@@ -82,7 +82,6 @@ public class BasicAttack : MonoBehaviour {
     {
         if(!isAttacking)
         {
-            print(direction);
             prueba = Instantiate(basicAttack, playerTransform.position, Quaternion.identity);
             prueba.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
             Invoke("StopAttack", lifeSeconds);
