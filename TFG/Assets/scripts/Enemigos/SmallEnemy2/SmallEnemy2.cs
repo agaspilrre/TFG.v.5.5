@@ -71,7 +71,7 @@ public class SmallEnemy2 : MonoBehaviour {
                 timer = 0;
                 stuned = false;
                 animator.SetBool("stun", false);
-                if (TriggerRecon.instance.isIn)
+                if (TriggerRecon.instance.isIn && stuned == false)
                 {
                     animator.SetBool("attack", true);
                 }

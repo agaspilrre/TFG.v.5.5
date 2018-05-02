@@ -173,18 +173,18 @@ public class lifeScript : MonoBehaviour {
             hurting = true;
             shake = true;
 
-            if (playerScript.getDireccion() == 1)
+            if (playerScript.getDireccion() == 1 && lifeCount >= 0)
             {
-                playerScript.enabled = false;
+                //playerScript.enabled = false;
                 inputScript.enabled = false;
-                rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);       
+                rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
             }
 
-            else if (playerScript.getDireccion() == -1)
+            else if (playerScript.getDireccion() == -1 && lifeCount >= 0)
             {
-                playerScript.enabled = false;
+                //playerScript.enabled = false;
                 inputScript.enabled = false;
-                rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);                
+                rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
             }
 
             playerAnim.Hurt(true);
@@ -201,14 +201,13 @@ public class lifeScript : MonoBehaviour {
        
         if (lifeCount < 0)
         {
-
             //congelar camara
             cameraController.SetCameraState("Camera/BlockBoth");
 
             //cargar gameover o lo que proceda 
             Invoke("StopMovement", timeToStopGravity);
             Invoke("ExecuteDeath", timeExpire);
-            Invoke("DoGameOver", timeToGameOver);        
+            Invoke("DoGameOver", timeToGameOver);
         }
     }
 
