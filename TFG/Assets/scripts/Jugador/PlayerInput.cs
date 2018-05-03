@@ -32,6 +32,7 @@ public class PlayerInput : MonoBehaviour
 
     public bool isJumping;
     float timerJump;
+    float playerTransformX;
 
     [SerializeField]
     [Header("Jump Vibration Settings")]
@@ -202,11 +203,22 @@ public class PlayerInput : MonoBehaviour
         //para activar las animaciones en caso de que nos movamos
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
+           
+
+            if (player.getWallSliding())
+            {
+                 playerTransformX = this.transform.position.x;
+            }
             stopTime = 0;
             moving = PlayerMoving.yes;
             //si nos movemos se activan las animaciones 
-            if(!player.getWallSliding())
+            
+
+            //condicion q comprueba el transform en x para solventar el problema que existia con el walljump 
+            //en las esquinas se alternavan las animaciones de correr y walljump con esta condicion lo solventams
+            if(!player.getWallSliding()&& playerTransformX!=0 && Mathf.Abs(this.transform.position.x-playerTransformX)>0.1f)
                 playerAnim.WallJump(false);
+
             playerAnim.IdlToRun();
 
             
@@ -222,8 +234,8 @@ public class PlayerInput : MonoBehaviour
             if (stopTime >= 0.1f)
             {
                 moving = PlayerMoving.no;
-                if (!player.getWallSliding())
-                    playerAnim.WallJump(false);
+                //if (!player.getWallSliding())
+                //    playerAnim.WallJump(false);
                 playerAnim.RunToIdl();
                 
             }
