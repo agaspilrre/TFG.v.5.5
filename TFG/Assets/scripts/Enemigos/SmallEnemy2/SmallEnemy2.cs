@@ -25,20 +25,24 @@ public class SmallEnemy2 : MonoBehaviour {
     private GameObject bullet;
     public float timeBetwenShoot;
     private float timer;
+    private float timerStund;
+    public float AJUSTE_ANIMACION_CON_TIEMPO_DE_DISPARO;
     public int life;
 
     bool startCountTime;
-    public float TimeToStart;
+    //public float TimeToStart;
     Animator animator;
 
-    public int Damage;
+    //public int Damage;
 
     // Use this for initialization
     void Start () {
 
-        StartCoroutine(StartCount());
+        //StartCoroutine(StartCount());
         animator = GetComponent<Animator>();
         animator.SetBool("idle", true);
+        //para que la animacion se ajuste al tiempo entre disparos de cada enemigo
+        animator.SetFloat("SpeedMultiplier", timeBetwenShoot+AJUSTE_ANIMACION_CON_TIEMPO_DE_DISPARO);
     }
 	
 	// Update is called once per frame
@@ -46,8 +50,8 @@ public class SmallEnemy2 : MonoBehaviour {
 
         if (!stuned && animator.GetBool("attack"))
         {
-            if (startCountTime)
-            {
+            //if (startCountTime)
+            //{
                 timer += Time.deltaTime;
                 ////ponemos la animacion de atacar
                 //if (timer >= timeBetwenShoot - 1.8f)
@@ -60,15 +64,16 @@ public class SmallEnemy2 : MonoBehaviour {
                     InstantiateBullet();
                     timer = 0;
                 }
-            }
+           // }
         }
 
         else
         {
-            timer += Time.deltaTime;
-            if (timer >= timeStun)
+            timer = 0;
+            timerStund += Time.deltaTime;
+            if (timerStund >= timeStun)
             {
-                timer = 0;
+                timerStund = 0;
                 stuned = false;
                 animator.SetBool("stun", false);
                 if (TriggerRecon.instance.isIn && stuned == false)
@@ -85,13 +90,13 @@ public class SmallEnemy2 : MonoBehaviour {
 
     }
 
-    IEnumerator StartCount()
-    {
+    //IEnumerator StartCount()
+    //{
         
-        yield return new WaitForSeconds(TimeToStart);
-        startCountTime = true;
+    //    yield return new WaitForSeconds(TimeToStart);
+    //    startCountTime = true;
        
-    }
+    //}
 
     public void InstantiateBullet()
     {
