@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR EL COMPORTAMIENTO DEL ENEMIGO DISPARADOR
+/// Actualmente descartada.
+/// </summary>
 public class EnemyShoot : MonoBehaviour {
 
     public bool haveMovement;

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR EL COMPORTAMIENTO DEL OBJETO MUELLE IMPULSADOR
+/// </summary>
 public class BouncyTrigger : MonoBehaviour {
 
     // Use this for initialization
@@ -88,19 +91,31 @@ public class BouncyTrigger : MonoBehaviour {
         //}
     }
 
+    /// <summary>
+    /// Activa la animacion de impulso cuando algo invade su area
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision)
     {
         anim.SetBool("Impulse", true);
         anim.SetBool("Idle", false);
     }
 
+    /// <summary>
+    /// Activa la animacion de Idle cuando algo sale de su area, generalmente el jugador
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerExit2D(Collider2D collision)
     {
         anim.SetBool("Impulse", false);
         anim.SetBool("Idle", true);
     }
 
-
+    /// <summary>
+    /// Detecta si el jugador permanece dentro del trigger y le da una fuerza de impulso
+    /// Desactiva el render del jugador
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -146,9 +161,14 @@ public class BouncyTrigger : MonoBehaviour {
     //    anim.SetBool("Awake", true);
     //}
 
+    /// <summary>
+    /// Metodo que detecta si una particula del disparo de jugador ha entrado en contacto
+    /// Activa la animacion de despertar y convierte la malla de collision en un trigger
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnParticleCollision(GameObject collision)
     {
-        print("entra");
+        
         anim.SetBool("Awake", true);
         colliderBouncy.isTrigger = true;
         Invoke("startIdle", 1);

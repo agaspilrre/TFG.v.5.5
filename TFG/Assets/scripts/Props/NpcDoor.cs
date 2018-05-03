@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASE QUE COMPRUEBA SI TODOS LOS INTERRUPTORES QUE PERTENECEN HA UNA PUERTA HAN SIDO PULSADOS Y DE GESTIONAR SU COMPORTAMIENTO
+/// </summary>
 public class NpcDoor : MonoBehaviour {
 
     public List<GameObject> activatorObjects = new List<GameObject>();
@@ -16,6 +19,7 @@ public class NpcDoor : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+    //Si la puerta ha sido abierta reduce la escala en y hasta el minimo y detruye los objetos puerta he interruptores
 	void Update () {
 		
 
@@ -28,7 +32,10 @@ public class NpcDoor : MonoBehaviour {
         }
 	}
 
-
+    /// <summary>
+    /// Detecta si el player entra en el area de la puerta y comprueba si todos sus interruptores han sido abiertos
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision)
     {
         count = 0;

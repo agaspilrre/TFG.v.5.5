@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
+/// <summary>
+/// CLASE ENCARGADA DE CONTROLAR LA VIDA QUE TIENE EL JUGADOR
+/// </summary>
 public class lifeScript : MonoBehaviour {
 
     public GameObject[] life = new GameObject[4];
@@ -157,7 +160,9 @@ public class lifeScript : MonoBehaviour {
     Función que controla la cantidad de vida que queremos restar al jugador 
  */
 
-
+    /// <summary>
+    /// Función que controla la cantidad de vida que queremos restar al jugador 
+    /// </summary>
     public void ResetBlur()
     {
         //life[lifeCount].SetActive(false);
@@ -165,6 +170,13 @@ public class lifeScript : MonoBehaviour {
         makeDamage(1);
     }
     
+    /// <summary>
+    /// Funcion que se encarga de restar vida y desactivar los corazones del HUD en funcion del parametro recibido
+    /// esto se aplicara cuando el personaje no este en estado invulnerable
+    /// tambien aplica una fuerza en la direccion contraria de donde el personaje recibio el daño
+    /// comprueba si la vida llega a cero y toma todas las acciones necesarios para realizar el gameover.
+    /// </summary>
+    /// <param name="damage"></param>
     public void makeDamage(int damage)
     {
         //solo hacemos daño si no estamos en estado invulnerable
@@ -250,8 +262,11 @@ public class lifeScript : MonoBehaviour {
         }
     }
 
-    //funcion que añade vida
 
+    /// <summary>
+    /// funcion que añade vida en funcion del parametro recibido
+    /// </summary>
+    /// <param name="cure"></param>
     public void cureLife(int cure)
     {
         //si la vida esta incompleta entonces curamos
@@ -268,11 +283,19 @@ public class lifeScript : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Funcion que indica si el jugador esta en estado invulnerable
+    /// </summary>
+    /// <returns></returns>
     public bool getInvulnerable()
     {
         return invulnerable;
     }
 
+    /// <summary>
+    /// Funcion que indica el numero de vidas que le quedan al jugador
+    /// </summary>
+    /// <returns></returns>
     public int getLifeCount()
     {
         return lifeCount;

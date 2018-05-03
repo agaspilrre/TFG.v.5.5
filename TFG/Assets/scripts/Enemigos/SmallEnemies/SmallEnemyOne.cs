@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR EL COMPORTAMIENTO DE SMALLENEMY. ENEMIGO QUE SALTA
+/// actualmente descartado por diseño.
+/// </summary>
 public class SmallEnemyOne : MonoBehaviour {
 
     public List<Transform> targets;

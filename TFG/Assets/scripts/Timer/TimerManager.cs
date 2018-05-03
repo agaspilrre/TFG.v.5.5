@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR UNA CUENTA ATRAS Y DE MOSTRARLA POR LA INTERFAZ DE USUARIO
+/// </summary>
 public class TimerManager : MonoBehaviour {
 
 
@@ -50,6 +52,10 @@ public class TimerManager : MonoBehaviour {
 
 	}
 
+    /// <summary>
+    /// Metodo que añade el tiempo pasado como parametro a la cuenta atras
+    /// </summary>
+    /// <param name="_time"></param>
     public void addTime(float _time)
     {
         seconds += _time;

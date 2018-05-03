@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+/// <summary>
+/// CLASE ENCARGADA DE LANZAR LOS RAYCAST DEL PLAYER PARA DETECTAR COLISIONES EN LAS CUATRO DIRECCIONES
+/// </summary>
 
 [RequireComponent (typeof (BoxCollider2D))]
 public class RaycastController : MonoBehaviour {

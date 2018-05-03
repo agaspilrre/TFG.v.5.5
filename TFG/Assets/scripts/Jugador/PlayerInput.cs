@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using XInputDotNetPure;
+/// <summary>
+/// CLASE ENCARGADA DE DETECTAR LOS INPUTS QUE EL JUGADOR ESTA PULSANDO 
+/// </summary>
+
 
 [RequireComponent(typeof(Player))]
 public class PlayerInput : MonoBehaviour

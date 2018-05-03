@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASE ENCARGADA DE DETECTAR SI EL PLAYER ENTRA EN EL RANGO DE RECONOCMIENTO DEL ENEMIGO Y DE ACTIVAR SU ESTADO DE ATAQUE
+/// </summary>
 public class TriggerRecon : MonoBehaviour {
 
     Animator animator;

@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// CLASE ENCARGADA DE LA GESTION DE EMOTICONOS QUE APARECEN ENCIMA DEL PERSONAJE.
+/// actualmente desactivado este script por descarte de diseño
+/// </summary>
 public class EmojiManagger : MonoBehaviour {
 
     public GameObject bocadillo;
@@ -94,7 +97,9 @@ public class EmojiManagger : MonoBehaviour {
     }
 
     
-
+    /// <summary>
+    /// Metodo encargado de desactivar todos los emoticonos de la lista y hacerlos desaparecer
+    /// </summary>
     public void DesactivateEmojis()
     {
         for (int i = 0; i < Emojis.Count; i++)

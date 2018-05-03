@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASSE ENCARGADA DE COMPROBAR SI EL JUGADOR A COLISIONADO CON ESTE OBJETO ESTRELLA
+/// </summary>
 public class StartItem : MonoBehaviour {
 
     public bool haveThisStart;
@@ -20,6 +23,11 @@ public class StartItem : MonoBehaviour {
 		
 	}
 
+    /// <summary>
+    /// Metodo encargado de comprobar si el jugador a colisionado con un objeto de tipo estrella
+    /// Incrementa la cuenta de la clase estatica y destruye este objeto
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")

@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// CLASE QUE GESTIONA EL COMPORTAMIENTO DE LOS PODERES DEL PLAYER
+/// </summary>
 public class Poderes : MonoBehaviour
 {
     public float duracionDash = 1f;
@@ -148,7 +151,10 @@ public class Poderes : MonoBehaviour
 
     }
 
-    //llama a cambio de personalidad y comprueba el salto para la transformacion doble salto
+    
+    /// <summary>
+    /// llama a cambio de personalidad y comprueba el salto para la transformacion doble salto, en desuso por razones de diseño
+    /// </summary>
     public void ControlChangePersonality()
     {
         personalityChange();
@@ -158,7 +164,10 @@ public class Poderes : MonoBehaviour
             personajeMovimiento.setCanSecondJump(true);
         }
     }
-    //comprueba si puede realizar el dush y si es posible lo realiza 
+    
+    /// <summary>
+    /// comprueba si puede realizar el dush y si es posible lo realiza 
+    /// </summary>
     public void checkDush()
     {
         if (dashUse && !staminaBar.isBarEmpty())
@@ -175,6 +184,10 @@ public class Poderes : MonoBehaviour
         }        
     }
 
+    /// <summary>
+    /// Comprueba si esta en estado de particion. actualmente en desuso
+    /// </summary>
+    /// <returns></returns>
     public bool getStatePartition()
     {
         if (state == Partition.PARTITION)
@@ -238,16 +251,27 @@ public class Poderes : MonoBehaviour
         verticalDush = false;
     }
 
+    /// <summary>
+    /// Devuelve el valor del bool que indica si se puede usar el dash o no
+    /// </summary>
+    /// <returns></returns>
     public bool getDashUse()
     {
         return dashUse;
     }
 
+    /// <summary>
+    /// Asgina valor al bool que indica si se puede usar el dash o no
+    /// </summary>
+    /// <param name="use"></param>
     public void SetDashUse(bool use)
     {
         dashUse = use;
     }
 
+    /// <summary>
+    /// Setea la variable de dashUse a true
+    /// </summary>
     void dushGround()
     {
         dashUse = true;        
@@ -272,6 +296,10 @@ public class Poderes : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Devuelve el estado de personalidad en el cual se encuentra el player. actualmente en desuso
+    /// </summary>
+    /// <returns></returns>
     public bool getPlayerStates()
     {
         return cambioPersonalidad;

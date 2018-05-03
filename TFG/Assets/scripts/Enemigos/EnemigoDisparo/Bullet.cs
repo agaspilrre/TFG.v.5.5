@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR EL MOVIMIENTO DE LA BALA QUE DISPARA EL ENEMIGO DISPARADOR
+/// actualmente descartada.
+/// </summary>
 public class Bullet : MonoBehaviour {
 
     Rigidbody2D rb;

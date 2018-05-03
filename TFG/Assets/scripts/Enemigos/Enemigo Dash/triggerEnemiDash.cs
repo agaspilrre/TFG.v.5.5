@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// CLASE ENCARGADA DE ASIGNAR AL ENEMIGO DASH EL ESTADO DE CARGA
+/// </summary>
 public class triggerEnemiDash : MonoBehaviour {
 
     public enemigoDash enemi;

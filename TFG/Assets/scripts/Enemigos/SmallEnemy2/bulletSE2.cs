@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR EL COMPORTAMIENTO, VELOCIDAD Y DIRECCION DE LA BALA DISPARADA POR EL SMALL ENEMY2
+/// </summary>
 public class bulletSE2 : MonoBehaviour {
 
     private Rigidbody2D rb;
@@ -17,6 +20,7 @@ public class bulletSE2 : MonoBehaviour {
     public bool LeftShoot;
 
     // Use this for initialization
+    //obtenemos el Rigidbody de la bala
     void Awake () {
 
         rb = GetComponent<Rigidbody2D>();
@@ -25,6 +29,7 @@ public class bulletSE2 : MonoBehaviour {
     }
 	
 	// Update is called once per frame
+    //asigna velocidad y direccion de la bala dependiendo de las variables
 	void Update () {
 
         if (UpShoot)
@@ -50,6 +55,10 @@ public class bulletSE2 : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Metodo que cambia la variable UpShoot y resetea las demas variables de direccion a false
+    /// </summary>
+    /// <param name="_value"></param>
     public void setUpShoot(bool _value)
     {
         UpShoot = _value;
@@ -63,6 +72,10 @@ public class bulletSE2 : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Metodo que cambia la variable DownShoot y resetea las demas variables de direccion a false
+    /// </summary>
+    /// <param name="_value"></param>
     public void setDownShoot(bool _value)
     {
         DownShoot = _value;
@@ -72,6 +85,10 @@ public class bulletSE2 : MonoBehaviour {
         LeftShoot = false;
     }
 
+    /// <summary>
+    /// Metodo que cambia la variable RightShoot y resetea las demas variables de direccion a false
+    /// </summary>
+    /// <param name="_value"></param>
     public void setRightShoot(bool _value)
     {
         RightShoot = _value;
@@ -81,6 +98,10 @@ public class bulletSE2 : MonoBehaviour {
         LeftShoot = false;
     }
 
+    /// <summary>
+    /// Metodo que cambia la variable LeftShoot y resetea las demas variables de direccion a false
+    /// </summary>
+    /// <param name="_value"></param>
     public void setLeftShoot(bool _value)
     {
         LeftShoot = _value;
@@ -90,30 +111,55 @@ public class bulletSE2 : MonoBehaviour {
         
     }
 
-
+    /// <summary>
+    /// Metodo que establece la velocidad de la bala
+    /// </summary>
+    /// <param name="_speed"></param>
     public void setSpeed(float _speed)
     {
         speed = _speed;
     }
 
+    /// <summary>
+    /// Metodo que establece el daño que causa la vale al jugador
+    /// </summary>
+    /// <param name="_damage"></param>
     public void setDamage(int _damage)
     {
         damage = _damage;
     }
 
+    /// <summary>
+    /// Metodo que se encarga de indicar si este disparo es dañino
+    /// </summary>
+    /// <param name="_makeDamage"></param>
     public void setMakeDamage(bool _makeDamage)
     {
         makeDamage = _makeDamage;
     }
+
+    /// <summary>
+    /// Metodo que indica si esta bala realentiza el movimiento del jugador
+    /// </summary>
+    /// <param name="_makeSlow"></param>
     public void setMakeSlow(bool _makeSlow)
     {
         makeSlow = _makeSlow;
     }
+
+    /// <summary>
+    ///Metodo que asigna la velocidad a la que  el jugador es realentizado por el contacto con esta bala 
+    /// </summary>
+    /// <param name="_slowSpeed"></param>
     public void setSlowSpeed(float _slowSpeed)
     {
         speedSlow = _slowSpeed;
     }
 
+    /// <summary>
+    /// Metodo que asigna el tiempo en el que el jugador permance realentizado por el contacto de esta bala
+    /// </summary>
+    /// <param name="_timer"></param>
     public void setSlowTimer(float _timer)
     {
         timeSlow = _timer;
@@ -143,7 +189,7 @@ public class bulletSE2 : MonoBehaviour {
     }*/
 
 
-
+    //Gestiona la colision de esta bala con el player y demas elementos del escenario
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.gameObject.tag == "Player")

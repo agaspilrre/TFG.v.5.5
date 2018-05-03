@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASE QUE GESTIONA EL COMPORTAMIENTO DE SMALLENEMY3
+/// actualmente descartada por motivos de diseño
+/// </summary>
 public class DifferentEnemyThree : MonoBehaviour {
 
     public List<Transform> targets;

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// CLASE ENCARGADA DE MOSTRAR POR PANTALLA EL NUMERO DE ESTRELLAS RECOGIDAS Y EL NUMERO DE ESTRELLAS TOTAL DEL NIVEL
+/// </summary>
 public class StartsManager : MonoBehaviour {
 
     public int numberStartsLevel;

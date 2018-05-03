@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASE ENCARGADO DE GESTIONAR EL COMPORTAMIENTO DEL ENEMIGO DASH
+/// </summary>
 public class enemigoDash : MonoBehaviour {
 
     public enum State { ataque, dash, patrulla, carga, knockout, goingBack };
@@ -122,6 +125,9 @@ public class enemigoDash : MonoBehaviour {
         direccion = 1;
     }
 
+    /// <summary>
+    /// Metodo que resetea la posicion del enemigo a la posicion inicial y lo deja en estado patrulla
+    /// </summary>
     public void ResetPosition()
     {
         transform.position = startPosition;
@@ -194,18 +200,26 @@ public class enemigoDash : MonoBehaviour {
         materialEnemigo.color = Color.black;
     }
 
+    /// <summary>
+    /// metodo que devuelve el estado de si el enemigo puede hacer daño al personaje
+    /// </summary>
+    /// <returns></returns>
     public bool getCanGetDamage()
     {
         return canGetDamage;
     }
-
+    /// <summary>
+    /// metodo que pone al enemigo en estado patrulla
+    /// </summary>
     public void setEstadoPatrulla()
     {
         estado = State.patrulla;
 
         materialEnemigo.color = Color.red;
     }
-
+    /// <summary>
+    /// Metodo que pone al enemigo en el estado dash
+    /// </summary>
     public void setEstadoDash()
     {
         estado = State.dash;

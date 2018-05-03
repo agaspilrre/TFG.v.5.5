@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR EL COMPORTAMIENTO DE SMALL ENEMY2
+/// </summary>
 public class SmallEnemy2 : MonoBehaviour {
 
     public float speedBullet;
@@ -53,6 +56,8 @@ public class SmallEnemy2 : MonoBehaviour {
     }
 	
 	// Update is called once per frame
+    //LLama al metodo de instanciar balas si esta en el modo ataque
+    //si no esta en modo ataque activa las animaciones de stun o idl dependiendo de cual de estos estados se encuentre
 	void Update () {
 
         if (!stuned && animator.GetBool("attack"))
@@ -105,6 +110,12 @@ public class SmallEnemy2 : MonoBehaviour {
        
     //}
 
+    /// <summary>
+    /// Metodo que instancia las balas que dispara este enemigo
+    /// asigna las propiedades que tiene que tener la bala, si es dañina o realentizadora
+    /// la velocidad, direccion de movimiento
+    /// el tiempo que realentiza y la velocidad, asi como el daño que provoca
+    /// </summary>
     public void InstantiateBullet()
     {
         bulletSmallEnemy2.GetComponent<bulletSE2>().setSpeed(speedBullet);
@@ -139,6 +150,11 @@ public class SmallEnemy2 : MonoBehaviour {
         }        
     }
 
+
+    /// <summary>
+    /// Metodo encargado de restar vida al enemigo, actualmente en desuso ya que el enemigo no recibe daño si no que se stunea al recibir el ataque del jugador
+    /// </summary>
+    /// <param name="_damage"></param>
     public void EnemyMakeDamage(int _damage)
     {
         life -= _damage;
@@ -149,6 +165,11 @@ public class SmallEnemy2 : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Metodo encargado de detectar si el enemigo ha entrado en colision con una particula
+    /// Pone al enemigo en el estado stund y activa su correspondiente animacion
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnParticleCollision(GameObject collision)
     {        
         animator.SetBool("idle", false);

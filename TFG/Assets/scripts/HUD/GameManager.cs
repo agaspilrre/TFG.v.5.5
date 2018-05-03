@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// CLASE QUE SE ENCARGA DE GESTIONAR EL GAMEOVER Y DE RESETEAR LOS PARAMETROS DEL PLAYER PARA QUE PUEDA VOLVER A JUGAR
+/// </summary>
 public class GameManager : MonoBehaviour {
 
     public GameObject gameOver;

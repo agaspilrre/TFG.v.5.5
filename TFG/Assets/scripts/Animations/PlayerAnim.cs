@@ -22,6 +22,10 @@ public class PlayerAnim : MonoBehaviour {
         return animator;
     }
 
+    /// <summary>
+    /// Funcion que establece la velocidad del animator
+    /// </summary>
+    /// <param name="_speed"></param>
     public void setAnimatorSpeed(float _speed)
     {
         animator.speed = _speed;
@@ -30,12 +34,18 @@ public class PlayerAnim : MonoBehaviour {
     //metodos encargados de todas las transiciones 
 
     //Si el player esta parado y corre
+    /// <summary>
+    /// Metodo que activa la transicion de la animacion de idl hacia la de correr.
+    /// </summary>
     public void IdlToRun()
     {
         animator.SetBool("idlToRun", true);        
     } 
 
     //si esta quieto y salta
+    /// <summary>
+    /// Metodo que activa la transicion de la animacion de idl a salto.
+    /// </summary>
     public void idlToJump()
     {
         setFalseAllAnimations();
@@ -44,6 +54,9 @@ public class PlayerAnim : MonoBehaviour {
     }
 
     //transicion de salto a idl
+    /// <summary>
+    /// Metodo que activa la transicion de de salto a idl
+    /// </summary>
     public void JumpToIdl()
     {
         setFalseAllAnimations();
@@ -51,6 +64,9 @@ public class PlayerAnim : MonoBehaviour {
     }
 
     //si esta corriendo y salta
+    /// <summary>
+    /// Metodo que activa la transicion de correr a saltar
+    /// </summary>
     public void runToJump()
     {
         setFalseAllAnimations();
@@ -58,12 +74,18 @@ public class PlayerAnim : MonoBehaviour {
     }
 
     //transicion de salto a correr
+    /// <summary>
+    /// Metodo que activa la transicion de salto a correr
+    /// </summary>
     public void jumpToRun()
     {
         setFalseAllAnimations();
         animator.SetBool("jumpToRun", true);
     }
 
+    /// <summary>
+    /// Metodo que activa la transicion de salto a dash
+    /// </summary>
     public void jumpToDash()
     {
         setFalseAllAnimations();
@@ -72,36 +94,53 @@ public class PlayerAnim : MonoBehaviour {
 
     //DASH
     //si esta parado y hace dash
+    /// <summary>
+    /// Metodo que activa la transicion de Idl a dash
+    /// </summary>
     public void idlToDash()
     {
         setFalseAllAnimations();
         animator.SetBool("idlToDash", true);
     }
 
+    /// <summary>
+    /// Metodo que activa la transicion de dash a idl
+    /// </summary>
     public void DashToIdl()
     {
         setFalseAllAnimations();
         animator.SetBool("dashToIdl", true);
     }
 
+    /// <summary>
+    /// Metodo que activa la transicion de correr a dash
+    /// </summary>
     public void runToDash()
     {
         setFalseAllAnimations();
         animator.SetBool("runToDash", true);
     }
-
+    /// <summary>
+    /// Metodo que activa la transicion de dash a correr
+    /// </summary>
     public void dashToRun()
     {
         setFalseAllAnimations();
         animator.SetBool("dashToRun", true);
     }
 
+    /// <summary>
+    /// Metodo que activa la animacion de muerte del personaje
+    /// </summary>
     public void death()
     {
         setFalseAllAnimations();
         animator.SetBool("death", true);
     }
 
+    /// <summary>
+    /// Metodo que activa la animacion de doble salto
+    /// </summary>
     public void DoubleJump()
     {
         setFalseAllAnimations();
@@ -110,38 +149,58 @@ public class PlayerAnim : MonoBehaviour {
 
     //PASAR A FALSO
 
-
+    /// <summary>
+    /// Metodo que desactiva la transicion de idl a correr
+    /// </summary>
     public void RunToIdl()
     {
         animator.SetBool("idlToRun", false);
     }
 
+    /// <summary>
+    /// Metodo que activa o desactiva la animacion de wallJump
+    /// </summary>
     public void WallJump(bool boolean)
     {
         animator.SetBool("wallJump", boolean);
     }
 
+    /// <summary>
+    /// Metodo que activa o desactiva la animacion de atacar
+    /// </summary>
     public void Attack(bool boolean)
     {
         animator.SetBool("Attacking", boolean);
     }
 
+    /// <summary>
+    /// Metodo que activa o desactiva la transicion de walljump a correr
+    /// </summary>
     public void WallToRun(bool boolean)
     {
         animator.SetBool("walToRun", boolean);
     }
 
+    /// <summary>
+    /// Metodo que activa o desactiva la animacion de caida
+    /// </summary>
     public void Fall(bool boolean)
     {
         animator.SetBool("Fall", boolean);
     }
 
+    /// <summary>
+    /// Metodo que activa o desactiva la animacion de daño del personaje
+    /// </summary>
     public void Hurt(bool boolean)
     {
         animator.SetBool("Hurt", boolean);
     }
 
     //pone todas las variables del animator a false para que no haya transiciones no deseadas
+    /// <summary>
+    /// Metodo que resetea todas las transiciones y animaciones a falso.
+    /// </summary>
     public void  setFalseAllAnimations()
     {
         animator.SetBool("idlToDash", false);

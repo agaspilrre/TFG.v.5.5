@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+/// <summary>
+/// CLASE ENCARGADA DE CALCULAR Y REALIZAR LOS MOVIMIENTOS DEL PLAYER, TANTO HORIZONTALES, COMO DE SALTO , COMO DE WALLJUMPING
+/// requiere componente Controller2D que se encarga de detectar las colisiones
+/// </summary>
 
 [RequireComponent(typeof(Controller2D))]
 public class Player : MonoBehaviour
@@ -96,11 +100,17 @@ public class Player : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Metodo que establece fuerza de gravedad al personaje
+    /// </summary>
     public void returnGravity()
     {
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
     }
 
+    /// <summary>
+    /// Metodo que anula la gravedad y la velocidad en el eje y del player
+    /// </summary>
     public void setGravity0()
     {
         gravity = 0;
@@ -220,12 +230,20 @@ public class Player : MonoBehaviour
 
     }
     
-    //obtiene la velocidad en y
+  
+    /// <summary>
+    /// obtiene la velocidad en el eje y del player
+    /// </summary>
+    /// <returns></returns>
     public float getVelocityY()
     {
         return velocity.y;
     }
 
+    /// <summary>
+    /// establece una velocidad en el eje Y al player recibida como parametro.
+    /// </summary>
+    /// <param name="_value"></param>
     public void setVelocityY(float _value)
     {
         velocity.y = _value;
@@ -237,17 +255,27 @@ public class Player : MonoBehaviour
     //    permitido = true;
     //}
 
-
+    /// <summary>
+    /// asigna la direccion que tiene los inputs
+    /// </summary>
+    /// <param name="input"></param>
     public void SetDirectionalInput(Vector2 input)
     {
         directionalInput = input;
     }
 
+    /// <summary>
+    /// Metodo que muestra si el jugador se encuentra o no en estado de walljumping
+    /// </summary>
+    /// <returns></returns>
     public bool getWallSliding()
     {
         return wallSliding;
     }
 
+    /// <summary>
+    /// Metodo que gestiona el comportamiento del salto, doble salto y wallJump 
+    /// </summary>
     public void OnJumpInputDown()
     {
         if (wallSliding || wallJump)
@@ -308,17 +336,28 @@ public class Player : MonoBehaviour
     }
 
     //funcion para controlar el numero de saltos para la accion de pulsar R despues del primer salto
+    /// <summary>
+    /// Funcion que devuelve el numero de saltos que ha dado el jugador en el aire
+    /// </summary>
+    /// <returns></returns>
     public int getNumSaltos()
     {
         return numeroSaltos;
     }
 
     //cambiar la variable para permitir el segundo salto, se cambia cuando pulsamos R y ya hemos saltado una vez script Poderes
+    /// <summary>
+    /// Funcion que asigna valor al bool que indica si el player puede realizar o no un segundo salto en el aire
+    /// </summary>
+    /// <param name="_value"></param>
     public void setCanSecondJump(bool _value)
     {
         canSecondJump = _value;
     }
 
+    /// <summary>
+    /// Metodo que ajusta la velocidad de salto a su minimo si la fuerza en Y es superada
+    /// </summary>
     public void OnJumpInputUp()
     {
         if (velocity.y > minJumpVelocity)
@@ -328,17 +367,28 @@ public class Player : MonoBehaviour
 
     }
     
-
+    /// <summary>
+    /// Devuelve la direccion en la que el player esta mirando
+    /// </summary>
+    /// <returns></returns>
     public int getDireccion()
     {
         return direccion;
     }
 
+    /// <summary>
+    /// Funcion que establece el valor del bool para permitir o no el movimiento del player
+    /// </summary>
+    /// <param name="prueba"></param>
     public void setPermitido(bool prueba)
     {
         permitido = prueba;
     }
 
+    /// <summary>
+    /// Metodo que devuelve si el player se esta moviendo o no
+    /// </summary>
+    /// <returns></returns>
     public bool getIsMoving()
     {
         if (directionalInput.x != 0)
@@ -346,6 +396,8 @@ public class Player : MonoBehaviour
         else
             return false;
     }
+
+    
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.collider.tag == "Suelo")
@@ -504,6 +556,10 @@ public class Player : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// metodo que indica si el player esta en el aire
+    /// </summary>
+    /// <returns></returns>
     public bool GetIsInAir()
     {
         return controller.collisions.below ? true : false;
@@ -528,7 +584,13 @@ public class Player : MonoBehaviour
         
         velocity.y += gravity * Time.deltaTime;
     }
-  
+    
+    /// <summary>
+    /// Metodo que asigna la realentizacion del player con los parametros de tiempo, velocidad y bool recibidos
+    /// </summary>
+    /// <param name="_makeS"></param>
+    /// <param name="_timeSlow"></param>
+    /// <param name="_speed"></param>
     public void setMakeSlow(bool _makeS,float _timeSlow,float _speed)
     {
         

@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR EL COMPORTAMIENTO DEL ENEMIGO RODADOR
+/// actualmente descartada
+/// </summary>
 public class enemigo : MonoBehaviour {
 
     public enum State { ataque, patrulla, carga, vulnerable };
