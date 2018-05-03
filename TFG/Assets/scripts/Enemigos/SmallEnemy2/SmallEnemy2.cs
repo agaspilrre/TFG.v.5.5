@@ -26,7 +26,7 @@ public class SmallEnemy2 : MonoBehaviour {
     public float timeBetwenShoot;
     private float timer;
     private float timerStund;
-    public float AJUSTE_ANIMACION_CON_TIEMPO_DE_DISPARO;
+    public float animationMultiplier;
     public int life;
 
     bool startCountTime;
@@ -42,7 +42,14 @@ public class SmallEnemy2 : MonoBehaviour {
         animator = GetComponent<Animator>();
         animator.SetBool("idle", true);
         //para que la animacion se ajuste al tiempo entre disparos de cada enemigo
-        animator.SetFloat("SpeedMultiplier", timeBetwenShoot+AJUSTE_ANIMACION_CON_TIEMPO_DE_DISPARO);
+        //regla de tres inversa
+        //si para 1.5 ---------->el ajuste es de 2.2
+        //para betwenshoot------>animationMultiplier
+
+        animationMultiplier = (1.5f * 2.2f) / timeBetwenShoot;
+        
+
+        animator.SetFloat("SpeedMultiplier",  animationMultiplier);
     }
 	
 	// Update is called once per frame
