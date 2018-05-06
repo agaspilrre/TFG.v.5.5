@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CollisionController : MonoBehaviour {
     CameraController mainCamera;
 
-    int numberOfBlok;
+    public int numberOfBlok;
 
     void Start()
     {
@@ -17,17 +17,22 @@ public class CollisionController : MonoBehaviour {
     #region triggers
     void OnTriggerEnter2D(Collider2D other)
     {
-        numberOfBlok++;
-
         if (other.name == "CameraEndPoint")
             mainCamera.SetCameraState("inactive");
         else if (other.name == "CameraStartPoint")
             mainCamera.SetCameraState("active");
-        else if (other.name == "CameraBlockPoint" || other.name == "PrefabPantalla")
-            mainCamera.SetCameraState(other.tag);
-        else if(other.tag=="EndScene")
+        else if (other.name == "CameraBlockPoint")
         {
-            if(PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "stars") < fixedVar.totalStarts)
+            numberOfBlok++;
+            mainCamera.SetCameraState(other.tag);
+        }
+        else if (other.name == "PrefabPantalla")
+        {
+            mainCamera.SetCameraState(other.tag);
+        }
+        else if (other.tag == "EndScene")
+        {
+            if (PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "stars") < fixedVar.totalStarts)
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "stars", fixedVar.totalStarts);
             PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);//1 es que te lo pasas y 0 que no 
         }
@@ -35,9 +40,15 @@ public class CollisionController : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D other)
     {
-        numberOfBlok--;
-        if ((other.name == "CameraBlockPoint" || other.name == "PrefabPantalla") && numberOfBlok == 0)
+        if ((other.name == "CameraBlockPoint" || other.name == "PrefabPantalla") && numberOfBlok <= 1)
+        {
             mainCamera.SetCameraState("active");
+            numberOfBlok--;
+        }
+        else if(other.name == "CameraBlockPoint")
+        {
+            numberOfBlok--;
+        }
     }
     #endregion
 }
