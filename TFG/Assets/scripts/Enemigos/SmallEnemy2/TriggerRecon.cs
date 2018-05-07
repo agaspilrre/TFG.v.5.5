@@ -34,6 +34,17 @@ public class TriggerRecon : MonoBehaviour {
         
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            isIn = true;
+            animator.SetBool("idle", false);
+            animator.SetBool("attack", true);
+        }
+
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")

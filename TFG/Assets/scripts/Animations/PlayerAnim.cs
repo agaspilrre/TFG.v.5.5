@@ -197,6 +197,11 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("Hurt", boolean);
     }
 
+    public void GameOver(bool boolean)
+    {
+        animator.SetBool("gameOver", boolean);
+    }
+
     //pone todas las variables del animator a false para que no haya transiciones no deseadas
     /// <summary>
     /// Metodo que resetea todas las transiciones y animaciones a falso.
@@ -216,7 +221,7 @@ public class PlayerAnim : MonoBehaviour {
         //animator.SetBool("wallJump", false);
         Fall(false);
         Hurt(false);
-
+        GameOver(false);
     }
 
     

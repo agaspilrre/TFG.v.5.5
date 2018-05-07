@@ -79,7 +79,7 @@ public class SmallEnemy2 : MonoBehaviour {
            // }
         }
 
-        else
+        if(stuned)
         {
             timer = 0;
             timerStund += Time.deltaTime;
@@ -88,13 +88,14 @@ public class SmallEnemy2 : MonoBehaviour {
                 timerStund = 0;
                 stuned = false;
                 animator.SetBool("stun", false);
+
                 if (TriggerRecon.instance.isIn && stuned == false)
                 {
                     animator.SetBool("attack", true);
                 }
                 else
                 {
-                    animator.SetBool("idle", true);
+                   animator.SetBool("idle", true);
                 }
                 
             }

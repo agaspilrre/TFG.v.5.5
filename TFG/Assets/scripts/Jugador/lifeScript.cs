@@ -199,6 +199,7 @@ public class lifeScript : MonoBehaviour {
                 rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
             }
 
+            playerAnim.RunToIdl();
             playerAnim.Hurt(true);
             for (int i = 0; i < damage && lifeCount >= 0; i++)
             {
@@ -215,6 +216,8 @@ public class lifeScript : MonoBehaviour {
         {
             //congelar camara
             cameraController.SetCameraState("Camera/BlockBoth");
+
+            playerAnim.GameOver(true);
 
             //cargar gameover o lo que proceda 
             Invoke("StopMovement", timeToStopGravity);
