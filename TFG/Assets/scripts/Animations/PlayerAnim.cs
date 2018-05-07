@@ -221,7 +221,7 @@ public class PlayerAnim : MonoBehaviour {
         //animator.SetBool("wallJump", false);
         Fall(false);
         Hurt(false);
-        GameOver(false);
+        //GameOver(false);
     }
 
     

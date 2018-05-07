@@ -110,6 +110,10 @@ public class lifeScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (lifeCount < 0)
+        {
+            playerAnim.GameOver(true);
+        }
         if (rb.velocity.y <= decrementImpulse && lifeCount >= 0)
         {
             playerScript.enabled = true;
@@ -217,6 +221,7 @@ public class lifeScript : MonoBehaviour {
             //congelar camara
             cameraController.SetCameraState("Camera/BlockBoth");
 
+            playerAnim.setFalseAllAnimations();
             playerAnim.GameOver(true);
 
             //cargar gameover o lo que proceda 
