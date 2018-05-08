@@ -48,12 +48,27 @@ public class BasicAttack : MonoBehaviour {
 
     void Update()
     {
-        if(isCharging)
+        
+
+        if (isCharging)
         {
             timer += Time.deltaTime;
 
             float rot_z = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             directionObject.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (prueba)
+        {
+            if (prueba.GetComponent<ParticleSystem>().particleCount == 0)
+            {
+                isAttacking = false;
+                Destroy(prueba);
+                StopAllCoroutines();
+            }
         }
     }
 
@@ -63,6 +78,7 @@ public class BasicAttack : MonoBehaviour {
         {
             isCharging = false;
             directionObject.SetActive(false);
+            playerInput.AttackAnimations(false);
             player.speedAttacking = 1;
             Attack();
         }
@@ -74,7 +90,8 @@ public class BasicAttack : MonoBehaviour {
         {
             isCharging = true;
             player.speedAttacking = decreaseSpeed;
-            directionObject.SetActive(true); 
+            directionObject.SetActive(true);
+            playerInput.AttackAnimations(true);
         }
     }
    

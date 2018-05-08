@@ -89,7 +89,6 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     float vibrationForce;
 
-
     void Start()
     {
         //settings = UnityEditor.AnimationUtility.GetAnimationClipSettings(jump);
@@ -336,9 +335,6 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("XButton"))
         {
-            brazo1.SetActive(true);
-            brazo2.SetActive(true);
-            playerAnim.Attack(true);
             basicAttack.Charge();
         }
 
@@ -359,9 +355,6 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("XButton"))
         {
             basicAttack.StopCharging();
-            brazo1.SetActive(false);
-            brazo2.SetActive(false);
-            playerAnim.Attack(false);
         }
 
         //Voltear personaje.
@@ -369,6 +362,31 @@ public class PlayerInput : MonoBehaviour
             flip();
         else if (Input.GetAxis("Horizontal") < 0 && direccion == Direccion.derecha)
             flip();
+    }
+
+    public void AttackAnimations(bool boolean)
+    {
+        if(boolean)
+        {
+            brazo1.SetActive(true);
+            brazo2.SetActive(true);
+            playerAnim.Attack(true);
+            playerAnim.RightArm(false);
+            playerAnim.LeftArm(false);
+        }
+        else
+        {
+            playerAnim.Attack(false);
+            playerAnim.RightArm(true);
+            playerAnim.LeftArm(true);
+            Invoke("ResetArms", 0.5f);
+        }
+    }
+
+    void ResetArms()
+    {
+        brazo1.SetActive(false);
+        brazo2.SetActive(false);
     }
 
 

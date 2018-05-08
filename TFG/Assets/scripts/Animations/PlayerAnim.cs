@@ -10,6 +10,11 @@ public class PlayerAnim : MonoBehaviour {
     Animator animator;
     float initialSpeedAnimator;
 
+    [SerializeField]
+    Animator fronArm;
+    [SerializeField]
+    Animator backArm;
+
 	// Use this for initialization
 	void Start () {
 
@@ -200,6 +205,16 @@ public class PlayerAnim : MonoBehaviour {
     public void GameOver(bool boolean)
     {
         animator.SetBool("gameOver", boolean);
+    }
+
+    public void RightArm(bool boolean)
+    {
+        fronArm.SetBool("Attacking", boolean);
+    }
+
+    public void LeftArm(bool boolean)
+    {
+        backArm.SetBool("Attacking", boolean);
     }
 
     //pone todas las variables del animator a false para que no haya transiciones no deseadas
