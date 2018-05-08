@@ -133,7 +133,7 @@ public class BouncyTrigger : MonoBehaviour {
                 }
                 characterRB.velocity = new Vector2(0, (forceBouncy*speedImpulse));
                 check = true;
-                characterCollider.enabled = false;
+                //characterCollider.enabled = false;
                 //anim.SetBool("Impulse", false);
             }
 
