@@ -9,9 +9,11 @@ public class DamageTrigger : MonoBehaviour {
 
     // Use this for initialization
     public int Damage;
+    lifeScript lifeScript;
     
-	void Start () {
-		
+	void Start ()
+    {
+        lifeScript = GameObject.Find("Personaje").GetComponent<lifeScript>();
 	}
 	
 	// Update is called once per frame
@@ -28,8 +30,8 @@ public class DamageTrigger : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
+            lifeScript.setInvulnerable(false);
             collision.GetComponent<lifeScript>().makeDamage(Damage);
-
         }
 
     }
@@ -41,9 +43,8 @@ public class DamageTrigger : MonoBehaviour {
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
-        {
+        {            
             collision.GetComponent<lifeScript>().makeDamage(Damage);
-
         }
     }
 }

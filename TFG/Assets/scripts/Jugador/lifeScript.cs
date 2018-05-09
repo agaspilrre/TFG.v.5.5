@@ -58,6 +58,11 @@ public class lifeScript : MonoBehaviour {
     float damageDisForceY;
 
     [SerializeField]
+    float damageDisInstantForceX;
+    [SerializeField]
+    float damageDisInstantForceY;
+
+    [SerializeField]
     float decrementImpulse;
 
     PlayerAnim playerAnim;
@@ -189,22 +194,35 @@ public class lifeScript : MonoBehaviour {
             hurting = true;
             shake = true;
 
-            if (playerScript.getDireccion() == 1 && lifeCount >= 0)
+            if (playerScript.getDireccion() == 1 && lifeCount >= 0 && damage != 4 ||damage != 5)
             {
                 //playerScript.enabled = false;
                 inputScript.enabled = false;
                 rb.AddForce(new Vector2(-damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
             }
 
-            else if (playerScript.getDireccion() == -1 && lifeCount >= 0)
+            else if (playerScript.getDireccion() == -1 && lifeCount >= 0 && damage != 4 || damage != 5)
             {
                 //playerScript.enabled = false;
                 inputScript.enabled = false;
                 rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
             }
 
+            if(damage == 4 || damage == 5)
+            {
+                if (playerScript.getDireccion() == 1)
+                    rb.AddForce(new Vector2(-damageDisInstantForceX, damageDisInstantForceY), ForceMode2D.Impulse);
+
+                if (playerScript.getDireccion() == -1)
+                    rb.AddForce(new Vector2(damageDisInstantForceX * 3, damageDisInstantForceY), ForceMode2D.Impulse);
+
+                playerScript.setPermitido(false);
+                inputScript.enabled = false;               
+            }
+
             playerAnim.RunToIdl();
             playerAnim.Hurt(true);
+
             for (int i = 0; i < damage && lifeCount >= 0; i++)
             {
                 life[lifeCount].SetActive(false);
@@ -213,6 +231,7 @@ public class lifeScript : MonoBehaviour {
                 cameraShake.Shake();
                 
             }
+
             invulnerable = true;
         }
        
@@ -298,6 +317,11 @@ public class lifeScript : MonoBehaviour {
     public bool getInvulnerable()
     {
         return invulnerable;
+    }
+
+    public void setInvulnerable(bool value)
+    {
+        invulnerable = value;
     }
 
     /// <summary>
