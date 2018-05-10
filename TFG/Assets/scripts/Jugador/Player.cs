@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
     public float fallWeight;
 
     bool wallJump;
-
+    bool isInDescendPlatform;
     bool canSecondJump;
     public bool enableDoubleJump;
 
@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 
         permitido = true;
+        isInDescendPlatform = false;
         direccion = 1;
         poderesScript = GetComponent<Poderes>();
         playerAnim = GetComponent<PlayerAnim>();
@@ -264,6 +265,11 @@ public class Player : MonoBehaviour
         directionalInput = input;
     }
 
+    public Vector2 GetDirectionalInput()
+    {
+        return directionalInput;
+    }
+
     /// <summary>
     /// Metodo que muestra si el jugador se encuentra o no en estado de walljumping
     /// </summary>
@@ -278,60 +284,64 @@ public class Player : MonoBehaviour
     /// </summary>
     public void OnJumpInputDown()
     {
-        if (wallSliding || wallJump)
-        {       
-            numeroSaltos = 1;
-
-            playerAnim.WallJump(true);
-
-            if (wallDirX == directionalInput.x)
+        if (!controller.getDown())
+        {
+            if (wallSliding || wallJump)
             {
-                velocity.x = -wallDirX * wallJumpClimb.x;
-                velocity.y = wallJumpClimb.y;
-            }
-            else if (directionalInput.x == 0)
-            {
-                velocity.x = -wallDirX * wallJumpClimb.x;
-                velocity.y = wallJumpClimb.y;
+                numeroSaltos = 1;
+
+                playerAnim.WallJump(true);
+
+                if (wallDirX == directionalInput.x)
+                {
+                    velocity.x = -wallDirX * wallJumpClimb.x;
+                    velocity.y = wallJumpClimb.y;
+                }
+                else if (directionalInput.x == 0)
+                {
+                    velocity.x = -wallDirX * wallJumpClimb.x;
+                    velocity.y = wallJumpClimb.y;
+                }
+                else
+                {
+                    velocity.x = -wallDirX * wallLeap.x;
+                    velocity.y = wallLeap.y;
+                }
+                //}           
             }
             else
             {
-                velocity.x = -wallDirX * wallLeap.x;
-                velocity.y = wallLeap.y;
-            }
-            //}           
-        }
-        else
-        {
-            if (1 > numeroSaltos)
-            {
-                numeroSaltos++;
-                multiplicadorSalto = 1;
-                velocity.y = maxJumpVelocity * multiplicadorSalto;               
-            }
-            else if (2 > numeroSaltos && enableDoubleJump) // && staminaBar.slider.value > 0)
-            {               
-                numeroSaltos++;
-                multiplicadorSalto = savedMultiplicadorSaltos;
-                velocity.y = maxJumpVelocity * multiplicadorSalto;
-
-            }                       
-        }
-
-        if (controller.collisions.below)
-        {
-            if (controller.collisions.slidingDownMaxSlope)
-            {
-                if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x))
-                { // not jumping against max slope
-                    velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
-                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+                if (1 > numeroSaltos)
+                {
+                    numeroSaltos++;
+                    multiplicadorSalto = 1;
+                    velocity.y = maxJumpVelocity * multiplicadorSalto;
                 }
-            } /*else
+                else if (2 > numeroSaltos && enableDoubleJump) // && staminaBar.slider.value > 0)
+                {
+                    numeroSaltos++;
+                    multiplicadorSalto = savedMultiplicadorSaltos;
+                    velocity.y = maxJumpVelocity * multiplicadorSalto;
+
+                }
+            }
+
+            if (controller.collisions.below)
+            {
+                if (controller.collisions.slidingDownMaxSlope)
+                {
+                    if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x))
+                    { // not jumping against max slope
+                        velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
+                        velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+                    }
+                } /*else
             {                        
                velocity.y = maxJumpVelocity;	
 			}*/
+            }
         }
+        
 
     }
 
@@ -402,8 +412,10 @@ public class Player : MonoBehaviour
     {
         if (coll.collider.tag == "Suelo")
         {
+            isInDescendPlatform = false;
             poderesScript.SetDashUse(true);
             permitido = true;
+            controller.down = false;
             //isJumping = false;
             input.isJumping = false;
             velocity = new Vector3(0, 0, 0);
@@ -471,6 +483,7 @@ public class Player : MonoBehaviour
         {
             poderesScript.SetDashUse(true);
             permitido = true;
+            isInDescendPlatform = true;
             //isJumping = false;
             //playerAnim.idlToJumpFalse(); 
 
@@ -516,6 +529,11 @@ public class Player : MonoBehaviour
         if (coll.tag == "WallJump")
         {
             wallJump = false;
+        }
+
+        if (coll.tag == "Through")
+        {
+            isInDescendPlatform = false;
         }
     }
 
@@ -597,6 +615,11 @@ public class Player : MonoBehaviour
         timerSlow = _timeSlow;
         slowSpeed = _speed;
         makeSlow = _makeS;
+    }
+
+    public bool GetIsInDescendPlatform()
+    {
+        return isInDescendPlatform;
     }
 
    

@@ -175,7 +175,7 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-
+        print(player.GetIsInDescendPlatform());
 
         /* //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
          if (player.getNumSaltos() == 0)
@@ -258,16 +258,27 @@ public class PlayerInput : MonoBehaviour
                 isJumping = true;
 
                 player.OnJumpInputDown();
-                if (moving == PlayerMoving.no)
+                
+
+                if (player.GetDirectionalInput().y == -1 && player.GetIsInDescendPlatform() && player.GetDirectionalInput().x == 0)
                 {
-                    //de idl a salto
-                    playerAnim.idlToJump();
+                    playerAnim.Fall(true);
                 }
-                else
+                else                
                 {
-                    //de correr a salto
-                    playerAnim.runToJump();
+                    if (moving == PlayerMoving.no)
+                    {
+                        //de idl a salto
+                        playerAnim.idlToJump();
+                    }
+                    else
+                    {
+                        //de correr a salto
+                        playerAnim.runToJump();
+                    }
                 }
+                
+               
                 //playerAnim.idlToJump();
             }
 

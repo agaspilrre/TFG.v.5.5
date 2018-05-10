@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Controller2D : RaycastController
 {
-
     public float maxSlopeAngle = 80;
     public CollisionInfo collisions;
     [HideInInspector]
@@ -11,6 +10,7 @@ public class Controller2D : RaycastController
 
     Poderes poderes;
     Player player;
+    public bool down;
 
     public override void Start()
     {
@@ -18,6 +18,12 @@ public class Controller2D : RaycastController
         collisions.faceDir = 1;
         poderes = GetComponent<Poderes>();
         player = GetComponent<Player>();
+        down = false;
+    }
+
+    public bool getDown()
+    {
+        return down;
     }
 
     public void Move(Vector2 moveAmount, bool standingOnPlatform)
@@ -148,7 +154,7 @@ public class Controller2D : RaycastController
             if (hit)
             {
                 if (hit.collider.tag == "Through")
-                {
+                {                   
                     if (directionY == 1)
                     {
                         continue;
@@ -158,8 +164,9 @@ public class Controller2D : RaycastController
                         //print("ss");
                         continue;
                     }
-                    if (playerInput.y == -1 && playerInput.x == 0)
+                    if (playerInput.y == -1 && playerInput.x == 0 && Input.GetButtonDown("AButton") && player.GetIsInDescendPlatform())
                     {
+                                                down = true;
                         collisions.fallingThroughPlatform = true;
                         Invoke("ResetFallingThroughPlatform", .5f);
                         continue;
@@ -278,7 +285,7 @@ public class Controller2D : RaycastController
     }
 
     void ResetFallingThroughPlatform()
-    {
+    {        
         collisions.fallingThroughPlatform = false;
     }
 
