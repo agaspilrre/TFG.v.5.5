@@ -30,7 +30,7 @@ public class TimerManager : MonoBehaviour {
         if (!stop)
         {
             seconds -= Time.deltaTime;
-            timer.text = "CRONO :  " +  (int)(seconds);
+            timer.text = "TIME: " +  (int)(seconds);
             if (seconds<=limitTime)
             {
                 //llamar a la funcion de muerte

@@ -399,6 +399,9 @@
     <None Include="Assets\ShaderForge\Readme.txt" />
     <None Include="Assets\ShaderForge\Test6.shader" />
     <None Include="Assets\Shaders\Blur.shader" />
+    <None Include="Assets\Shaders\Particle1.shader" />
+    <None Include="Assets\Shaders\Particle2.shader" />
+    <None Include="Assets\Shaders\ParticleDash.shader" />
     <None Include="Assets\Shaders\Test.shader" />
     <None Include="Assets\Shaders\Test2.shader" />
     <None Include="Assets\Shaders\Test3.shader" />
@@ -406,6 +409,8 @@
     <None Include="Assets\Shaders\Test5.shader" />
     <None Include="Assets\Shaders\Test7.shader" />
     <None Include="Assets\Shaders\Test8.shader" />
+    <None Include="Assets\Shaders\TestParticle2.shader" />
+    <None Include="Assets\Shaders\TestParticles.shader" />
     <None Include="Assets\Shaders\Waterfall\Waterfall01.shader" />
     <None Include="Assets\Shaders\Waterfall\Waterfall02.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
