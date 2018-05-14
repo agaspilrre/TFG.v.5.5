@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 
     bool finishedFade;
     int entryCount;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -75,6 +76,8 @@ public class GameManager : MonoBehaviour {
                     TimerManager.instance.setTime(PlayerPrefs.GetFloat("timeLoad"));
                     Time.timeScale = 1;
                     playerAnim.GameOver(false);
+                    player.GetComponent<Player>().setPermitido(true);
+                    
                     //entryCount = 0;
                     //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
