@@ -78,6 +78,11 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("runToJump", true);
     }
 
+    public void runToJumpFalse()
+    {
+        animator.SetBool("runToJump", false);
+    }
+
     //transicion de salto a correr
     /// <summary>
     /// Metodo que activa la transicion de salto a correr
@@ -85,6 +90,7 @@ public class PlayerAnim : MonoBehaviour {
     public void jumpToRun()
     {
         setFalseAllAnimations();
+
         animator.SetBool("jumpToRun", true);
     }
 
@@ -152,6 +158,17 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("doubleJump", true);
     }
 
+    public void DoubleJumpFalse()
+    {
+        animator.SetBool("doubleJump", false);
+    }
+
+    public void ForceWallJump()
+    {
+        animator.SetBool("wallJump", true);
+        animator.Play("wallJump");
+    }
+
     //PASAR A FALSO
 
     /// <summary>
@@ -167,6 +184,13 @@ public class PlayerAnim : MonoBehaviour {
     /// </summary>
     public void WallJump(bool boolean)
     {
+        if (boolean)
+        {
+            animator.SetBool("jumpToRun", false);
+            animator.SetBool("jumpToIdl", false);            
+        }
+       
+
         animator.SetBool("wallJump", boolean);
     }
 
@@ -198,12 +222,13 @@ public class PlayerAnim : MonoBehaviour {
     /// Metodo que activa o desactiva la animacion de daño del personaje
     /// </summary>
     public void Hurt(bool boolean)
-    {
+    {        
         animator.SetBool("Hurt", boolean);
     }
 
     public void GameOver(bool boolean)
     {
+        setFalseAllAnimations();
         animator.SetBool("gameOver", boolean);
     }
 
@@ -233,9 +258,9 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("runToDash", false);
         animator.SetBool("dashToRun", false);
         animator.SetBool("doubleJump", false);
-        //animator.SetBool("wallJump", false);
+        animator.SetBool("wallJump", false);
         Fall(false);
-        Hurt(false);
+        //Hurt(false);
         //GameOver(false);
     }
 

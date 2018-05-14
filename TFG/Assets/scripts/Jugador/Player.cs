@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     
 
     Vector2 directionalInput;
-    bool wallSliding;
+    public bool wallSliding;
     int wallDirX;
 
     private bool makeSlow;
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     //variable para modular peso en la caida
     public float fallWeight;
 
-    bool wallJump;
+    public bool wallJump;
     bool isInDescendPlatform;
     bool canSecondJump;
     public bool enableDoubleJump;
@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
         HandleWallSliding();
 
         
+           
 
         //habilidad de correr
         /*
@@ -288,8 +289,8 @@ public class Player : MonoBehaviour
         {
             if (wallSliding || wallJump)
             {
-                numeroSaltos = 1;
-
+                numeroSaltos = 1;                
+                
                 playerAnim.WallJump(true);
 
                 if (wallDirX == directionalInput.x)
@@ -419,6 +420,7 @@ public class Player : MonoBehaviour
             //isJumping = false;
             input.isJumping = false;
             velocity = new Vector3(0, 0, 0);
+            playerAnim.Fall(false);
 
             if (Input.GetAxisRaw("Horizontal") != 0)
             {
@@ -489,7 +491,7 @@ public class Player : MonoBehaviour
 
             //PARA CRTAR LA ANIMACION DE SALTO CUANDO CAE AL SUELO
             if (Input.GetAxisRaw("Horizontal") != 0)
-            {
+            {                
                 playerAnim.jumpToRun();
                 //playerAnim.dashToRun();
             }
@@ -507,6 +509,10 @@ public class Player : MonoBehaviour
         else if(coll.tag == "WallJump")
         {
             wallJump = true;
+            playerAnim.setFalseAllAnimations();
+            playerAnim.ForceWallJump();
+            playerAnim.DoubleJumpFalse();
+            
         }
         else 
         if (coll.tag == "PowerUp")
@@ -529,6 +535,7 @@ public class Player : MonoBehaviour
         if (coll.tag == "WallJump")
         {
             wallJump = false;
+            //playerAnim.WallJump(false);            
         }
 
         if (coll.tag == "Through")
@@ -543,8 +550,7 @@ public class Player : MonoBehaviour
         wallDirX = (controller.collisions.left) ? -1 : 1;
         wallSliding = false;
         if (( controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
-        {
-           
+        {           
              playerAnim.WallJump(true);
 
             if (entraColisionPared)
@@ -554,7 +560,6 @@ public class Player : MonoBehaviour
             }
 
             wallSliding = true;
-
             
 
             if (velocity.y < wallSlideSpeedMax)

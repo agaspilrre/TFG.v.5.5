@@ -175,7 +175,7 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-        print(player.GetIsInDescendPlatform());
+
 
         /* //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
          if (player.getNumSaltos() == 0)
@@ -219,7 +219,7 @@ public class PlayerInput : MonoBehaviour
 
             //condicion q comprueba el transform en x para solventar el problema que existia con el walljump 
             //en las esquinas se alternavan las animaciones de correr y walljump con esta condicion lo solventams
-            if(!player.getWallSliding()&& playerTransformX!=0 && Mathf.Abs(this.transform.position.x-playerTransformX)>0.1f)
+            if(!player.getWallSliding()&& playerTransformX!=0 && Mathf.Abs(this.transform.position.x-playerTransformX)>0.2f)
                 playerAnim.WallJump(false);
 
             playerAnim.IdlToRun();
@@ -275,6 +275,7 @@ public class PlayerInput : MonoBehaviour
                     {
                         //de correr a salto
                         playerAnim.runToJump();
+                        
                     }
                 }
                 
@@ -327,7 +328,7 @@ public class PlayerInput : MonoBehaviour
             }
             else
             {
-                playerAnim.jumpToRun();                
+                //playerAnim.jumpToRun();                
             }
 
             //else

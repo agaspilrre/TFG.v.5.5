@@ -144,6 +144,7 @@ public class lifeScript : MonoBehaviour {
             hurting = false;
             //playerScript.enabled = true;
             inputScript.enabled = true;
+            playerAnim.Hurt(false);
         }
 
         if (timer >= timeVibration)

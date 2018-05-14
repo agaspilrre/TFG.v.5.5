@@ -227,7 +227,9 @@ public class Poderes : MonoBehaviour
 
         //quitar las animaciones del dush        
         if (Input.GetAxisRaw("Horizontal") != 0)
+        {
             playerAnim.jumpToRun();
+        }
 
         else
             playerAnim.JumpToIdl();

@@ -22,6 +22,9 @@ public class BasicAttack : MonoBehaviour {
     [SerializeField]
     GameObject basicAttack;
 
+    public GameObject rotacionDerecho;
+    public GameObject rotacionIzquierdo;
+
     GameObject prueba;
 
     [SerializeField]
@@ -56,6 +59,14 @@ public class BasicAttack : MonoBehaviour {
 
             float rot_z = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             directionObject.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+
+            if(rot_z >= 90)
+            {
+                rot_z = -180 + rot_z;
+            }
+
+            rotacionDerecho.transform.rotation = Quaternion.Euler(0f, 0f,rot_z);
+            rotacionIzquierdo.transform.rotation = Quaternion.Euler(0f, 0f,rot_z);
         }
     }
 
@@ -74,7 +85,7 @@ public class BasicAttack : MonoBehaviour {
 
     public void StopCharging()
     {       
-        if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse && isCharging)
+        if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse && isCharging && !player.wallSliding)
         {
             isCharging = false;
             directionObject.SetActive(false);
@@ -86,7 +97,7 @@ public class BasicAttack : MonoBehaviour {
 
     public void Charge()
     {
-        if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse)
+        if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse && !player.wallSliding)
         {
             isCharging = true;
             player.speedAttacking = decreaseSpeed;
