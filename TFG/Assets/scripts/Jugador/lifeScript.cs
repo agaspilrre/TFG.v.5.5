@@ -115,10 +115,7 @@ public class lifeScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (lifeCount < 0)
-        {
-            playerAnim.GameOver(true);
-        }
+       
         if (rb.velocity.y <= decrementImpulse && lifeCount >= 0)
         {
             playerScript.enabled = true;
@@ -237,6 +234,9 @@ public class lifeScript : MonoBehaviour {
        
         if (lifeCount < 0)
         {
+           
+            
+            
             //congelar camara
             cameraController.SetCameraState("Camera/BlockBoth");
 
@@ -247,6 +247,8 @@ public class lifeScript : MonoBehaviour {
             Invoke("StopMovement", timeToStopGravity);
             Invoke("ExecuteDeath", timeExpire);
             Invoke("DoGameOver", timeToGameOver);
+            //gameManager.loadGameOver();
+            rb.velocity = Vector3.zero;
         }
     }
 
@@ -255,7 +257,13 @@ public class lifeScript : MonoBehaviour {
         particles1.SetActive(false);
         particles2.SetActive(false);
         
-        playerAnim.death();
+        playerAnim.death(true);
+        Invoke("deathtofalse", 0.1f);
+    }
+
+    void deathtofalse()
+    {
+        playerAnim.death(false);
     }
 
     void StopMovement()
@@ -266,9 +274,10 @@ public class lifeScript : MonoBehaviour {
 
     void DoGameOver()
     {
+        
         gameManager.loadGameOver();
     }
-   
+
 
     IEnumerator InvulnerableColor()
     {
@@ -296,6 +305,7 @@ public class lifeScript : MonoBehaviour {
     /// <param name="cure"></param>
     public void cureLife(int cure)
     {
+        playerAnim.death(false);
         //si la vida esta incompleta entonces curamos
         if (lifeCount < numberLifes)
         {

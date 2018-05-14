@@ -6,7 +6,14 @@ public class ScreensManager : MonoBehaviour {
     [SerializeField]
     Screens[] screens;
 
+    public static ScreensManager instance;
+
     private byte index;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public byte Index
     {

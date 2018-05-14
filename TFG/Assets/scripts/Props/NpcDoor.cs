@@ -54,5 +54,24 @@ public class NpcDoor : MonoBehaviour {
         }
     }
 
-   
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+
+        count = 0;
+        if (collision.gameObject.tag == "Player")
+        {
+            for (int i = 0; i < activatorObjects.Count; i++)
+            {
+                if (activatorObjects[i].GetComponent<DoorObjects>().getActivationObject())
+                    count++;
+
+            }
+
+            if (count == activatorObjects.Count)
+                isOpen = true;
+
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using XInputDotNetPure;
+using System.Collections.Generic;
 /// <summary>
 /// CLASE ENCARGADA DE DETECTAR LOS INPUTS QUE EL JUGADOR ESTA PULSANDO 
 /// </summary>
@@ -13,6 +14,7 @@ public class PlayerInput : MonoBehaviour
     Player player;
     private PlayerAnim playerAnim;
     Poderes poderes;
+
 
     BasicAttack basicAttack;
 
@@ -89,8 +91,13 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     float vibrationForce;
 
+    public List<AudioClip> clips = new List<AudioClip>();
+    AudioSource audioSource;
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         //settings = UnityEditor.AnimationUtility.GetAnimationClipSettings(jump);
         player = GetComponent<Player>();
         lifeScript = gameObject.GetComponent<lifeScript>();
@@ -174,8 +181,6 @@ public class PlayerInput : MonoBehaviour
                 GamePad.SetVibration(0, 0, 0);
             }
         }
-
-        print(player.GetIsInDescendPlatform());
 
         /* //Control de la animacion de salto, que la primera vez se ejecute normal y en el segundo se para en el ultimo frame
          if (player.getNumSaltos() == 0)
