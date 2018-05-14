@@ -27,6 +27,7 @@ public class TimerManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        //print(seconds);
         if (!stop)
         {
             seconds -= Time.deltaTime;
@@ -34,7 +35,7 @@ public class TimerManager : MonoBehaviour {
             if (seconds<=limitTime)
             {
                 //llamar a la funcion de muerte
-                fixedVar.totalStarts = 0;
+                //fixedVar.totalStarts = 0;
                 gm.loadGameOver();
             }
             //if (seconds % 60 >= 10)
@@ -59,6 +60,16 @@ public class TimerManager : MonoBehaviour {
     public void addTime(float _time)
     {
         seconds += _time;
+    }
+
+    public float getTime()
+    {
+        return seconds;
+    }
+
+    public void setTime(float _value)
+    {
+        seconds = _value;
     }
 
     

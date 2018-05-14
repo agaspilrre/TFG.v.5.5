@@ -143,10 +143,10 @@ public class PlayerAnim : MonoBehaviour {
     /// <summary>
     /// Metodo que activa la animacion de muerte del personaje
     /// </summary>
-    public void death()
+    public void death(bool _value)
     {
         setFalseAllAnimations();
-        animator.SetBool("death", true);
+        animator.SetBool("death", _value);
     }
 
     /// <summary>
