@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using XInputDotNetPure;
+using System.Collections.Generic;
 /// <summary>
 /// CLASE ENCARGADA DE DETECTAR LOS INPUTS QUE EL JUGADOR ESTA PULSANDO 
 /// </summary>
@@ -77,6 +78,7 @@ public class PlayerInput : MonoBehaviour
 
     float timer;
     bool pressed;
+    public float timerWalking;
 
     public GameObject brazo1;
     public GameObject brazo2;
@@ -88,6 +90,18 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField]
     float vibrationForce;
+
+    [SerializeField]
+    List<AudioClip> clips;
+
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioSource sourceShoot;
+
+    [SerializeField]
+    public AudioSource sourceWalk;
 
     void Start()
     {
@@ -112,7 +126,7 @@ public class PlayerInput : MonoBehaviour
         //VIBRACION SALTO
 
         if (isJumpingVibr)
-        {
+        {            
             timerJump++;
             GamePad.SetVibration(0, quantityVibrationJump, quantityVibrationJump);
         }
@@ -206,30 +220,28 @@ public class PlayerInput : MonoBehaviour
         //para activar las animaciones en caso de que nos movamos
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
-           
-
             if (player.getWallSliding())
             {
-                 playerTransformX = this.transform.position.x;
+                playerTransformX = this.transform.position.x;
             }
             stopTime = 0;
             moving = PlayerMoving.yes;
             //si nos movemos se activan las animaciones 
-            
+
 
             //condicion q comprueba el transform en x para solventar el problema que existia con el walljump 
             //en las esquinas se alternavan las animaciones de correr y walljump con esta condicion lo solventams
-            if(!player.getWallSliding()&& playerTransformX!=0 && Mathf.Abs(this.transform.position.x-playerTransformX)>0.2f)
+            if (!player.getWallSliding() && playerTransformX != 0 && Mathf.Abs(this.transform.position.x - playerTransformX) > 0.2f)
                 playerAnim.WallJump(false);
 
-            playerAnim.IdlToRun();
+            playerAnim.IdlToRun();        
 
-            
-            
         }
 
         else if (Input.GetAxis("Horizontal") == 0)
         {
+            timerWalking = 0;
+            sourceWalk.loop = false;
 
             //comprobar cuanto tiempo permanece parado para el sistema de emojis
             stopTime += Time.deltaTime;
@@ -253,6 +265,12 @@ public class PlayerInput : MonoBehaviour
         //SALTO  
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("AButton"))
         {
+
+            if (player.getNumSaltos() <= 1)
+            {
+                PlayClipJump();
+            }
+
             if (!basicAttack.isCharging)
             {
                 isJumping = true;
@@ -262,7 +280,7 @@ public class PlayerInput : MonoBehaviour
 
                 if (player.GetDirectionalInput().y == -1 && player.GetIsInDescendPlatform() && player.GetDirectionalInput().x == 0)
                 {
-                    playerAnim.Fall(true);
+                    playerAnim.Fall(true);                   
                 }
                 else                
                 {
@@ -338,15 +356,18 @@ public class PlayerInput : MonoBehaviour
         }
 
         if ((Input.GetButton("BButton") || Input.GetKey(KeyCode.Y)) && pressed == false)
-        {
+        {            
             timer += Time.deltaTime;            
         }
 
         if ((Input.GetButtonUp("BButton") || Input.GetKeyUp(KeyCode.Y)) && pressed == false)
-            timer = 0;
+        {
+            timer = 0;            
+        }
+            
 
         if (Input.GetKeyDown(KeyCode.L) || Input.GetButtonDown("XButton"))
-        {
+        {            
             basicAttack.Charge();
         }
 
@@ -365,7 +386,7 @@ public class PlayerInput : MonoBehaviour
             basicAttack.direction = basicAttackDirection.normalized;
         }
         if (Input.GetKeyUp(KeyCode.L) || Input.GetButtonUp("XButton"))
-        {
+        {            
             basicAttack.StopCharging();
         }
 
@@ -439,4 +460,46 @@ public class PlayerInput : MonoBehaviour
         isDashing = value;
     }
 
+    public void PlayClipJump()
+    {
+        source.clip = clips[0];
+        source.Play();
+    }
+
+    public void PlayClipFall()
+    {
+        source.clip = clips[1];
+        source.Play();
+    }
+
+    public void PlayClipShoot()
+    {
+        source.clip = clips[2];
+        source.Play();
+    }
+
+    public void PlayClipShotHit()
+    {
+        sourceShoot.clip = clips[3];
+        sourceShoot.Play();
+    }
+
+    public void PlayClipDash()
+    {
+        source.clip = clips[4];
+        source.Play();
+    }
+
+    public void PlayClipHurt()
+    {
+        source.clip = clips[5];
+        source.Play();
+    }
+
+    public void PlayClipWalk()
+    {
+        sourceWalk.clip = clips[4];
+        sourceWalk.loop = true;
+        sourceWalk.Play();
+    }
 }

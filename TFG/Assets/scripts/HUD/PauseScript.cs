@@ -6,10 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseScript : MonoBehaviour {
 
     GameObject PauseMenu;
-    bool pausa;
-    bool muted;
-    [SerializeField]
-    Text muteText;
+    bool pausa;    
     GameManager gameManager;
     public GameObject cameraMap;
 
@@ -76,10 +73,6 @@ public class PauseScript : MonoBehaviour {
         SceneManager.LoadScene("Portada");
     }
 
-    public void Mute()
-    {
-        muted = !muted;
-    }
 
     public void Quit()
     {

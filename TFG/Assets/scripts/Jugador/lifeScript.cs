@@ -185,7 +185,8 @@ public class lifeScript : MonoBehaviour {
     /// </summary>
     /// <param name="damage"></param>
     public void makeDamage(int damage)
-    {
+    {   
+
         //solo hacemos daño si no estamos en estado invulnerable
         if (!invulnerable)
         {
@@ -219,7 +220,7 @@ public class lifeScript : MonoBehaviour {
             }
 
             playerAnim.RunToIdl();
-            playerAnim.Hurt(true);
+            playerAnim.Hurt(true);            
 
             for (int i = 0; i < damage && lifeCount >= 0; i++)
             {
@@ -227,17 +228,14 @@ public class lifeScript : MonoBehaviour {
                 lifeCount--;
                 StartCoroutine("InvulnerableColor");
                 cameraShake.Shake();
-                
+                inputScript.PlayClipHurt();
             }
 
             invulnerable = true;
         }
        
         if (lifeCount < 0)
-        {
-           
-            
-            
+        {           
             //congelar camara
             cameraController.SetCameraState("Camera/BlockBoth");
 

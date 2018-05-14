@@ -19,12 +19,20 @@ public class bulletSE2 : MonoBehaviour {
     public bool RightShoot;
     public bool LeftShoot;
 
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip clip;
+
+    bool dontPlay;
+
     // Use this for initialization
     //obtenemos el Rigidbody de la bala
     void Awake () {
 
         rb = GetComponent<Rigidbody2D>();
-       
+        dontPlay = false;
         
     }
 	
@@ -192,6 +200,7 @@ public class bulletSE2 : MonoBehaviour {
     //Gestiona la colision de esta bala con el player y demas elementos del escenario
     private void OnTriggerEnter2D(Collider2D coll)
     {
+      
         if (coll.gameObject.tag == "Player")
         {
             //call die function
@@ -204,7 +213,61 @@ public class bulletSE2 : MonoBehaviour {
         }
 
         if (coll.gameObject.tag == "Player" || coll.gameObject.tag == "Pared" || coll.gameObject.tag == "Suelo" || coll.gameObject.tag == "techo" || coll.gameObject.tag == "Platform")
-            Destroy(gameObject);
+        {          
+
+            Destroy(gameObject, 0.15f);            
+        }
+
+        if(coll.gameObject.tag == "Player")
+        {
+            if (!dontPlay)
+            {
+                dontPlay = true;
+                source.clip = clip;
+                source.Play();
+            }
+        }
+
+        if (coll.gameObject.tag == "Pared")
+        {
+            if (!dontPlay)
+            {
+                dontPlay = true;
+                source.clip = clip;
+                source.Play();
+            }
+        }
+
+        if (coll.gameObject.tag == "Suelo")
+        {
+            if (!dontPlay)
+            {
+                dontPlay = true;
+                source.clip = clip;
+                source.Play();
+            }
+        }
+
+        if (coll.gameObject.tag == "techo")
+        {
+            if (!dontPlay)
+            {
+                dontPlay = true;
+                source.clip = clip;
+                source.Play();
+            }
+        }
+
+        if (coll.gameObject.tag == "Platform")
+        {
+            if (!dontPlay)
+            {
+                dontPlay = true;
+                source.clip = clip;
+                source.Play();
+            }
+        }
+
     }
 
 }

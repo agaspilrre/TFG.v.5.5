@@ -22,10 +22,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 1019, y: 321}
-  m_MaxSize: {x: 26014, y: 10021}
+  m_MinSize: {x: 1015, y: 321}
+  m_MaxSize: {x: 26010, y: 10000}
   vertical: 0
-  controlID: 4219
+  controlID: 7157
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_MinSize: {x: 304, y: 321}
   m_MaxSize: {x: 8004, y: 8042}
   vertical: 1
-  controlID: 4147
+  controlID: 7158
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,8 +144,8 @@ MonoBehaviour:
     y: 0
     width: 948
     height: 486
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 5}
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_MinSize: {x: 304, y: 200}
   m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 4002
+  controlID: 7101
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -347,8 +347,8 @@ MonoBehaviour:
     y: 0
     width: 318
     height: 461
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 104, y: 121}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
@@ -433,9 +433,9 @@ MonoBehaviour:
     height: 926
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 4048ffff
-    m_LastClickedID: -47040
-    m_ExpandedIDs: 3851ffff00000000
+    m_SelectedIDs: 0acdffff
+    m_LastClickedID: -13046
+    m_ExpandedIDs: 0cd6ffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -476,8 +476,8 @@ MonoBehaviour:
     y: 0
     width: 339
     height: 947
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 234, y: 271}
+  m_MaxSize: {x: 10004, y: 10021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -521,19 +521,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Prefabs/Checkpoint
+    - Assets/SFX
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Checkpoint
+  - Assets/SFX
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\Alumno\Documents\GitHub\TFG.v.5.5\TFG
+  m_LastProjectPath: C:\Users\alber\OneDrive\Documentos\GitHub\TFG.v.5.5\TFG
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 143}
-    m_SelectedIDs: aed90000
-    m_LastClickedID: 55726
-    m_ExpandedIDs: 0000000062840000c0900000109100001493000026930000529300005893000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 275}
+    m_SelectedIDs: 40bc0000
+    m_LastClickedID: 48192
+    m_ExpandedIDs: 00000000d65a0000566e0000c86e0000b4710000d87100001a7200002272000040bc000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -561,7 +561,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000062840000c0900000109100001493000026930000529300005893000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000d65a0000566e0000c86e0000b4710000d87100001a7200002272000040bc000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -586,9 +586,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 4048ffff
-    m_LastClickedInstanceID: -47040
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 0acdffff
+    m_LastClickedInstanceID: -13046
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -634,8 +634,8 @@ MonoBehaviour:
     y: 0
     width: 429
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -667,7 +667,7 @@ MonoBehaviour:
     y: 92
     width: 427
     height: 926
-  m_ScrollPosition: {x: 0, y: 832.9551}
+  m_ScrollPosition: {x: 0, y: 1620}
   m_InspectorMode: 0
   m_PreviewResizer:
     m_CachedPref: -160

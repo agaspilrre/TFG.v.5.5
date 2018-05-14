@@ -8,6 +8,10 @@ using UnityEngine;
 public class HearthPU : MonoBehaviour {
 
     public int curePoints;
+
+    [SerializeField]
+    AudioSource source;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -27,7 +31,7 @@ public class HearthPU : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-
+            source.Play();
             collision.GetComponent<lifeScript>().cureLife(curePoints);
             Destroy(this.gameObject);
         }

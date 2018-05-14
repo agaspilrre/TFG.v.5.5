@@ -210,6 +210,7 @@ public class Poderes : MonoBehaviour
         basicAttack.CancelAttack();
 
         input.setVibrationDash(true);
+        input.PlayClipDash();
     }
 
     public void CancelInvokes()

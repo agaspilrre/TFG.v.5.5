@@ -36,6 +36,12 @@ public class SmallEnemy2 : MonoBehaviour {
     //public float TimeToStart;
     Animator animator;
 
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip clip;
+    
     //public int Damage;
 
     // Use this for initialization
@@ -91,7 +97,7 @@ public class SmallEnemy2 : MonoBehaviour {
 
                 if (TriggerRecon.instance.isIn && stuned == false)
                 {
-                    animator.SetBool("attack", true);
+                    animator.SetBool("attack", true);                    
                 }
                 else
                 {
@@ -119,6 +125,8 @@ public class SmallEnemy2 : MonoBehaviour {
     /// </summary>
     public void InstantiateBullet()
     {
+        PlayShootClip();
+
         bulletSmallEnemy2.GetComponent<bulletSE2>().setSpeed(speedBullet);
         bulletSmallEnemy2.GetComponent<bulletSE2>().setMakeDamage(makeDamage);
         bulletSmallEnemy2.GetComponent<bulletSE2>().setMakeSlow(makeSlow);
@@ -178,4 +186,12 @@ public class SmallEnemy2 : MonoBehaviour {
         animator.SetBool("stun", true);
         stuned = true;
     }
+
+    public void PlayShootClip()
+    {
+        source.clip = clip;
+        source.Play();
+    }
+
+    
 }

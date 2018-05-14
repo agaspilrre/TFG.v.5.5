@@ -9,6 +9,9 @@ public class StartItem : MonoBehaviour {
 
     public bool haveThisStart;
 
+    [SerializeField]
+    AudioSource source;
+
 	// Use this for initialization
 	void Start () {
 
@@ -32,6 +35,7 @@ public class StartItem : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
+            source.Play();
             //incrementar variable estatica
             fixedVar.totalStarts ++;
             //incrementar variable start manager
@@ -39,7 +43,7 @@ public class StartItem : MonoBehaviour {
             //poner variable a true de que ya tengo este objeto.
             haveThisStart = true;
             //destruir el objeto
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 0.15f);
 
         }
     }

@@ -76,6 +76,7 @@ public class BasicAttack : MonoBehaviour {
         {
             if (prueba.GetComponent<ParticleSystem>().particleCount == 0)
             {
+                playerInput.PlayClipShotHit();
                 isAttacking = false;
                 Destroy(prueba);
                 StopAllCoroutines();
@@ -110,6 +111,7 @@ public class BasicAttack : MonoBehaviour {
     {
         if(!isAttacking)
         {
+            playerInput.PlayClipShoot();
             prueba = Instantiate(basicAttack, playerTransform.position, Quaternion.identity);
             prueba.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
             Invoke("StopAttack", lifeSeconds);
@@ -126,8 +128,8 @@ public class BasicAttack : MonoBehaviour {
     void StopAttack()
     {
         isAttacking = false;
-
-        if(prueba != null)
+        
+        if (prueba != null)
             Destroy(prueba);
     }
 }

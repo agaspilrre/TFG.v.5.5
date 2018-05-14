@@ -25,6 +25,12 @@ public class BouncyTrigger : MonoBehaviour {
     BoxCollider2D characterCollider;
     Player playerScript;
 
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    List<AudioClip> clips;
+
     bool isJumping;
     float timerJump;
 
@@ -97,6 +103,7 @@ public class BouncyTrigger : MonoBehaviour {
     /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        PlayImpulseClip();
         anim.SetBool("Impulse", true);
         anim.SetBool("Idle", false);
     }
@@ -168,7 +175,7 @@ public class BouncyTrigger : MonoBehaviour {
     /// <param name="collision"></param>
     public void OnParticleCollision(GameObject collision)
     {
-        
+        PlayWakeUpClip();
         anim.SetBool("Awake", true);
         colliderBouncy.isTrigger = true;
         Invoke("startIdle", 1);
@@ -192,6 +199,18 @@ public class BouncyTrigger : MonoBehaviour {
         check = false;
         playerScript.returnGravity();
         playerScript.setPermitido(true);
+    }
+
+    void PlayWakeUpClip()
+    {
+        source.clip = clips[0];
+        source.Play();
+    }
+
+    void PlayImpulseClip()
+    {
+        source.clip = clips[1];
+        source.Play();
     }
 }
 

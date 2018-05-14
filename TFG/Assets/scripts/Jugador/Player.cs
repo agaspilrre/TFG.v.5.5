@@ -216,6 +216,7 @@ public class Player : MonoBehaviour
         if (velocity.y < -5 && !wallSliding && numeroSaltos >= 1)
         {
             playerAnim.Fall(true);
+            
         }
 
         
@@ -425,6 +426,7 @@ public class Player : MonoBehaviour
             if (Input.GetAxisRaw("Horizontal") != 0)
             {
                 playerAnim.jumpToRun();
+                
                 //playerAnim.dashToRun();
             }
             else
@@ -434,8 +436,7 @@ public class Player : MonoBehaviour
             }
 
             if(numeroSaltos == 1 || numeroSaltos == 2)
-            {
-
+            {                
                 //shake.Shake(0.2f);
                 input.setVibrationJump(true);
             }
@@ -476,7 +477,7 @@ public class Player : MonoBehaviour
         {
             //this.enabled = false;
             transform.parent = null;
-        }
+        }      
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
