@@ -68,9 +68,29 @@ public class Player : MonoBehaviour
     bool isInDescendPlatform;
     bool canSecondJump;
     public bool enableDoubleJump;
+    bool canShowfallParticles;
 
     Rigidbody2D rb;
     CameraShake shake;
+
+    [SerializeField]
+    GameObject jumpParticles;
+
+    [SerializeField]
+    Transform spawnJumpParticles;
+
+    [SerializeField]
+    GameObject wallParticles;
+
+    [SerializeField]
+    Transform spawnWallRightParticles;
+
+    [SerializeField]
+    Transform spawnWallLeftParticles;
+
+    [SerializeField]
+    GameObject fallParticles;
+
 
     void Start()
     {
@@ -83,6 +103,7 @@ public class Player : MonoBehaviour
 
         permitido = true;
         isInDescendPlatform = false;
+        canShowfallParticles = false;
         direccion = 1;
         poderesScript = GetComponent<Poderes>();
         playerAnim = GetComponent<PlayerAnim>();
@@ -121,10 +142,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateVelocity();
-        HandleWallSliding();
-
-        
-           
+        HandleWallSliding();          
 
         //habilidad de correr
         /*
@@ -148,8 +166,7 @@ public class Player : MonoBehaviour
             playerAnim.setAnimatorSpeed(0.5f);
             timer += Time.deltaTime;
             if (timer >= timerSlow)
-            {
-                
+            {               
                 makeSlow = false;
                 timer = 0;
                 playerAnim.setAnimatorSpeed(1f);
@@ -288,8 +305,10 @@ public class Player : MonoBehaviour
     {
         if (!controller.getDown())
         {
+            canShowfallParticles = false;
+
             if (wallSliding || wallJump)
-            {
+            {               
                 numeroSaltos = 1;                
                 
                 playerAnim.WallJump(true);
@@ -310,20 +329,38 @@ public class Player : MonoBehaviour
                     velocity.y = wallLeap.y;
                 }
                 //}           
+
+                if (Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    GameObject gb = Instantiate(wallParticles, spawnWallRightParticles.position, spawnWallRightParticles.rotation);
+                    Destroy(gb, 1);                   
+                }
+                else
+                {
+                    GameObject gb = Instantiate(wallParticles, spawnWallLeftParticles.position, spawnWallLeftParticles.rotation);
+                    Destroy(gb, 1);
+                }
             }
             else
-            {
+            {             
+
                 if (1 > numeroSaltos)
                 {
                     numeroSaltos++;
                     multiplicadorSalto = 1;
                     velocity.y = maxJumpVelocity * multiplicadorSalto;
+                    GameObject gb = Instantiate(jumpParticles, spawnJumpParticles.position, spawnJumpParticles.rotation);
+                    Destroy(gb, 2);
+                    canShowfallParticles = true;
                 }
                 else if (2 > numeroSaltos && enableDoubleJump) // && staminaBar.slider.value > 0)
                 {
                     numeroSaltos++;
                     multiplicadorSalto = savedMultiplicadorSaltos;
                     velocity.y = maxJumpVelocity * multiplicadorSalto;
+                    GameObject gb = Instantiate(jumpParticles, spawnJumpParticles.position, spawnJumpParticles.rotation);
+                    Destroy(gb, 2);
+                    canShowfallParticles = true;
 
                 }
             }
@@ -374,9 +411,10 @@ public class Player : MonoBehaviour
     {
         if (velocity.y > minJumpVelocity)
         {
-            velocity.y = minJumpVelocity;
+            velocity.y = minJumpVelocity;            
         }
 
+        
     }
     
     /// <summary>
@@ -440,7 +478,13 @@ public class Player : MonoBehaviour
                 //shake.Shake(0.2f);
                 input.setVibrationJump(true);
             }
-               
+
+            if ((numeroSaltos == 1 || numeroSaltos == 2) && canShowfallParticles)
+            {
+                GameObject gb = Instantiate(fallParticles, spawnJumpParticles.position, spawnJumpParticles.rotation);
+                Destroy(gb, 2);
+            }
+
             numeroSaltos = 0;
             canSecondJump = false;
             entraColisionPared = true;           
@@ -513,7 +557,8 @@ public class Player : MonoBehaviour
             playerAnim.setFalseAllAnimations();
             playerAnim.ForceWallJump();
             playerAnim.DoubleJumpFalse();
-            
+            canShowfallParticles = false;
+
         }
         else 
         if (coll.tag == "PowerUp")
@@ -553,9 +598,10 @@ public class Player : MonoBehaviour
         if (( controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
         {           
              playerAnim.WallJump(true);
-
+            
             if (entraColisionPared)
-            {               
+            {
+                canShowfallParticles = false;
                 timeToWallUnstick = wallStickTime;
                 entraColisionPared = false;
             }
@@ -564,7 +610,7 @@ public class Player : MonoBehaviour
             
 
             if (velocity.y < wallSlideSpeedMax)
-            {
+            {               
                 velocity.y = -wallSlideSpeedMax;
             }
 

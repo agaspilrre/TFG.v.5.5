@@ -73,6 +73,9 @@ public class lifeScript : MonoBehaviour {
     [SerializeField]
     GameObject particles2;
 
+    [SerializeField]
+    GameObject deathParticles;
+
     public float timeExpire;
 
     public float timeToGameOver;
@@ -82,7 +85,7 @@ public class lifeScript : MonoBehaviour {
     public float timeStopAllActions;
 
     bool hurting;
-
+    bool showDead;
     // Use this for initialization
     void Start () {
 
@@ -90,6 +93,7 @@ public class lifeScript : MonoBehaviour {
         invulnerableCount = 0;
         shake = false;
         hurting = false;
+        showDead = false;
 
         if(GameObject.Find("GameManager") != null)
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -113,9 +117,7 @@ public class lifeScript : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-
-       
+	void Update () {      
 
         if (rb.velocity.y <= decrementImpulse && lifeCount >= 0)
         {
@@ -187,7 +189,6 @@ public class lifeScript : MonoBehaviour {
     /// <param name="damage"></param>
     public void makeDamage(int damage)
     {   
-
         //solo hacemos daño si no estamos en estado invulnerable
         if (!invulnerable)
         {
@@ -236,7 +237,14 @@ public class lifeScript : MonoBehaviour {
         }
        
         if (lifeCount < 0)
-        {           
+        {
+            if(!showDead)
+            {
+                GameObject gb = Instantiate(deathParticles, transform.position, transform.rotation);
+                Destroy(gb, 1);
+                showDead = true;
+            }
+
             //congelar camara
             cameraController.SetCameraState("Camera/BlockBoth");
 
@@ -253,7 +261,7 @@ public class lifeScript : MonoBehaviour {
     }
 
     void ExecuteDeath()
-    {
+    {      
         particles1.SetActive(false);
         particles2.SetActive(false);
         
@@ -273,9 +281,9 @@ public class lifeScript : MonoBehaviour {
     }
 
     void DoGameOver()
-    {
-        
+    {        
         gameManager.loadGameOver();
+        showDead = false;
     }
 
 

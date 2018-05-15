@@ -265,7 +265,6 @@ public class PlayerInput : MonoBehaviour
         //SALTO  
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("AButton"))
         {
-
             if (player.getNumSaltos() <= 1)
             {
                 PlayClipJump();
