@@ -215,7 +215,7 @@ public class bulletSE2 : MonoBehaviour {
         if (coll.gameObject.tag == "Player" || coll.gameObject.tag == "Pared" || coll.gameObject.tag == "Suelo" || coll.gameObject.tag == "techo" || coll.gameObject.tag == "Platform")
         {          
 
-            Destroy(gameObject, 0.15f);            
+            Destroy(gameObject);            
         }
 
         if(coll.gameObject.tag == "Player")

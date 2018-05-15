@@ -116,6 +116,7 @@ public class lifeScript : MonoBehaviour {
 	void Update () {
 
        
+
         if (rb.velocity.y <= decrementImpulse && lifeCount >= 0)
         {
             playerScript.enabled = true;

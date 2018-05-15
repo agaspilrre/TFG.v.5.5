@@ -26,15 +26,15 @@ public class DamageTrigger : MonoBehaviour {
     /// Metodo que detecta si el personaje a entrado y se encarga de aplicarle daño
     /// </summary>
     /// <param name="collision"></param>
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            lifeScript.setInvulnerable(false);
-            collision.GetComponent<lifeScript>().makeDamage(Damage);
-        }
+    //public void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Player")
+    //    {
+    //        lifeScript.setInvulnerable(false);
+    //        collision.GetComponent<lifeScript>().makeDamage(Damage);
+    //    }
 
-    }
+    //}
 
     /// <summary>
     /// Metodo que detecta si el personaje permanece dentro del trigger para seguir aplicandole daño
