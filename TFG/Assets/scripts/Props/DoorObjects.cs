@@ -10,11 +10,13 @@ public class DoorObjects : MonoBehaviour {
 
     public bool activateObject;
     SpriteRenderer sr;
+    Animator anim;
 
 	// Use this for initialization
 	void Start () {
 
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
 
 	}
 	
@@ -40,7 +42,8 @@ public class DoorObjects : MonoBehaviour {
     {
 
         activateObject = true;
-        sr.color = Color.green;
+        anim.SetBool("ActivarPuerta", true);
+        //sr.color = Color.green;
 
     }
 }
