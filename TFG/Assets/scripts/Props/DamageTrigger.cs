@@ -43,7 +43,10 @@ public class DamageTrigger : MonoBehaviour {
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
-        {            
+        {
+            if(Damage == 4)
+                lifeScript.setInvulnerable(false);
+
             collision.GetComponent<lifeScript>().makeDamage(Damage);
         }
     }

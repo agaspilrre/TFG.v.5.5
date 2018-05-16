@@ -12,8 +12,11 @@ public class StartItem : MonoBehaviour {
     [SerializeField]
     AudioSource source;
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    AudioClip clip;
+
+    // Use this for initialization
+    void Start () {
 
         if (haveThisStart)
         {
@@ -35,6 +38,7 @@ public class StartItem : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
+            source.clip = clip;
             source.Play();
             //incrementar variable estatica
             fixedVar.totalStarts ++;

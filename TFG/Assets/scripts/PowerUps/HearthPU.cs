@@ -12,8 +12,11 @@ public class HearthPU : MonoBehaviour {
     [SerializeField]
     AudioSource source;
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    AudioClip clip;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -31,9 +34,12 @@ public class HearthPU : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
+            source.clip = clip;
             source.Play();
             collision.GetComponent<lifeScript>().cureLife(curePoints);
             Destroy(this.gameObject);
         }
     }
+
+
 }

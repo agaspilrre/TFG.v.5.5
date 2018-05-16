@@ -188,10 +188,22 @@ public class lifeScript : MonoBehaviour {
     /// </summary>
     /// <param name="damage"></param>
     public void makeDamage(int damage)
-    {   
+    {
+        if (damage == 4 || damage == 5)
+        {
+            if (playerScript.getDireccion() == 1)
+                rb.AddForce(new Vector2(-damageDisInstantForceX, damageDisInstantForceY), ForceMode2D.Impulse);
+
+            if (playerScript.getDireccion() == -1)
+                rb.AddForce(new Vector2(damageDisInstantForceX * 3, damageDisInstantForceY), ForceMode2D.Impulse);
+
+            playerScript.setPermitido(false);
+            inputScript.enabled = false;
+        }
+
         //solo hacemos daño si no estamos en estado invulnerable
         if (!invulnerable)
-        {
+        {            
             hurting = true;
             shake = true;
 
@@ -207,19 +219,7 @@ public class lifeScript : MonoBehaviour {
                 //playerScript.enabled = false;
                 inputScript.enabled = false;
                 rb.AddForce(new Vector2(damageDisForceX, damageDisForceY), ForceMode2D.Impulse);
-            }
-
-            if(damage == 4 || damage == 5)
-            {
-                if (playerScript.getDireccion() == 1)
-                    rb.AddForce(new Vector2(-damageDisInstantForceX, damageDisInstantForceY), ForceMode2D.Impulse);
-
-                if (playerScript.getDireccion() == -1)
-                    rb.AddForce(new Vector2(damageDisInstantForceX * 3, damageDisInstantForceY), ForceMode2D.Impulse);
-
-                playerScript.setPermitido(false);
-                inputScript.enabled = false;               
-            }
+            }          
 
             playerAnim.RunToIdl();
             playerAnim.Hurt(true);            
