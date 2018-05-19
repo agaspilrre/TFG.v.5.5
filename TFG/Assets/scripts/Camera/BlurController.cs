@@ -49,7 +49,7 @@ public class BlurController : MonoBehaviour {
         }
 	}
 
-    public void SetActive(bool isActive)
+    public void SetActiveBlur(bool isActive)
     {
         active = isActive;
     }

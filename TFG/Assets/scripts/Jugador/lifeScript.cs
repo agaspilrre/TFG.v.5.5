@@ -284,6 +284,8 @@ public class lifeScript : MonoBehaviour {
     {        
         gameManager.loadGameOver();
         showDead = false;
+
+        cameraController.RestartCamera();
     }
 
 

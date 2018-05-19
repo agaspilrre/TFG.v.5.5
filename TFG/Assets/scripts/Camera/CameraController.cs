@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     bool isActive = true;
 
+    [SerializeField]
     enum State{
         active, 
         inactive,
@@ -18,6 +19,7 @@ public class CameraController : MonoBehaviour {
 
     int blockedDirection; //0 width 1 heigth
 
+    [SerializeField]
     State cameraState;
 
     [SerializeField]
@@ -117,6 +119,11 @@ public class CameraController : MonoBehaviour {
 
         heightDirection = 3;
         widthDirecion = 3;
+    }
+
+    public void RestartCamera()
+    {
+        cameraState = State.active;
     }
 
     public void ChangeGameScreen(Vector3 position)

@@ -17,7 +17,9 @@ public class CollisionController : MonoBehaviour {
     #region triggers
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "CameraEndPoint")
+        if (other.name == "CameraDistorsion")
+            BlurController.instance.SetActiveBlur(true);
+        else if (other.name == "CameraEndPoint")
             mainCamera.SetCameraState("inactive");
         else if (other.name == "CameraStartPoint")
             mainCamera.SetCameraState("active");
