@@ -8,15 +8,20 @@ using UnityEngine;
 /// </summary>
 public class FadeManagger : MonoBehaviour {
 
+    /// <summary>
+    /// Duracion del fade
+    /// </summary>
     public float fadeDuration;
 
     void Start()
     {
-
         StartCoroutine("goTo");
-
     }
 
+    /// <summary>
+    /// Corrutina que permite cargar la escena al cabo de los segundos del fadeDuration
+    /// </summary>
+    /// <returns></returns>
     IEnumerator goTo()
     {
         yield return new WaitForSeconds(fadeDuration);

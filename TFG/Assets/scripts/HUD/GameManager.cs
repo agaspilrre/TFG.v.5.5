@@ -9,18 +9,59 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : MonoBehaviour {
 
+    /// <summary>
+    /// Referencia a la pantalla de gameover
+    /// </summary>
     public GameObject gameOver;
-    public int timeGameOver;
-    Transform camera;
-    int countTime;
-    lifeScript lifePlayer;
-    PlayerAnim playerAnim;
-    CheckPointManager CPmanager;
-    GameObject player;
-    RawImage fadeImage;
-    public float fadeTime;
 
+    /// <summary>
+    /// Tiempo de gameover
+    /// </summary>
+    public int timeGameOver;
+
+    /// <summary>
+    /// Referencia al transform de la camara
+    /// </summary>
+    Transform camera;
+
+    /// <summary>
+    /// Contador para quitar el gameover
+    /// </summary>
+    int countTime;
+
+    /// <summary>
+    /// Referencia al lifescript del player
+    /// </summary>
+    lifeScript lifePlayer;
+
+    /// <summary>
+    /// Referencia al player anim del player
+    /// </summary>
+    PlayerAnim playerAnim;
+
+    /// <summary>
+    /// Rerefencia al checkpoint manager
+    /// </summary>
+    CheckPointManager CPmanager;
+
+    /// <summary>
+    /// Referencia al gameobject del player
+    /// </summary>
+    GameObject player;
+
+    /// <summary>
+    /// Referencia a la imagen de fade
+    /// </summary>
+    RawImage fadeImage;
+
+    /// <summary>
+    /// Tiempo de fade
+    /// </summary>
+    public float fadeTime;
+    
     bool finishedFade;
+
+
     int entryCount;
     
 

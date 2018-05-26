@@ -3,21 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// CLASE ENCARGADA DE GESTIONAR EL MENU PRINCIPAL DEL JUEGO
+/// </summary>
 public class MenuManager : MonoBehaviour {
-
    
+    /// <summary>
+    /// Tiempo para que el fade se realice poco a poco (incrementando o decrementando)
+    /// </summary>
     public float fadeTime = 0.025f;
+
+    /// <summary>
+    /// Referencia a la imagen de fade
+    /// </summary>
     public RawImage fadeBlack;
+
+    /// <summary>
+    /// Referencia a la imagen principal del fondo
+    /// </summary>
     public GameObject staticImage;
+
+    /// <summary>
+    /// Referencia al resto de imagenes que hay en el fondo
+    /// </summary>
     public RawImage[] concepts;
 
-    bool round;
-
+   
     // Use this for initialization
     void Start () {
-
-        round = false;
-		
 	}
 	
 	// Update is called once per frame
@@ -26,6 +39,10 @@ public class MenuManager : MonoBehaviour {
         Sequence();       
     }
 
+    /// <summary>
+    /// Metodo para realizar el fadeOut
+    /// </summary>
+    /// <param name="image"></param>
     void FadeOut(RawImage image)
     {        
         Color color = image.color;
@@ -33,6 +50,10 @@ public class MenuManager : MonoBehaviour {
         image.color = color;       
     }
 
+    /// <summary>
+    /// Metodo para resetear el alpha de la imagen
+    /// </summary>
+    /// <param name="image"></param>
     void ResetAlpha(RawImage image)
     {
         Color color = image.color;
@@ -41,6 +62,9 @@ public class MenuManager : MonoBehaviour {
                 
     }
 
+    /// <summary>
+    /// Metodo para la sucesion de imagenes del fondo mediante fades
+    /// </summary>
     void Sequence()
     {
         if (fadeBlack.color.a >= 0)
@@ -70,10 +94,11 @@ public class MenuManager : MonoBehaviour {
         {
             Reset();
         }
-    }
+    }  
 
-  
-
+    /// <summary>
+    /// Metodo para resetear el alpha de todas las imagenes
+    /// </summary>
     void Reset()
     {
         for(int i = 0; i < concepts.Length; i++)

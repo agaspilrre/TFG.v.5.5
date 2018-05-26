@@ -8,14 +8,35 @@ using UnityEngine.UI;
 /// </summary>
 public class TimerManager : MonoBehaviour {
 
-
+    /// <summary>
+    /// Texto del timer
+    /// </summary>
     public Text timer;
 
+    /// <summary>
+    /// Segundos del timer
+    /// </summary>
     public  float seconds;
+
+    /// <summary>
+    /// Tiempo limite
+    /// </summary>
     public float limitTime;
+
+    /// <summary>
+    /// Propiedad para parar el timer
+    /// </summary>
     public bool stop { get; set; }
-    public static TimerManager instance;
+
+    /// <summary>
+    /// Referencia al game manager
+    /// </summary>
     GameManager gm;
+
+    /// <summary>
+    /// Singleton del timeManager
+    /// </summary>
+    public static TimerManager instance;   
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +48,7 @@ public class TimerManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //print(seconds);
+        //Se va descontando tiempo hasta llegar al limite donde activamos el gameover
         if (!stop)
         {
             seconds -= Time.deltaTime;
@@ -37,20 +58,8 @@ public class TimerManager : MonoBehaviour {
                 //llamar a la funcion de muerte
                 //fixedVar.totalStarts = 0;
                 gm.loadGameOver();
-            }
-            //if (seconds % 60 >= 10)
-            //{
-            //    timer.text = "CRONO :  0" + (int)(seconds / 60) + " : " + (int)(seconds % 60);
-            //}
-
-            //else
-            //{
-            //    timer.text = "CRONO :  0" + (int)(seconds / 60) + " :  0" + (int)(seconds % 60);
-            //}
-            
+            }           
         }
-
-
 	}
 
     /// <summary>
@@ -62,11 +71,19 @@ public class TimerManager : MonoBehaviour {
         seconds += _time;
     }
 
+    /// <summary>
+    /// Metodo para obtener los segundos que quedan
+    /// </summary>
+    /// <returns></returns>
     public float getTime()
     {
         return seconds;
     }
 
+    /// <summary>
+    /// Metodo para setear segundos al timer
+    /// </summary>
+    /// <param name="_value"></param>
     public void setTime(float _value)
     {
         seconds = _value;

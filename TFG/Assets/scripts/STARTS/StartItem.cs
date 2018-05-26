@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// CLASSE ENCARGADA DE COMPROBAR SI EL JUGADOR A COLISIONADO CON ESTE OBJETO ESTRELLA
+/// CLASSE ENCARGADA DE COMPROBAR SI EL JUGADOR HA COLISIONADO CON ESTE OBJETO ESTRELLA
 /// </summary>
 public class StartItem : MonoBehaviour {
 
+    /// <summary>
+    /// Booleano que comprueba si ya tenemos esta estrella
+    /// </summary>
     public bool haveThisStart;
 
+    /// <summary>
+    /// Referencia al audiosource de la estrella
+    /// </summary>
     [SerializeField]
     AudioSource source;
 
+    /// <summary>
+    /// Referencia al clip de sonido que va a emitir la estrella al ser recogida
+    /// </summary>
     [SerializeField]
     AudioClip clip;
 

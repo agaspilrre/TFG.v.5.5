@@ -7,73 +7,116 @@ using UnityEngine.UI;
 /// </summary>
 public class Poderes : MonoBehaviour
 {
+    /// <summary>
+    /// Tiempo de duracion del dash
+    /// </summary>
     public float duracionDash = 1f;
 
+    /// <summary>
+    /// Material para la carga del dash
+    /// </summary>
     public Material materialCargaDash;
 
+    /// <summary>
+    /// Distancia que recorre el dash
+    /// </summary>
     public float distanciaDash = 1f;
 
-    public float distanciaElectroDash = 1f;
+    //public float distanciaElectroDash = 1f;
 
-    public float duracionElectroDash = 1f;
-
-    public float velocidadDash;
-
-    public float velocidadElectroDash;
-
-    Vector3 Seguimiento;
-
-    float initGravity;
-
-    public float cargaDash;
-
-    public bool dashUse;
-
-    public Transform personajeTrans;
-
-    Player personajeMovimiento;
-    //rigidbody del personaje
-    Rigidbody2D personajeRB;
-
-    //variables para el poder de la particion de sombras
-    enum Partition { NORMAL, PARTITION }
-    Partition state;
-
-    //variables para controlar la personalidad del personaje
-    enum Shades { ELECTRIC, SHADOW }
-    Shades playerState;
+    //public float duracionElectroDash = 1f;
 
     /// <summary>
-    /// Almacena los sprites dependiendo en que estado estemos
+    /// Velocidad de dash
     /// </summary>
-    public Sprite ElectricShade;
+    public float velocidadDash;
+
+    //public float velocidadElectroDash;
+
+    //Vector3 Seguimiento;
+
+    /// <summary>
+    /// Gravedad inicial del personaje
+    /// </summary>
+    float initGravity;
+
+    /// <summary>
+    /// Tiempo de carga del dash
+    /// </summary>
+    public float cargaDash;
+
+    /// <summary>
+    /// Booleano para determinar si el dash esta usandose
+    /// </summary>
+    public bool dashUse;
+
+    /// <summary>
+    /// Referencia del transform del personaje
+    /// </summary>
+    public Transform personajeTrans;
+
+    /// <summary>
+    /// Referencia al script del player
+    /// </summary>
+    Player personajeMovimiento;
+    
+    /// <summary>
+    /// Referencia al rigidbody del personaje
+    /// </summary>
+    Rigidbody2D personajeRB;
+
+    ////variables para el poder de la particion de sombras
+    //enum Partition { NORMAL, PARTITION }
+    //Partition state;
+
+    ////variables para controlar la personalidad del personaje
+    //enum Shades { ELECTRIC, SHADOW }
+    //Shades playerState;
+
+    ///// <summary>
+    ///// Almacena los sprites dependiendo en que estado estemos
+    ///// </summary>
+    //public Sprite ElectricShade;
 
 
-    public Sprite ShadowShade;
+    //public Sprite ShadowShade;
 
-    SpriteRenderer sr;
+    //SpriteRenderer sr;
 
-    public GameObject partitionPrefab;
-    GameObject partitonObject;
-    Vector2 positionPartition;
-    bool returnPartitionPosition;
+    //public GameObject partitionPrefab;
+    //GameObject partitonObject;
+    //Vector2 positionPartition;
+    //bool returnPartitionPosition;
     //private float journeyLength;
-    [SerializeField]
-    private float speedLerp = 10;
-    private Transform startMarker;
-    private Collider2D playerCollider;
+    //[SerializeField]
+    //private float speedLerp = 10;
+    //private Transform startMarker;
+    //private Collider2D playerCollider;
 
-    private bool cambioPersonalidad;
-    bool isInAir;
+    //private bool cambioPersonalidad;
+    //bool isInAir;
 
     private PlayerAnim playerAnim;
 
-    //variables para testeo con y sin dush infinito
+    /// <summary>
+    /// Variables para testeo con dash y sin dash infinito
+    /// </summary>
     public bool infinityDush;
     bool verticalDush;
 
+    /// <summary>
+    /// Referencia al script staminaBar
+    /// </summary>
     HabilityBar staminaBar;
+
+    /// <summary>
+    /// Referencia al script basicAttack
+    /// </summary>
     BasicAttack basicAttack;
+
+    /// <summary>
+    /// Referencia al script de player input
+    /// </summary>
     PlayerInput input;
 
     // Use this for initialization
@@ -82,7 +125,7 @@ public class Poderes : MonoBehaviour
         //calcular la velocidad del dash
         velocidadDash = distanciaDash / duracionDash;
 
-        velocidadElectroDash = distanciaElectroDash / duracionElectroDash;
+        //velocidadElectroDash = distanciaElectroDash / duracionElectroDash;
         //referencia al protagonista
         personajeMovimiento = GetComponent<Player>();
         input = GetComponent<PlayerInput>();
@@ -93,25 +136,25 @@ public class Poderes : MonoBehaviour
 
         //variable que controla el numero de dush que se puede hacer, en principio se activa cuando el personaje toca el suelo
         dashUse = true;
-        isInAir = false;
+        //isInAir = false;
 
         staminaBar = GetComponent<HabilityBar>();
 
         cargaDash = 0;
 
-        //al iniciar el juego inicia en estado normal
-        state = Partition.NORMAL;
+        ////al iniciar el juego inicia en estado normal
+        //state = Partition.NORMAL;
 
-        //al iniciar el juego inicia en estado electrico
-        playerState = Shades.ELECTRIC;
+        ////al iniciar el juego inicia en estado electrico
+        //playerState = Shades.ELECTRIC;
 
-        playerCollider = GetComponent<Collider2D>();
+        //playerCollider = GetComponent<Collider2D>();
 
-        cambioPersonalidad = false;
+        //cambioPersonalidad = false;
 
         //para poder modificar el sprite del sprite renderer cuando cambiemos de estados
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = ElectricShade;
-        sr = GetComponent<SpriteRenderer>();
+       // this.gameObject.GetComponent<SpriteRenderer>().sprite = ElectricShade;
+       // sr = GetComponent<SpriteRenderer>();
 
         playerAnim = GetComponent<PlayerAnim>();
         basicAttack = gameObject.GetComponent<BasicAttack>();
@@ -155,15 +198,15 @@ public class Poderes : MonoBehaviour
     /// <summary>
     /// llama a cambio de personalidad y comprueba el salto para la transformacion doble salto, en desuso por razones de diseño
     /// </summary>
-    public void ControlChangePersonality()
-    {
-        personalityChange();
-        //activa el segundo salto al cambiar de personalidad
-        if (personajeMovimiento.getNumSaltos() == 1)
-        {
-            personajeMovimiento.setCanSecondJump(true);
-        }
-    }
+    //public void ControlChangePersonality()
+    //{
+    //    personalityChange();
+    //    //activa el segundo salto al cambiar de personalidad
+    //    if (personajeMovimiento.getNumSaltos() == 1)
+    //    {
+    //        personajeMovimiento.setCanSecondJump(true);
+    //    }
+    //}
     
     /// <summary>
     /// comprueba si puede realizar el dush y si es posible lo realiza 
@@ -188,14 +231,17 @@ public class Poderes : MonoBehaviour
     /// Comprueba si esta en estado de particion. actualmente en desuso
     /// </summary>
     /// <returns></returns>
-    public bool getStatePartition()
-    {
-        if (state == Partition.PARTITION)
-            return true;
-        else
-            return false;
-    }  
+    //public bool getStatePartition()
+    //{
+    //    if (state == Partition.PARTITION)
+    //        return true;
+    //    else
+    //        return false;
+    //}  
 
+    /// <summary>
+    /// Metodo para la ejecucion del dash
+    /// </summary>
     void dash()
     {
         personajeMovimiento.setGravity0();
@@ -213,11 +259,17 @@ public class Poderes : MonoBehaviour
         input.PlayClipDash();
     }
 
+    /// <summary>
+    /// Metodo para cancelar los invokes
+    /// </summary>
     public void CancelInvokes()
     {
         CancelInvoke();
     }
 
+    /// <summary>
+    /// Metodo para permitir el dash de nuevo y reajustar todos los valores del personaje
+    /// </summary>
     void dashPermitido()
     {
         personajeMovimiento.returnGravity();
@@ -281,63 +333,63 @@ public class Poderes : MonoBehaviour
     }
 
 
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        //si chocamos con el cuerpo cascaron vacio se destruye el objeto cascaron instanciado
-        if (coll.gameObject.tag == "Partition")
-        {
-            GameObject.Destroy(partitonObject);
-            state = Partition.NORMAL;
-            //poner permitido a true;
-        }
+    //void OnCollisionEnter2D(Collision2D coll)
+    //{
+    //    //si chocamos con el cuerpo cascaron vacio se destruye el objeto cascaron instanciado
+    //    if (coll.gameObject.tag == "Partition")
+    //    {
+    //        GameObject.Destroy(partitonObject);
+    //        state = Partition.NORMAL;
+    //        //poner permitido a true;
+    //    }
 
-        else if (coll.gameObject.tag == "Enemy" && state == Partition.PARTITION)
-        {
-            startMarker = this.transform;
-            //journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
-            returnPartitionPosition = true;
-        }
-    }
+    //    else if (coll.gameObject.tag == "Enemy" && state == Partition.PARTITION)
+    //    {
+    //        startMarker = this.transform;
+    //        //journeyLength = Vector3.Distance(startMarker.position, partitonObject.transform.position);
+    //        returnPartitionPosition = true;
+    //    }
+    //}
 
     /// <summary>
     /// Devuelve el estado de personalidad en el cual se encuentra el player. actualmente en desuso
     /// </summary>
     /// <returns></returns>
-    public bool getPlayerStates()
-    {
-        return cambioPersonalidad;
-    }
+    //public bool getPlayerStates()
+    //{
+    //    return cambioPersonalidad;
+    //}
 
     
     /// <summary>
     /// Método para cambiar de personalidad. 
     /// Se hace funcion porque no solo se activa con el boton R si no que hay trigger que lo cambian automaticamente
     /// </summary>
-    public void personalityChange()
-    {
+    //public void personalityChange()
+    //{
 
-        if (!cambioPersonalidad)
-        {
-            playerState = Shades.SHADOW;
-            cambioPersonalidad = true;
-            //sr.sprite = ShadowShade;
-            //cambiamos a animacion idle de sombra
-            //playerAnim.IdlSToIdlFalse();
-            //playerAnim.IdlToIdlS();
+    //    if (!cambioPersonalidad)
+    //    {
+    //        playerState = Shades.SHADOW;
+    //        cambioPersonalidad = true;
+    //        //sr.sprite = ShadowShade;
+    //        //cambiamos a animacion idle de sombra
+    //        //playerAnim.IdlSToIdlFalse();
+    //        //playerAnim.IdlToIdlS();
 
-            print("sombra");
-        }
-        else
-        {
-            playerState = Shades.ELECTRIC;
-            cambioPersonalidad = false;
-            //sr.sprite = ElectricShade;
-            //playerAnim.IdlToIdlSFalse();
-            //playerAnim.IdlSToIdl();
-            print("elec");
-        }
+    //        print("sombra");
+    //    }
+    //    else
+    //    {
+    //        playerState = Shades.ELECTRIC;
+    //        cambioPersonalidad = false;
+    //        //sr.sprite = ElectricShade;
+    //        //playerAnim.IdlToIdlSFalse();
+    //        //playerAnim.IdlSToIdl();
+    //        print("elec");
+    //    }
 
-    }
+    //}
 
 
 }

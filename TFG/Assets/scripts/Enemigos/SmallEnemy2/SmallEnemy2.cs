@@ -4,50 +4,122 @@ using UnityEngine;
 
 /// <summary>
 /// CLASE ENCARGADA DE GESTIONAR EL COMPORTAMIENTO DE SMALL ENEMY2
+/// UNICO ENEMIGO ACTUALMENTE
 /// </summary>
 public class SmallEnemy2 : MonoBehaviour {
 
+    /// <summary>
+    /// Velocidad de la bala 
+    /// </summary>
     public float speedBullet;
+
+    /// <summary>
+    /// Booleanos para controlar la direccion en que dispara el enemigo
+    /// </summary>
     public bool UpShoot;
     public bool DownShoot;
     public bool RightShoot;
     public bool LeftShoot;
     
+    /// <summary>
+    /// Booleano para controlar cuando hacer daño
+    /// </summary>
     public bool makeDamage;
+
+    /// <summary>
+    /// Booleano para ralentizar al personaje
+    /// </summary>
     public bool makeSlow;
+
+    /// <summary>
+    /// Daño que realiza el personaje
+    /// </summary>
     public int damage;
+
+    /// <summary>
+    /// Velocidad de slow que se le pone al personaje cuando se le daña
+    /// </summary>
     public float speedSlow;
+
+    /// <summary>
+    /// Timepo de slow que tiene el personaje cuando se le daña
+    /// </summary>
     public float timeSlow;
+
+    /// <summary>
+    /// Timepo de stun que tiene el enemigo
+    /// </summary>
     public float timeStun;
+
+    /// <summary>
+    /// Booleano para comprobar si el enemigo esta stuneado
+    /// </summary>
     bool stuned;
+
+    /// <summary>
+    /// Spawn points de la bala en funcion de la direccion en la que se dispara
+    /// </summary>
     public Transform spawnBulletPointD;
     public Transform spawnBulletPointU;
     public Transform spawnBulletPointL;
     public Transform spawnBulletPointR;
+
+    /// <summary>
+    /// Referencia al prefab de la bala
+    /// </summary>
     public GameObject bulletSmallEnemy2;
+
+    /// <summary>
+    /// Gameobject donde guardamos la instancia de la bala
+    /// </summary>
     private GameObject bullet;
+
+    /// <summary>
+    /// Tiempo entre disparos
+    /// </summary>
     public float timeBetwenShoot;
+
+    /// <summary>
+    /// Timer para gestionar los disparos
+    /// </summary>
     private float timer;
+
+    /// <summary>
+    /// Timer para controlar el tiempo que permanece stuneado el enemigo
+    /// </summary>
     private float timerStund;
+
+    /// <summary>
+    /// Variable para que la animacion se ajuste al tiempo entre disparos de cada enemigo
+    /// </summary>
     public float animationMultiplier;
+
+   
     public int life;
 
     bool startCountTime;
-    //public float TimeToStart;
+    
+    /// <summary>
+    /// Referencia al animator del enemigo
+    /// </summary>
     Animator animator;
 
+    /// <summary>
+    /// Referencia al audiosource del enemigo
+    /// </summary>
     [SerializeField]
     AudioSource source;
 
+    /// <summary>
+    /// Referencia al clip de sonido que va a emitir el enemigo
+    /// </summary>
     [SerializeField]
     AudioClip clip;
-    
-    //public int Damage;
-
+   
     // Use this for initialization
     void Start () {
 
-        //StartCoroutine(StartCount());
+        
         animator = GetComponent<Animator>();
         animator.SetBool("idle", true);
         //para que la animacion se ajuste al tiempo entre disparos de cada enemigo
@@ -68,21 +140,15 @@ public class SmallEnemy2 : MonoBehaviour {
 
         if (!stuned && animator.GetBool("attack"))
         {
-            //if (startCountTime)
-            //{
-                timer += Time.deltaTime;
-                ////ponemos la animacion de atacar
-                //if (timer >= timeBetwenShoot - 1.8f)
-                //{
-                //    animator.SetBool("attack", true);
-                //}
+            timer += Time.deltaTime;
+              
 
-                if (timer >= timeBetwenShoot)
-                {
-                    InstantiateBullet();
-                    timer = 0;
-                }
-           // }
+            if (timer >= timeBetwenShoot)
+            {
+                InstantiateBullet();
+                timer = 0;
+            }
+           
         }
 
         if(stuned)
@@ -108,14 +174,7 @@ public class SmallEnemy2 : MonoBehaviour {
         }
 
     }
-
-    //IEnumerator StartCount()
-    //{
-        
-    //    yield return new WaitForSeconds(TimeToStart);
-    //    startCountTime = true;
-       
-    //}
+   
 
     /// <summary>
     /// Metodo que instancia las balas que dispara este enemigo
@@ -187,6 +246,9 @@ public class SmallEnemy2 : MonoBehaviour {
         stuned = true;
     }
 
+    /// <summary>
+    /// Metodo para hacer sonar el sonido que emite el enemigo
+    /// </summary>
     public void PlayShootClip()
     {
         source.clip = clip;

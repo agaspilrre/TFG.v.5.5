@@ -7,24 +7,64 @@ using UnityEngine;
 /// </summary>
 public class bulletSE2 : MonoBehaviour {
 
+    /// <summary>
+    /// Referencia al rigidbody de la bala
+    /// </summary>
     private Rigidbody2D rb;
+
+    /// <summary>
+    /// Speed de la bala
+    /// </summary>
     public float speed;
+
+    /// <summary>
+    /// Daño que realiza la bala
+    /// </summary>
     public int damage;
+
+    /// <summary>
+    /// Booleano para controlar cuando hacer daño
+    /// </summary>
     public bool makeDamage;
+
+    /// <summary>
+    /// Booleano para ralentizar al personaje
+    /// </summary>
     public bool makeSlow;
+
+    /// <summary>
+    /// Velocidad de slow que se le pone al personaje cuando se le daña
+    /// </summary>
     public float speedSlow;
+
+    /// <summary>
+    /// Timepo de slow que tiene el personaje cuando se le daña
+    /// </summary>
     public float timeSlow;
+
+    /// <summary>
+    /// Booleanos para controlar la direccion en que dispara el enemigo
+    /// </summary>
     public bool UpShoot;
     public bool DownShoot;
     public bool RightShoot;
     public bool LeftShoot;
 
+    /// <summary>
+    /// Referencia al audiosource del enemigo
+    /// </summary>
     [SerializeField]
     AudioSource source;
 
+    /// <summary>
+    /// Referencia al clip de sonido que va a emitir el enemigo al disparar
+    /// </summary>
     [SerializeField]
     AudioClip clip;
 
+    /// <summary>
+    /// Booleano para determinar que suene una vez al colisionar con algo
+    /// </summary>
     bool dontPlay;
 
     // Use this for initialization
@@ -173,30 +213,6 @@ public class bulletSE2 : MonoBehaviour {
         timeSlow = _timer;
     }
 
-    /*
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        
-            if (coll.gameObject.tag == "Player")
-            {
-                //call die function
-                if(makeDamage)
-                    coll.gameObject.GetComponent<lifeScript>().makeDamage(damage);
-
-                //hacer realentizacion tb
-                if (makeSlow)
-                    coll.gameObject.GetComponent<Player>().setMakeSlow(true, timeSlow, speedSlow);
-            }
-
-            Destroy(gameObject);
-
-        
-
-
-
-    }*/
-
-
     //Gestiona la colision de esta bala con el player y demas elementos del escenario
     private void OnTriggerEnter2D(Collider2D coll)
     {
@@ -214,10 +230,10 @@ public class bulletSE2 : MonoBehaviour {
 
         if (coll.gameObject.tag == "Player" || coll.gameObject.tag == "Pared" || coll.gameObject.tag == "Suelo" || coll.gameObject.tag == "techo" || coll.gameObject.tag == "Platform")
         {          
-
             Destroy(gameObject);            
         }
 
+        //En funcion de la colision ejecutamos el sonido una sola vez
         if(coll.gameObject.tag == "Player")
         {
             if (!dontPlay)

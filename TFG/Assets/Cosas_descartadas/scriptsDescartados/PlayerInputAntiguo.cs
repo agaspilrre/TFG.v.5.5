@@ -5,113 +5,113 @@ using System.Collections;
 public class PlayerInputAntiguo : MonoBehaviour
 {
 
-    Player player;
-    private PlayerAnim playerAnim;
+    //Player player;
+    //private PlayerAnim playerAnim;
 
 
-    //variable para activar las animaciones
-    private Animator anim;
+    ////variable para activar las animaciones
+    //private Animator anim;
 
-    enum Direccion { izquierda, derecha }
-    Direccion direccion;
+    //enum Direccion { izquierda, derecha }
+    //Direccion direccion;
 
-    float stopTime = 0;
+    //float stopTime = 0;
 
-    void Start()
-    {
-        player = GetComponent<Player>();
-        anim = GetComponent<Animator>();
+    //void Start()
+    //{
+    //    player = GetComponent<Player>();
+    //    anim = GetComponent<Animator>();
 
-        direccion = Direccion.derecha;
-        playerAnim = GetComponent<PlayerAnim>();
-    }
+    //    direccion = Direccion.derecha;
+    //    playerAnim = GetComponent<PlayerAnim>();
+    //}
 
-    void Update()
-    {
-        Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    //void Update()
+    //{
+    //    Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        //para activar las animaciones en caso de que nos movamos
-        if (Input.GetAxisRaw("Horizontal") != 0)
-        {
-            stopTime = 0;
-            //si nos movemos se activan las animaciones
+    //    //para activar las animaciones en caso de que nos movamos
+    //    if (Input.GetAxisRaw("Horizontal") != 0)
+    //    {
+    //        stopTime = 0;
+    //        //si nos movemos se activan las animaciones
 
-            //comprobamos que no esta ejecutando el dash
-            if (player.GetComponent<Poderes>().getDashUse())
-            {
-                //si es falso corresponde animacion electro
-                if (!player.GetComponent<Poderes>().getPlayerStates())
-                {
-                    playerAnim.IdlToRun();
-                    //playerAnim.RunToIdlFalse();
-                }
+    //        //comprobamos que no esta ejecutando el dash
+    //        if (player.GetComponent<Poderes>().getDashUse())
+    //        {
+    //            //si es falso corresponde animacion electro
+    //            if (!player.GetComponent<Poderes>().getPlayerStates())
+    //            {
+    //                playerAnim.IdlToRun();
+    //                //playerAnim.RunToIdlFalse();
+    //            }
 
-                else
-                {
-                    //playerAnim.IdlSToRunS();
-                    //playerAnim.RunSToIdlSFalse();
-                }
-            }
-        }
+    //            else
+    //            {
+    //                //playerAnim.IdlSToRunS();
+    //                //playerAnim.RunSToIdlSFalse();
+    //            }
+    //        }
+    //    }
 
-        else if (Input.GetAxis("Horizontal") == 0)
-        {
-            //comprobar cuanto tiempo permanece parado para el sistema de emojis
-            stopTime += Time.deltaTime;
+    //    else if (Input.GetAxis("Horizontal") == 0)
+    //    {
+    //        //comprobar cuanto tiempo permanece parado para el sistema de emojis
+    //        stopTime += Time.deltaTime;
 
-            if (!player.GetComponent<Poderes>().getPlayerStates())
-            {
-                playerAnim.RunToIdl();
-                //playerAnim.IdlToRunFalse();
-            }
+    //        if (!player.GetComponent<Poderes>().getPlayerStates())
+    //        {
+    //            playerAnim.RunToIdl();
+    //            //playerAnim.IdlToRunFalse();
+    //        }
 
-            else
-            {
-                //playerAnim.RunSToIdlS();
-                //playerAnim.IdlSToRunSFalse();
-            }
-        }
+    //        else
+    //        {
+    //            //playerAnim.RunSToIdlS();
+    //            //playerAnim.IdlSToRunSFalse();
+    //        }
+    //    }
 
-        player.SetDirectionalInput(directionalInput);
-
-
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
-        {
-            player.OnJumpInputDown();
-        }
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("PS4_X"))
-        {
-            player.OnJumpInputUp();
-        }
+    //    player.SetDirectionalInput(directionalInput);
 
 
+    //    if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("PS4_X"))
+    //    {
+    //        player.OnJumpInputDown();
+    //    }
+    //    if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("PS4_X"))
+    //    {
+    //        player.OnJumpInputUp();
+    //    }
 
 
 
-        //Voltear personaje.
-        if (Input.GetAxis("Horizontal") > 0 && direccion == Direccion.izquierda)
-            flip();
-        else if (Input.GetAxis("Horizontal") < 0 && direccion == Direccion.derecha)
-            flip();
-    }
 
 
-    //funcion que voltea el personaje y animaciones
-    void flip()
-    {
+    //    //Voltear personaje.
+    //    if (Input.GetAxis("Horizontal") > 0 && direccion == Direccion.izquierda)
+    //        flip();
+    //    else if (Input.GetAxis("Horizontal") < 0 && direccion == Direccion.derecha)
+    //        flip();
+    //}
 
-        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
-        if (direccion == Direccion.derecha)
-            direccion = Direccion.izquierda;
-        else
-            direccion = Direccion.derecha;
-    }
+    ////funcion que voltea el personaje y animaciones
+    //void flip()
+    //{
 
-    public float getStopTime()
-    {
-        return stopTime;
-    }
+    //    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+
+    //    if (direccion == Direccion.derecha)
+    //        direccion = Direccion.izquierda;
+    //    else
+    //        direccion = Direccion.derecha;
+    //}
+
+    //public float getStopTime()
+    //{
+    //    return stopTime;
+    //}
 
 
 

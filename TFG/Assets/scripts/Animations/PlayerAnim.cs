@@ -3,13 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// CLASE ENCARGADA DE GESTIONAR LAS TRANSICIONES DEL ANIMATOR DEL PLAYER
+/// CLASE ENCARGADA DE GESTIONAR LAS TRANSICIONES DEL ANIMATOR DEL PLAYER,
+/// POSEE METODOS PARA CANCELAR Y ACTIVAR LOS BOOLEANOS CON LOS QUE SE CONTROLAN LAS ANIMACIONES
 /// </summary>
 public class PlayerAnim : MonoBehaviour {
 
+    /// <summary>
+    /// Referencia al  animator
+    /// </summary>
     Animator animator;
+
+    /// <summary>
+    /// Velocidad inicial del animator
+    /// </summary>
     float initialSpeedAnimator;
 
+    /// <summary>
+    /// Referencia al animator de los brazos 
+    /// para realizar la animacion de apuntado mediante codigo
+    /// </summary>
     [SerializeField]
     Animator fronArm;
     [SerializeField]
@@ -163,6 +175,9 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("doubleJump", false);
     }
 
+    /// <summary>
+    /// Metodo que activa la animacion de walljump
+    /// </summary>
     public void ForceWallJump()
     {
         animator.SetBool("wallJump", true);
@@ -226,12 +241,20 @@ public class PlayerAnim : MonoBehaviour {
         animator.SetBool("Hurt", boolean);
     }
 
+    /// <summary>
+    /// Metodo que activa o desactiva la animacion de gameover del personaje
+    /// </summary>
+    /// <param name="boolean"></param>
     public void GameOver(bool boolean)
     {
         setFalseAllAnimations();
         animator.SetBool("gameOver", boolean);
     }
 
+    /// <summary>
+    /// Metodos para establecer las animaciones de apuntado cuando el personaje ataca
+    /// </summary>
+    /// <param name="boolean"></param>
     public void RightArm(bool boolean)
     {
         fronArm.SetBool("Attacking", boolean);

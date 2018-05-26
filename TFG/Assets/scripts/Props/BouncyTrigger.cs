@@ -8,32 +8,85 @@ using XInputDotNetPure;
 /// </summary>
 public class BouncyTrigger : MonoBehaviour {
 
-    // Use this for initialization
+    /// <summary>
+    /// Booleano para determinar la direccion en la que impulsa
+    /// </summary>
     public bool north;
     public bool south;
     public bool est;
     public bool west;
+
+    /// <summary>
+    /// Fuerza del muelle
+    /// </summary>
     public float forceBouncy;
+
+    /// <summary>
+    /// Velocidad de impulso que da al jugador
+    /// </summary>
     public float speedImpulse;
+
+    /// <summary>
+    /// Velocidad a la que que queremos que se vuelva a recuperar el control del personaje
+    /// tras chocar con el muelle
+    /// </summary>
     public float decrementImpulse;
-    bool check;//para que haga la comprobacion justo despues de saltar en el trampolin
+
+    /// <summary>
+    /// Booleano para que haga la comprobacion justo despues de saltar en el trampolin
+    /// </summary>
+    bool check;
+
+    /// <summary>
+    /// Booleano para establecer la desparicion del jugador
+    /// </summary>
     public bool disapearCharacter;
+
+    /// <summary>
+    /// Referencia al gameobject del jugador
+    /// </summary>
     GameObject player;
+
+    /// <summary>
+    /// Referencia al script de poderes
+    /// </summary>
     Poderes poderes;
 
+    /// <summary>
+    /// Referencia al rigidbody del jugador
+    /// </summary>
     Rigidbody2D characterRB;
+
+    /// <summary>
+    /// Referencia al box collide del jugador
+    /// </summary>
     BoxCollider2D characterCollider;
+
+    /// <summary>
+    /// Referencia al player script
+    /// </summary>
     Player playerScript;
 
+    /// <summary>
+    /// Referencia al audiosource del muelle
+    /// </summary>
     [SerializeField]
     AudioSource source;
 
+    /// <summary>
+    /// Lista de clips de sonido que va a emitir el muelle en sus distintos estados
+    /// </summary>
     [SerializeField]
     List<AudioClip> clips;
 
-    bool isJumping;
-    float timerJump;
+    /// <summary>
+    /// Booleano para establecer la vibracion del mando cuando el jugador esta en el aire
+    /// </summary>
+    bool isJumping;  
 
+    /// <summary>
+    /// Valores para la vibracion del mando
+    /// </summary>
     [SerializeField]
     [Header("Trigger Vibration Settings")]
     [Space(10)]
@@ -41,8 +94,14 @@ public class BouncyTrigger : MonoBehaviour {
     [SerializeField]
     float timeVibrationTrigger;
 
+    /// <summary>
+    /// Collider del muelle
+    /// </summary>
     Collider2D colliderBouncy;
 
+    /// <summary>
+    /// Referencia al animator del muelle
+    /// </summary>
     Animator anim;
 
     void Start () {
@@ -58,15 +117,11 @@ public class BouncyTrigger : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {        
         
-        //Debug.Log( characterRB.velocity);
         if (check)
-        {
-            if (characterRB.velocity.y < 0)
-            {
-                print("sdsdsdsdsdsd");
-            }
+        {            
+            //Cuando queremos devolver el control al personaje
             if (characterRB.velocity.y <= decrementImpulse)
             {
                 activateScriptMovement();
@@ -78,8 +133,7 @@ public class BouncyTrigger : MonoBehaviour {
         }
 
         if (isJumping)
-        {
-            //timerJump++;
+        {           
             GamePad.SetVibration(0, quantityVibrationTrigger, quantityVibrationTrigger);
         }
 
@@ -181,12 +235,18 @@ public class BouncyTrigger : MonoBehaviour {
         Invoke("startIdle", 1);
     }
 
+    /// <summary>
+    /// Metodo para poner a idle al muelle
+    /// </summary>
     void startIdle()
     {
         anim.SetBool("Idle", true);
         anim.SetBool("Awake", false);
     }
 
+    /// <summary>
+    /// Metodo para quitar el control del personaje
+    /// </summary>
     void ChangeGravity()
     {       
         playerScript.setGravity0();
@@ -194,6 +254,9 @@ public class BouncyTrigger : MonoBehaviour {
         playerScript.setPermitido(false);
     }
 
+    /// <summary>
+    /// Metodo para devolver el control del personaje
+    /// </summary>
     void activateScriptMovement()
     {
         check = false;
@@ -201,12 +264,18 @@ public class BouncyTrigger : MonoBehaviour {
         playerScript.setPermitido(true);
     }
 
+    /// <summary>
+    /// Activar sonido de despertarse del muelle
+    /// </summary>
     void PlayWakeUpClip()
     {
         source.clip = clips[0];
         source.Play();
     }
 
+    /// <summary>
+    /// Activar sonido de impulso del muelle
+    /// </summary>
     void PlayImpulseClip()
     {
         source.clip = clips[1];

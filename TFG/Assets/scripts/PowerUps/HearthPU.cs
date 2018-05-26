@@ -7,11 +7,20 @@ using UnityEngine;
 /// </summary>
 public class HearthPU : MonoBehaviour {
 
+    /// <summary>
+    /// Cantidad de vida que recupera el power up
+    /// </summary>
     public int curePoints;
 
+    /// <summary>
+    /// Referencia al audio source del power up
+    /// </summary>
     [SerializeField]
     AudioSource source;
 
+    /// <summary>
+    /// Referencia al clip que suena cuando coges el power up
+    /// </summary>
     [SerializeField]
     AudioClip clip;
 

@@ -2,14 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// CLASE ENCARGADA DEL MOVIMIENTO DE PLATAFORMAS ENTRE DIFERENTES PUNTOS
+/// </summary>
 public class MovementPlatform : MonoBehaviour {
 
+    /// <summary>
+    /// Lista de targets points a los que tiene que ir la plataforma
+    /// </summary>
     public List<Transform> targets;
 
+    /// <summary>
+    /// Transform del siguiente destino al que tiene que ir la plataforma
+    /// </summary>
     Transform destination;
+
+    /// <summary>
+    /// Timer para controlar el tiempo de espera de la plataforma
+    /// </summary>
     float timer = 0;
+
+    /// <summary>
+    /// Velocidad de la plataforma
+    /// </summary>
     public float speed;
+
+    /// <summary>
+    /// Booleano para controlar el movimiento 
+    /// </summary>
     bool enableMovement;
+
+    /// <summary>
+    /// Tiempo de espera
+    /// </summary>
     public float timeWait;
 
     private void Start()
@@ -51,7 +76,10 @@ public class MovementPlatform : MonoBehaviour {
         }
     }
 
-    //Cambia el destino
+    /// <summary>
+    /// Metodo para cambiar el destino de la plataforma
+    /// </summary>
+    /// <param name="dest"></param>
     void SetDestination(Transform dest)
     {
         destination = dest;

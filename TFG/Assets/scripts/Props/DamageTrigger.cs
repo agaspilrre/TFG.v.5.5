@@ -7,8 +7,14 @@ using UnityEngine;
 /// </summary>
 public class DamageTrigger : MonoBehaviour {
 
-    // Use this for initialization
+    /// <summary>
+    /// Daño que realizar el trigger
+    /// </summary>
     public int Damage;
+
+    /// <summary>
+    /// Referencia al lifescript del personaje
+    /// </summary>
     lifeScript lifeScript;
     
 	void Start ()

@@ -8,7 +8,14 @@ using UnityEngine.UI;
 /// </summary>
 public class StartsManager : MonoBehaviour {
 
+    /// <summary>
+    /// Numero de estrellas del nivel
+    /// </summary>
     public int numberStartsLevel;
+
+    /// <summary>
+    /// Texto donde se muestran el numero de estrellas
+    /// </summary>
     public Text startsText;
     //public int starts;
 

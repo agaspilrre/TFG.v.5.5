@@ -8,86 +8,255 @@ using System.Collections;
 [RequireComponent(typeof(Controller2D))]
 public class Player : MonoBehaviour
 {
+    /// <summary>
+    /// Maxima altura de salto
+    /// </summary>
     public float maxJumpHeight = 4;
+
+    /// <summary>
+    /// Valores de salto
+    /// </summary>
     public float minJumpHeight = 1;
-    public float timeToJumpApex = .4f;
+    public float timeToJumpApex = .4f;  
     float accelerationTimeAirborne = .2f;
     public float accelerationTimeGrounded = .1f;
+
+    /// <summary>
+    /// Velocidad de movimiento 
+    /// </summary>
     public float moveSpeed = 6;
+
+    /// <summary>
+    /// Velocidad al correr
+    /// </summary>
     public float runSpeed;
+
+    /// <summary>
+    /// Velocidad de decrecimiento
+    /// </summary>
     public float decreeseSpeed;
 
+    /// <summary>
+    /// Referencia al script Collider2D
+    /// </summary>
     Collider2D myCollider;
-    float timerForJump;
 
+    /// <summary>
+    /// Variable para devolver la velocidad normal del jugador
+    /// </summary>
     float normalSpeed;
+
+    /// <summary>
+    /// Vector2 que guardan valores relacionados con el walljump
+    /// </summary>
     public Vector2 wallJumpClimb;
     public Vector2 wallJumpOff;
     public Vector2 wallLeap;
 
+    /// <summary>
+    /// Velocidad de deslizamiento
+    /// </summary>
     public float wallSlideSpeedMax = 3;
+
+    /// <summary>
+    /// Tiempo de stick en la pared
+    /// </summary>
     public float wallStickTime = .25f;
+
+    /// <summary>
+    /// Tiempo para despegarse de la pared
+    /// </summary>
     public float timeToWallUnstick;
+
+    /// <summary>
+    /// Variable para el doble salto
+    /// </summary>
     public float multiplicadorSalto;
+
+    /// <summary>
+    /// Variable auxiliar para el doble salto
+    /// </summary>
     float savedMultiplicadorSaltos;
+
+    /// <summary>
+    /// Velocidad para atacar
+    /// </summary>
     public float speedAttacking;
 
+    /// <summary>
+    /// Gravedad del personaje
+    /// </summary>
     float gravity;
+
+    /// <summary>
+    /// Maxima velocidad de salto
+    /// </summary>
     float maxJumpVelocity;
+
+    /// <summary>
+    /// Minima velocidad de salto
+    /// </summary>
     float minJumpVelocity;
+
+    /// <summary>
+    /// Vector de velocidad
+    /// </summary>
     Vector3 velocity;
     float velocityXSmoothing;
 
-    float chekcTimeWall;
+    /// <summary>
+    /// Booleano para permitir o no el movimiento
+    /// </summary>
     public bool permitido;
+
+    /// <summary>
+    /// Booleano para determinar si entra en colision con una pared
+    /// </summary>
     bool entraColisionPared = false;
+
+    /// <summary>
+    /// Referencia al script de poderes
+    /// </summary>
     Poderes poderesScript;
+
+    /// <summary>
+    /// Referencia a la direccion del personaje
+    /// </summary>
     int direccion;
-    //bool isJumping;
+    
+    /// <summary>
+    /// Contador de saltos
+    /// </summary>
     int numeroSaltos;
 
+    /// <summary>
+    /// Referencia al script controller2D
+    /// </summary>
     Controller2D controller;
+
+    /// <summary>
+    /// Referencia al script playerInput
+    /// </summary>
     PlayerInput input;
+
+    /// <summary>
+    /// Referencia al script de staminaBar
+    /// </summary>
     HabilityBar staminaBar;
-    PowerUp controlPU;
+
+    /// <summary>
+    /// Referencia al script de playerAnim
+    /// </summary>
     PlayerAnim playerAnim;
     
-
+    /// <summary>
+    /// Vector2 para el input del personaje
+    /// </summary>
     Vector2 directionalInput;
+
+    /// <summary>
+    /// Booleano para determinar si esta deslizando pro la pared
+    /// </summary>
     public bool wallSliding;
+
+    /// <summary>
+    /// 
+    /// </summary>
     int wallDirX;
 
+    /// <summary>
+    /// Booleano para ralentizar al personaje 
+    /// </summary>
     private bool makeSlow;
+
+    /// <summary>
+    /// Timer auxiliar para ralentizar al personaje
+    /// </summary>
     private float timer;
+
+    /// <summary>
+    /// Tiempo que se ralentiza al personaje
+    /// </summary>
     private float timerSlow;
+
+    /// <summary>
+    /// Velocidad cuando esta ralentizado
+    /// </summary>
     private float slowSpeed;
-    //variable para modular peso en la caida
+
+    /// <summary>
+    /// Variable para modular peso en la caida
+    /// </summary>
     public float fallWeight;
 
+    /// <summary>
+    /// Booleano para determinar si esta haciendo wall jump
+    /// </summary>
     public bool wallJump;
+
+    /// <summary>
+    /// Booleano para determinar si el jugador esta situado en una plataforma por la que puede descender
+    /// </summary>
     bool isInDescendPlatform;
+
+    /// <summary>
+    /// Booleano para determinar si el jugador puede hacer el segundo salto
+    /// </summary>
     bool canSecondJump;
+
+    /// <summary>
+    /// Booleano para activar el doble salto al personaje
+    /// </summary>
     public bool enableDoubleJump;
+
+    /// <summary>
+    /// Booleano para mostrar las particulas de caida
+    /// </summary>
     bool canShowfallParticles;
 
+    /// <summary>
+    /// Referencia al rigidbody del personaje
+    /// </summary>
     Rigidbody2D rb;
+
+    /// <summary>
+    /// Referencia al script de shake de la camara
+    /// </summary>
     CameraShake shake;
 
+    /// <summary>
+    /// Particulas de salto
+    /// </summary>
     [SerializeField]
     GameObject jumpParticles;
 
+    /// <summary>
+    /// Punto de spawn de de las particulas de salto
+    /// </summary>
     [SerializeField]
     Transform spawnJumpParticles;
 
+    /// <summary>
+    /// Particulas de wallJump
+    /// </summary>
     [SerializeField]
     GameObject wallParticles;
 
+    /// <summary>
+    /// Punto de spawn a la derecha de de las particulas de walljump
+    /// </summary>
     [SerializeField]
     Transform spawnWallRightParticles;
 
+    /// <summary>
+    /// Punto de spawn a la izquierda de de las particulas de walljump
+    /// </summary>
     [SerializeField]
     Transform spawnWallLeftParticles;
 
+    /// <summary>
+    /// Particulas de caida
+    /// </summary>
     [SerializeField]
     GameObject fallParticles;
 
@@ -107,7 +276,7 @@ public class Player : MonoBehaviour
         direccion = 1;
         poderesScript = GetComponent<Poderes>();
         playerAnim = GetComponent<PlayerAnim>();
-        //controlPU = GameObject.FindGameObjectWithTag("ControlPowerUp").GetComponent<PowerUp>();
+        
         input = GetComponent<PlayerInput>();
         staminaBar = GetComponent<HabilityBar>();
         //isJumping = false;
@@ -204,22 +373,6 @@ public class Player : MonoBehaviour
 
         }
 
-
-        //if (!wallSliding)
-        //{
-        //    chekcTimeWall += Time.deltaTime;
-
-        //    if(chekcTimeWall<=0.5)
-        //    {
-        //        playerAnim.WallJump(false);
-        //        chekcTimeWall = 0;
-        //    }
-
-
-        //}
-
-        
-
         //anular un salto si salimos de walljump o caemos
         if (velocity.y<-5 && !wallSliding && numeroSaltos==0)
         {
@@ -284,6 +437,10 @@ public class Player : MonoBehaviour
         directionalInput = input;
     }
 
+    /// <summary>
+    /// Getter del directional input del personaje
+    /// </summary>
+    /// <returns></returns>
     public Vector2 GetDirectionalInput()
     {
         return directionalInput;
@@ -447,7 +604,10 @@ public class Player : MonoBehaviour
             return false;
     }
 
-    
+    /// <summary>
+    /// Cuando el jugador colisiona con determinados objetos
+    /// </summary>
+    /// <param name="coll"></param>
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.collider.tag == "Suelo")
@@ -504,6 +664,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Cuando el jugador permanece en colision con determinados objetos
+    /// </summary>
     private void OnCollisionStay2D(Collision2D coll)
     {
         if (coll.collider.name == "Platform")
@@ -515,6 +678,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Cuando el jugador deja de colisionar con determinados objetos
+    /// </summary>
+    /// <param name="other"></param>
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.collider.name == "Platform")
@@ -524,6 +691,10 @@ public class Player : MonoBehaviour
         }      
     }
 
+    /// <summary>
+    /// Cuando el personaje entra en determinados triggers
+    /// </summary>
+    /// <param name="coll"></param>
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if ( coll.tag == "Through")
@@ -576,6 +747,10 @@ public class Player : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Cuando el personaje sale de determinados triggers
+    /// </summary>
+    /// <param name="coll"></param>
     private void OnTriggerExit2D(Collider2D coll)
     {
         if (coll.tag == "WallJump")
@@ -590,9 +765,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Metodo para el deslizamiento en la pared del wall jump
+    /// </summary>
     void HandleWallSliding()
-    {
-        
+    {        
         wallDirX = (controller.collisions.left) ? -1 : 1;
         wallSliding = false;
         if (( controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
@@ -635,6 +812,9 @@ public class Player : MonoBehaviour
         return controller.collisions.below ? true : false;
     }
 
+    /// <summary>
+    /// Metodo para calcular la velocidad en x del personaje
+    /// </summary>
     void CalculateVelocity()
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
@@ -669,6 +849,10 @@ public class Player : MonoBehaviour
         makeSlow = _makeS;
     }
 
+    /// <summary>
+    /// Getter del booleano para determinar si esta en una plataforma por la que puede descender
+    /// </summary>
+    /// <returns></returns>
     public bool GetIsInDescendPlatform()
     {
         return isInDescendPlatform;

@@ -8,84 +8,189 @@ using XInputDotNetPure;
 /// </summary>
 public class lifeScript : MonoBehaviour {
 
+    /// <summary>
+    /// Vidas que tiene el personaje
+    /// </summary>
     public GameObject[] life = new GameObject[4];
+
+    /// <summary>
+    /// Contador de vidas
+    /// </summary>
     int lifeCount;
+
+    /// <summary>
+    /// Numero de vidas
+    /// </summary>
     int numberLifes;
 
+    /// <summary>
+    /// Tiempo de invulnerabilidad
+    /// </summary>
     public int invulnerableTime;
 
+    /// <summary>
+    /// Referencia al camera shake
+    /// </summary>
     CameraShake cameraShake;
 
+    /// <summary>
+    /// Referencia al camera controller
+    /// </summary>
     CameraController cameraController;
 
+    /// <summary>
+    /// Referencia al sprite renderer del personaje
+    /// </summary>
     SpriteRenderer spriteRenderer;
 
+    /// <summary>
+    /// Referencia al game manager
+    /// </summary>
     GameManager gameManager;
 
+    /// <summary>
+    /// Referencia al player script
+    /// </summary>
     Player playerScript;
 
+    /// <summary>
+    /// Referencia al input script
+    /// </summary>
     PlayerInput inputScript;
 
+    /// <summary>
+    /// Booleano para determinar el shake de la camara
+    /// </summary>
     bool shake;
+
+    /// <summary>
+    /// Timer auxiliar para la vibracion
+    /// </summary>
     float timer;
+
+    /// <summary>
+    /// Timer para perder el control del personaje cuando es dañado
+    /// </summary>
     float timerStop;
 
+    /// <summary>
+    /// Valores de la vibracion del mando
+    /// </summary>
     [SerializeField]
     float timeVibration;
 
     [SerializeField]
     float quantityVibration;
 
+    /// <summary>
+    /// Valores para la invulnerabilidad
+    /// Cambios de color, numero de cambios
+    /// </summary>
     [SerializeField]
     float timeForEachColor;
     [SerializeField]
     float numberOfChanges;
     float auxNumberOfChanges;
 
+    /// <summary>
+    /// Color para devolver tras la invulnerabilidad
+    /// </summary>
     Color savedColor;
+
+    /// <summary>
+    /// Color para el daño
+    /// </summary>
     [SerializeField]
     Color damageColor;
 
+    /// <summary>
+    /// Booleano para determinar cuando es invulnerable
+    /// </summary>
     [SerializeField]
     bool invulnerable;
 
+    /// <summary>
+    /// Timer para la invulnerabilidad
+    /// </summary>
     int invulnerableCount;
 
+    /// <summary>
+    /// Referencia al rigidbody del personaje
+    /// </summary>
     Rigidbody2D rb;
+
+    /// <summary>
+    /// Distancia que recorre el personaje al sufrir daño no mortal
+    /// </summary>
     [SerializeField]
     float damageDisForceX;
     [SerializeField]
     float damageDisForceY;
 
+    /// <summary>
+    /// Distancia que recorre el personaje al sufrir daño mortal
+    /// </summary>
     [SerializeField]
     float damageDisInstantForceX;
     [SerializeField]
     float damageDisInstantForceY;
 
+    /// <summary>
+    /// Velocidad a la que que queremos que se vuelva a recuperar el control del personaje  
+    /// </summary>
     [SerializeField]
     float decrementImpulse;
 
+    /// <summary>
+    /// Referencia al player anim
+    /// </summary>
     PlayerAnim playerAnim;
 
+    /// <summary>
+    /// Referencia a las particulas que desprende el personaje
+    /// </summary>
     [SerializeField]
     GameObject particles1;
 
     [SerializeField]
     GameObject particles2;
 
+    /// <summary>
+    /// Referencia a las particulas de muerte
+    /// </summary>
     [SerializeField]
     GameObject deathParticles;
 
+    /// <summary>
+    /// Tiempo que tarda en morir
+    /// </summary>
     public float timeExpire;
 
+    /// <summary>
+    /// Tiempo que tarda en ejecutarse el gameover
+    /// </summary>
     public float timeToGameOver;
 
+    /// <summary>
+    /// Tiempo para perder la gravedad
+    /// </summary>
     public float timeToStopGravity;
 
+    /// <summary>
+    /// Tiempo que tarda en parar todo el input
+    /// </summary>
     public float timeStopAllActions;
 
+    /// <summary>
+    /// Booleano para determinar si esta siendo dañado
+    /// </summary>
     bool hurting;
+
+    /// <summary>
+    /// Booleano para determinar si mostrar las particulas de muerte
+    /// </summary>
     bool showDead;
+
     // Use this for initialization
     void Start () {
 
@@ -166,10 +271,7 @@ public class lifeScript : MonoBehaviour {
         }
 	}
 
-    /*
-    Función que controla la cantidad de vida que queremos restar al jugador 
- */
-
+  
     /// <summary>
     /// Función que controla la cantidad de vida que queremos restar al jugador 
     /// </summary>
@@ -260,6 +362,9 @@ public class lifeScript : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Funcion para ejecutar la muerte
+    /// </summary>
     void ExecuteDeath()
     {      
         particles1.SetActive(false);
@@ -269,17 +374,26 @@ public class lifeScript : MonoBehaviour {
         Invoke("deathtofalse", 0.1f);
     }
 
+    /// <summary>
+    /// Funcion para parar la animacion de death
+    /// </summary>
     void deathtofalse()
     {
         playerAnim.death(false);
     }
 
+    /// <summary>
+    /// Funcion para congelar el movimiento
+    /// </summary>
     void StopMovement()
     {        
         playerScript.enabled = false;
         inputScript.enabled = false;
     }
 
+    /// <summary>
+    /// Funcion para cargar el gameover
+    /// </summary>
     void DoGameOver()
     {        
         gameManager.loadGameOver();
@@ -288,7 +402,11 @@ public class lifeScript : MonoBehaviour {
         cameraController.RestartCamera();
     }
 
-
+    /// <summary>
+    /// Corrutina para la invulnerabilidad
+    /// Se cambia el color del personaje durante unos segundos
+    /// </summary>
+    /// <returns></returns>
     IEnumerator InvulnerableColor()
     {
         auxNumberOfChanges = 0;
@@ -310,7 +428,7 @@ public class lifeScript : MonoBehaviour {
 
 
     /// <summary>
-    /// funcion que añade vida en funcion del parametro recibido
+    /// Funcion que añade vida en funcion del parametro recibido
     /// </summary>
     /// <param name="cure"></param>
     public void cureLife(int cure)
