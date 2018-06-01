@@ -4,21 +4,42 @@ using UnityEngine;
 
 public class CameraScreenTrigger : MonoBehaviour {
 
+    /// <summary>
+    /// indice de las proximas caras
+    /// </summary>
     [SerializeField]
     byte nextScreen;
 
+    /// <summary>
+    /// posicion de la camara
+    /// </summary>
     [SerializeField]
     Vector3 cameraPosition;
 
+    /// <summary>
+    /// referencia al player
+    /// </summary>
     Transform player;
 
+    /// <summary>
+    /// variable para trasladar la camara al comienzo
+    /// </summary>
     [SerializeField]
     bool QUIERES_QUE_SE_TELETRANSPORTE_JOSE = false;
 
+    /// <summary>
+    /// posicion de jugador al comienzo
+    /// </summary>
     [SerializeField]
     Vector3 playerPosition;
 
+    /// <summary>
+    /// referencia a camara
+    /// </summary>
     CameraController mainCamera;
+    /// <summary>
+    /// referencia al screen manager
+    /// </summary>
     ScreensManager screensManager;
 
     void Start()
