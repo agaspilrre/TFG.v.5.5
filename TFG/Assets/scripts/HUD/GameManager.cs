@@ -128,6 +128,9 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+    /// <summary>
+    /// Funcion que controla que el game over solo se cargue una vez por muerte
+    /// </summary>
     public void loadGameOver()
     {
         //activar canvas y congelar juego
@@ -140,11 +143,18 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Funcion que resetea el contador de carga de game over a 0
+    /// </summary>
     public void resetCount()
     {
         entryCount = 0;
     }
 
+    /// <summary>
+    /// Metodo que devuelve si la referencia al gameOver esta activo o no
+    /// </summary>
+    /// <returns></returns>
     public bool getGameOverState()
     {
         return gameOver.activeSelf;

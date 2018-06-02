@@ -7,20 +7,40 @@ using UnityEngine;
 /// </summary>
 public class NpcDoor : MonoBehaviour {
 
+    /// <summary>
+    /// Lista que guarda los interruptores que contiene una puerta
+    /// </summary>
     public List<GameObject> activatorObjects = new List<GameObject>();
-    //public List<bool>
+    
+    /// <summary>
+    /// bool que indica si la puerta esta en estado abierta
+    /// </summary>
     bool isOpen;
+
+    /// <summary>
+    /// variable que cuenta los objetos interruptores que han sido activados
+    /// </summary>
     int count;
+
+    /// <summary>
+    /// Guarda la escala en Y de este objeto
+    /// </summary>
     float scale;
 	// Use this for initialization
+
+    /// <summary>
+    /// Obtiene la escala en Y del objeto puerta
+    /// </summary>
 	void Start () {
 
         scale = transform.localScale.y;
 	}
-	
-	// Update is called once per frame
-    //Si la puerta ha sido abierta reduce la escala en y hasta el minimo y detruye los objetos puerta he interruptores
-	void Update () {
+
+    // Update is called once per frame
+    /// <summary>
+    /// Si la puerta ha sido abierta reduce la escala en y hasta el minimo y detruye los objetos puerta he interruptores
+    /// </summary>
+    void Update () {
 		
 
         if(isOpen)
@@ -55,6 +75,10 @@ public class NpcDoor : MonoBehaviour {
     }
 
 
+    /// <summary>
+    /// Detecta si el player esta dentro del area de la puerta y comprueba si sus interruptores han sido abiertos
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerStay2D(Collider2D collision)
     {
 
