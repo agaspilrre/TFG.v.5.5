@@ -13,6 +13,11 @@ public class TriggerTutorial : MonoBehaviour {
     [SerializeField]
     GameObject image;
 
+
+    public float velocity;
+    float startTime;
+    private float alpha = 1.0f;
+
     /// <summary>
     /// Booleano para controlar si esta visible o no
     /// </summary>
@@ -21,7 +26,7 @@ public class TriggerTutorial : MonoBehaviour {
 	void Start () {
 
         visible = false;
-        image.SetActive(false);
+        //image.SetActive(false);
 	}
 
     /// <summary>
@@ -34,8 +39,10 @@ public class TriggerTutorial : MonoBehaviour {
         {
             if (!visible)
             {
+               
                 visible = true;
-                image.SetActive(true);
+                image.GetComponent<Animator>().SetBool("Aparecer", true);
+                //image.SetActive(true);
             }           
         }
     }
@@ -48,7 +55,9 @@ public class TriggerTutorial : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            image.SetActive(false);
+            image.GetComponent<Animator>().SetBool("Desaparecer", true);
+            image.GetComponent<Animator>().SetBool("Aparecer", false);
+            //image.SetActive(false);
         }
     }
 }

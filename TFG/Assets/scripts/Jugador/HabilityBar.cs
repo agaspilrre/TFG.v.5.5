@@ -55,7 +55,7 @@ public class HabilityBar : MonoBehaviour {
         //    loseSquare();
 
         //Si hay que recuperar alguno o todos
-        if (!energySquares[0].activeSelf && !energySquares[1].activeSelf && !energySquares[2].activeSelf && !energySquares[3].activeSelf)
+        if (!energySquares[0].activeSelf && !energySquares[1].activeSelf )
         {
             cooldownTime = generalTimeCooldown;            
         }
@@ -72,7 +72,7 @@ public class HabilityBar : MonoBehaviour {
         }
 
         //Todos recuperados
-        if (energySquares[0].activeSelf && energySquares[1].activeSelf && energySquares[2].activeSelf && energySquares[3].activeSelf)
+        if (energySquares[0].activeSelf && energySquares[1].activeSelf )
         {
             start = false;
         }
@@ -117,7 +117,7 @@ public class HabilityBar : MonoBehaviour {
     /// <returns></returns>
     public bool isBarEmpty()
     {
-        if (!energySquares[0].activeSelf && !energySquares[1].activeSelf && !energySquares[2].activeSelf && !energySquares[3].activeSelf)
+        if (!energySquares[0].activeSelf && !energySquares[1].activeSelf)
         {
             return true;
         }

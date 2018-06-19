@@ -25,10 +25,10 @@ public class NpcDoor : MonoBehaviour {
 
         if(isOpen)
         {
-            scale -= 0.1f;
-            transform.localScale=new Vector2(transform.localScale.x,scale);
-            if (scale < 0)
-                Destroy(this.gameObject);
+            this.GetComponent<Animator>().SetBool("Disappear", true);
+            /*scale -= 0.1f;
+            transform.localScale=new Vector2(transform.localScale.x,scale);*/
+            Invoke("destroyDoor", 2.01f);
         }
 	}
 
@@ -73,5 +73,12 @@ public class NpcDoor : MonoBehaviour {
 
         }
     }
+
+    void destroyDoor()
+    {
+        Destroy(this.gameObject);
+
+    }
+
 
 }

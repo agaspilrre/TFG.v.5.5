@@ -20,14 +20,18 @@ public class CameraShake : MonoBehaviour {
     float shakeDecay;
 
     float shakeAux;
+  
 
-	void Update ()
+    void Update ()
     {
+
+
         if (shakeAux > 0)
         {
             transform.position = transform.position + Random.insideUnitSphere * shakeIntensity;
             shakeAux -= shakeDecay;
         }
+    
     }
 
     /// <summary>

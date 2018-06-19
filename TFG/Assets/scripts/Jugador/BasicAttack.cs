@@ -39,6 +39,8 @@ public class BasicAttack : MonoBehaviour {
     GameObject directionObject;
     public Vector3 direction { get; set; }
 
+
+
 	void Start ()
     {
         playerTransform = GameObject.Find("Personaje").transform;

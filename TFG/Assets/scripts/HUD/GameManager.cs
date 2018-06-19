@@ -112,7 +112,8 @@ public class GameManager : MonoBehaviour {
                     player.transform.position = new Vector3(CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position.x, CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position.y, -3);
                     camera.position = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).position;
                     camera.position = new Vector3(camera.position.x, camera.position.y, -10);
-                   
+                    BlurController.instance.ResetBlur();
+
                     ScreensManager.instance.Index = CPmanager.GetCheckPoint(PlayerPrefs.GetInt("CheckPoint")).GetComponent<CheckPoint>().pantallaID;
                     TimerManager.instance.setTime(PlayerPrefs.GetFloat("timeLoad"));
                     Time.timeScale = 1;

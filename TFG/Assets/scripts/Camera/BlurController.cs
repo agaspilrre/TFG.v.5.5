@@ -37,9 +37,9 @@ public class BlurController : MonoBehaviour {
         blurReference = Camera.main.GetComponent<MotionBlur>();
 	}
 
-	void Update ()
+    void Update()
     {
-		if(active && blur < maxBlur)
+        if (active && blur < maxBlur)
         {
             blur += blurPerSecond * Time.deltaTime;
             angle += anglePerSecond * Time.deltaTime;
@@ -47,19 +47,29 @@ public class BlurController : MonoBehaviour {
             vortexReference.angle = angle;
             blurReference.blurAmount = blur;
         }
+   
 	}
 
     public void SetActiveBlur()
     {
         if (active)
+        {
+            ResetBlur();
             active = false;
+        }
         else
+        {
             active = true;
+        }
     }
 
     public void ResetBlur()
     {
+        print("entre");
+        active = false;
         blur = 0;
         angle = 0;
+        vortexReference.angle = angle;
+        blurReference.blurAmount = blur;
     }
 }

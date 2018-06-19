@@ -147,7 +147,7 @@ public class ButtonsController : MonoBehaviour {
     /// </summary>
     public void yesNewGameButton()
     {
-        SceneManager.LoadScene("FreshStart");
+        SceneManager.LoadScene("TheDoubt");
     }
 
     /// <summary>

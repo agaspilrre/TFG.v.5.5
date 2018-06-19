@@ -231,7 +231,6 @@ public class BouncyTrigger : MonoBehaviour {
     {
         PlayWakeUpClip();
         anim.SetBool("Awake", true);
-        colliderBouncy.isTrigger = true;
         Invoke("startIdle", 1);
     }
 
@@ -242,6 +241,7 @@ public class BouncyTrigger : MonoBehaviour {
     {
         anim.SetBool("Idle", true);
         anim.SetBool("Awake", false);
+        Invoke("activarTrigger", 0.5f);
     }
 
     /// <summary>
@@ -280,6 +280,12 @@ public class BouncyTrigger : MonoBehaviour {
     {
         source.clip = clips[1];
         source.Play();
+    }
+
+    void activarTrigger()
+    {
+        colliderBouncy.isTrigger = true;
+
     }
 }
 

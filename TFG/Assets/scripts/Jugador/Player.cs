@@ -345,6 +345,7 @@ public class Player : MonoBehaviour
 
         if (permitido)
         {
+          
             controller.Move(velocity * Time.deltaTime, directionalInput);            
 
             if (controller.collisions.above || controller.collisions.below)

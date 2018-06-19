@@ -358,7 +358,7 @@ public class lifeScript : MonoBehaviour {
             Invoke("ExecuteDeath", timeExpire);
             Invoke("DoGameOver", timeToGameOver);
             //gameManager.loadGameOver();
-            rb.velocity = Vector3.zero;
+            //rb.velocity = Vector3.zero;
         }
     }
 
@@ -469,5 +469,12 @@ public class lifeScript : MonoBehaviour {
     public int getLifeCount()
     {
         return lifeCount;
+    }
+
+    public void falseDeath()
+    {
+        StartCoroutine("InvulnerableColor");
+        cameraShake.Shake();
+        inputScript.PlayClipHurt();
     }
 }
