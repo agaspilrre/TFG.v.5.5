@@ -5,33 +5,42 @@ using UnityEngine;
 /// <summary>
 /// CLASE ENCARGADA DE REALIZAR UN SHAKE DE LA CAMARA
 /// </summary>
-public class CameraShake : MonoBehaviour {
+public class CameraShake : MonoBehaviour
+{
 
     /// <summary>
     /// Intensidad del shake de la camara
     /// </summary>
-    [SerializeField][Range(0,5)]
+    [SerializeField]
+    [Range(0, 5)]
     float shakeIntensity;
 
     /// <summary>
     /// Tiempo del shake
     /// </summary>
-    [SerializeField][Range(0,0.5f)]
+    [SerializeField]
+    [Range(0, 0.5f)]
     float shakeDecay;
 
-    float shakeAux;
-  
+    [SerializeField]
+    Vector3 originPosition;
+    Quaternion originRotation;
 
-    void Update ()
+    float shakeAux;
+
+    void Update()
     {
 
 
         if (shakeAux > 0)
         {
-            transform.position = transform.position + Random.insideUnitSphere * shakeIntensity;
+            transform.position = originPosition + Random.insideUnitSphere * shakeIntensity;
             shakeAux -= shakeDecay;
         }
-    
+        if (shakeAux <= 0)
+        {
+            originPosition = transform.position;
+        }
     }
 
     /// <summary>
@@ -39,6 +48,8 @@ public class CameraShake : MonoBehaviour {
     /// </summary>
     public void Shake()
     {
+        originPosition = transform.position;
+        originRotation = transform.rotation;
         shakeAux = shakeIntensity;
     }
 

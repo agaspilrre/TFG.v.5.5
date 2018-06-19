@@ -276,7 +276,7 @@ public class PlayerInput : MonoBehaviour
             {
                 pressed = false;
                 BlurController.instance.ResetBlur();
-                //lifeScript.ResetBlur();     
+                lifeScript.ResetBlur();     
                 lifeScript.makeDamage(1);
                 timer = 0;
                 GamePad.SetVibration(0, 0, 0);

@@ -277,23 +277,30 @@ public class lifeScript : MonoBehaviour {
     /// </summary>
     public void ResetBlur()
     {
-        hurting = true;
-        shake = true;
-        inputScript.enabled = false;
-
-        playerAnim.RunToIdl();
-        playerAnim.Hurt(true);
-
-        for (int i = 0; i < 1 && lifeCount >= 0; i++)
+        if (lifeCount > 0)
         {
-            life[lifeCount].SetActive(false);
-            lifeCount--;
-            StartCoroutine("InvulnerableColor");
-            cameraShake.Shake();
-            inputScript.PlayClipHurt();
-        }
+            hurting = true;
+            shake = true;
+            inputScript.enabled = false;
 
-        invulnerable = true;
+            playerAnim.RunToIdl();
+            playerAnim.Hurt(true);
+
+            for (int i = 0; i < 1 && lifeCount >= 0; i++)
+            {
+                life[lifeCount].SetActive(false);
+                lifeCount--;
+                StartCoroutine("InvulnerableColor");
+                cameraShake.Shake();
+                inputScript.PlayClipHurt();
+            }
+
+            invulnerable = true;
+        }
+        else
+        {
+            makeDamage(1);
+        }
     }
     
     /// <summary>
