@@ -2,12 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// controlador de las pantallas del juego
+/// </summary>
 public class ScreensManager : MonoBehaviour {
+
+    /// <summary>
+    /// guardadas las pantallas
+    /// </summary>
     [SerializeField]
     Screens[] screens;
 
+    /// <summary>
+    /// instancia
+    /// </summary>
     public static ScreensManager instance;
 
+    /// <summary>
+    /// pantalla actual
+    /// </summary>
     private byte index;
 
     private void Awake()
@@ -38,7 +51,9 @@ public class ScreensManager : MonoBehaviour {
             screens[i].SetActive(false);
     }
 }
-
+/// <summary>
+/// clase con todas las pantallas
+/// </summary>
 [System.Serializable]
 public class Screens
 {

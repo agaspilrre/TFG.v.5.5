@@ -7,9 +7,7 @@ using UnityEngine;
 /// CLASE ESTATICA ENCARGADA DE LLEVAR LA CUENTA DE LAS ESTRELLAS QUE SE HAN RECOGIDO
 /// </summary>
 public static class fixedVar
-{
-
-    
+{ 
     public static int totalStarts = 0;
 
 }

@@ -2,11 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// clase controla el prefab cameratrigger centra la camara en otro objeto
+/// </summary>
 public class CameraTrigger : MonoBehaviour {
 
+    /// <summary>
+    /// referencia al target de la camara
+    /// </summary>
     CameraTarget target;
+
+    /// <summary>
+    /// objetivo centrar el trigger
+    /// </summary>
     Transform child;
 
+    /// <summary>
+    /// porcentaje de desvio
+    /// </summary>
     [SerializeField][Range(0,1)]
     float percent = 0.5f;
 
@@ -38,6 +51,9 @@ public class CameraTrigger : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// setea las variables de los target al entrar en triggers
+    /// </summary>
     public void Setters()
     {
         target.SetPercent(percent);

@@ -4,16 +4,34 @@ using UnityEngine;
 
 public class CameraSize : MonoBehaviour {
 
+    /// <summary>
+    /// tamño de la camara
+    /// </summary>
     [SerializeField]
     float size;
+
+    /// <summary>
+    /// velocidad de aumento / reduccion  de la camara
+    /// </summary>
     [SerializeField]
     float resizeSpeed;
 
+    /// <summary>
+    /// referencias a las camaras
+    /// </summary>
     Camera mainCamera;
     [SerializeField] Camera secondCamera;
 
+
+    /// <summary>
+    /// guarda el tamaño inicial
+    /// </summary>
     public
-    float savedSize;//saves the start size
+    float savedSize;
+
+    /// <summary>
+    /// guarda el tamaño de la camaraactual
+    /// </summary>
     public
     float auxSize;
 
@@ -23,6 +41,9 @@ public class CameraSize : MonoBehaviour {
     }
     State myState;
 
+    /// <summary>
+    /// booleano por si esta incrementando el tamaño 
+    /// </summary>
     public
     bool increasing;
 

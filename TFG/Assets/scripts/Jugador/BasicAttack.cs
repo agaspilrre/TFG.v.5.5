@@ -30,13 +30,34 @@ public class BasicAttack : MonoBehaviour {
     [SerializeField]
     float bulletSpeed;
 
+    /// <summary>
+    /// posicion del player
+    /// </summary>
     Transform playerTransform;
+    /// <summary>
+    /// referencia al jugadir
+    /// </summary>
     Player player;
+
+    /// <summary>
+    /// referencia a los input
+    /// </summary>
     PlayerInput playerInput;
+
+    /// <summary>
+    /// referencia a los poderes
+    /// </summary>
     Poderes poderes;
 
+    /// <summary>
+    /// flecha de apuntado
+    /// </summary>
     [SerializeField]
     GameObject directionObject;
+
+    /// <summary>
+    /// direccion del disparo
+    /// </summary>
     public Vector3 direction { get; set; }
 
 
@@ -54,7 +75,6 @@ public class BasicAttack : MonoBehaviour {
     void Update()
     {
         
-
         if (isCharging)
         {
             timer += Time.deltaTime;
@@ -86,6 +106,9 @@ public class BasicAttack : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// cancela la carga y dispara
+    /// </summary>
     public void StopCharging()
     {       
         if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse && isCharging && !player.wallSliding)
@@ -98,6 +121,9 @@ public class BasicAttack : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// carga el ataque
+    /// </summary>
     public void Charge()
     {
         if (!isAttacking && !playerInput.getIsJumping() && poderes.dashUse && !player.wallSliding)
@@ -109,6 +135,9 @@ public class BasicAttack : MonoBehaviour {
         }
     }
    
+    /// <summary>
+    /// dispara la bala
+    /// </summary>
     public void Attack()
     {
         if(!isAttacking)
@@ -121,12 +150,18 @@ public class BasicAttack : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// cancela la carga y para las corrutinas
+    /// </summary>
     public void CancelAttack()
     {
         StopAllCoroutines();
         StopAttack();
     }
 
+    /// <summary>
+    /// finaliza el ataque y destruye la bala
+    /// </summary>
     void StopAttack()
     {
         isAttacking = false;
